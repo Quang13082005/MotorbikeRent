@@ -1,0 +1,73 @@
+spring.application.name=motorbike-rental
+
+# =============================================
+# DATABASE - MySQL (Production/Default)
+# =============================================
+spring.datasource.url=jdbc:mysql://localhost:3306/motorent_db?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=[YOUR_DB_PASSWORD_HERE]
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# =============================================
+# JPA / HIBERNATE
+# =============================================
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# =============================================
+# THYMELEAF
+# =============================================
+spring.thymeleaf.cache=false
+spring.thymeleaf.encoding=UTF-8
+spring.thymeleaf.mode=HTML
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+
+# =============================================
+# SERVER
+# =============================================
+server.port=8080
+server.servlet.encoding.charset=UTF-8
+server.servlet.encoding.enabled=true
+server.servlet.encoding.force=true
+
+# =============================================
+# LOGGING
+# =============================================
+logging.level.com.motorrent.motorbikerental=DEBUG
+logging.level.org.springframework.security=WARN
+logging.level.org.hibernate.SQL=WARN
+
+# =============================================
+# SPRING AI (disable by default, enable in production)
+# =============================================
+spring.ai.openai.api-key=${OPENAI_API_KEY:placeholder-not-required-in-preview}
+spring.ai.openai.chat.enabled=false
+
+# =============================================
+# MAIL (disable by default)
+# =============================================
+spring.mail.host=${MAIL_HOST:localhost}
+spring.mail.port=${MAIL_PORT:25}
+spring.mail.username=${MAIL_USERNAME:}
+spring.mail.password=${MAIL_PASSWORD:}
+spring.mail.properties.mail.smtp.auth=false
+spring.mail.properties.mail.smtp.starttls.enable=false
+
+# =============================================
+# OAUTH2 (disable by default)
+# =============================================
+# spring.security.oauth2.client.registration.google.client-id=
+# spring.security.oauth2.client.registration.google.client-secret=
+
+# =============================================
+# APP CUSTOM PROPERTIES
+# =============================================
+app.jwt.secret=${JWT_SECRET:motorent-danang-secret-key-2024-very-long-secure-key}
+app.jwt.expiration=86400000
+app.upload.dir=uploads/
+app.preview.mode=false
+
+logging.file.name=spring.log

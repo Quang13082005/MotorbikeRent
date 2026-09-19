@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi" class="h-full">
+<head th:replace="~{fragments/head :: head(title='Admin - Cài đặt')}"></head>
+<body class="bg-[#090d16] text-slate-200 font-sans antialiased">
+  <div th:replace="~{fragments/admin-layout :: layout(activeNav='settings', content=~{::#mainContent})}">
+    <div id="mainContent">
+      <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-1 flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-500 text-3xl">settings</span> Cài đặt
+          </h1>
+          <p class="text-sm text-slate-400">Cấu hình hệ thống</p>
+        </div>
+      </div>
+      <div class="bg-slate-900/80 backdrop-blur-md p-6 rounded-2xl border border-slate-800 shadow-xl min-h-[400px] flex items-center justify-center">
+        <div class="text-center">
+          <span class="material-symbols-outlined text-6xl text-slate-600 mb-4 block">construction</span>
+          <h3 class="text-lg font-bold text-slate-300">Tính năng đang được phát triển</h3>
+          <p class="text-sm text-slate-500 mt-2">Giao diện quản lý cài đặt sẽ sớm được cập nhật.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

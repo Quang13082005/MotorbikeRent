@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<!-- Admin Layout Fragment -->
+<div th:fragment="layout(activeNav, content)" class="min-h-screen bg-[#090d16] text-slate-200 flex font-sans antialiased selection:bg-cyan-500 selection:text-white">
+  
+  <!-- Sidebar (Desktop) -->
+  <aside class="hidden md:flex flex-col w-64 bg-slate-950/80 backdrop-blur-xl border-r border-slate-800/80 fixed inset-y-0 z-40 shadow-2xl">
+    <div class="h-20 flex items-center gap-3 px-6 border-b border-slate-800/80">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">admin_panel_settings</span>
+      </div>
+      <div class="font-extrabold text-lg text-white tracking-tight">MotoRent <span class="text-cyan-400 font-bold">Admin</span></div>
+    </div>
+    
+    <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1.5 scrollbar-none">
+      <a th:href="@{/admin/dashboard}" th:classappend="${activeNav == 'dashboard'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'dashboard'} ? 'font-variation-settings: FILL 1' : ''">dashboard</span>
+        <span class="font-medium text-sm">Tổng quan</span>
+      </a>
+      
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Dịch vụ</div>
+      
+      <a th:href="@{/admin/rental-orders}" th:classappend="${activeNav == 'rental-orders'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'rental-orders'} ? 'font-variation-settings: FILL 1' : ''">list_alt</span>
+        <span class="font-medium text-sm">Đơn thuê xe</span>
+      </a>
+      
+      <a th:href="@{/admin/contracts}" th:classappend="${activeNav == 'contracts'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'contracts'} ? 'font-variation-settings: FILL 1' : ''">assignment</span>
+        <span class="font-medium text-sm">Hợp đồng</span>
+      </a>
+
+      <a th:href="@{/admin/payments}" th:classappend="${activeNav == 'payments'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'payments'} ? 'font-variation-settings: FILL 1' : ''">account_balance_wallet</span>
+        <span class="font-medium text-sm">Thanh toán &amp; Cọc</span>
+      </a>
+
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Tài sản</div>
+
+      <a th:href="@{/admin/motorbikes}" th:classappend="${activeNav == 'motorbikes'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'motorbikes'} ? 'font-variation-settings: FILL 1' : ''">two_wheeler</span>
+        <span class="font-medium text-sm">Danh mục xe</span>
+      </a>
+
+      <a th:href="@{/admin/maintenance}" th:classappend="${activeNav == 'maintenance'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'maintenance'} ? 'font-variation-settings: FILL 1' : ''">handyman</span>
+        <span class="font-medium text-sm">Bảo trì sửa chữa</span>
+      </a>
+
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Tài khoản</div>
+
+      <a th:href="@{/admin/customers}" th:classappend="${activeNav == 'customers'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'customers'} ? 'font-variation-settings: FILL 1' : ''">groups</span>
+        <span class="font-medium text-sm">Khách hàng</span>
+      </a>
+
+      <a th:href="@{/admin/staff-accounts}" th:classappend="${activeNav == 'staff'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'staff'} ? 'font-variation-settings: FILL 1' : ''">badge</span>
+        <span class="font-medium text-sm">Nhân viên (Staff)</span>
+      </a>
+
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Hệ thống</div>
+
+      <a th:href="@{/admin/statistics}" th:classappend="${activeNav == 'statistics'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'statistics'} ? 'font-variation-settings: FILL 1' : ''">bar_chart</span>
+        <span class="font-medium text-sm">Báo cáo thống kê</span>
+      </a>
+      
+      <a th:href="@{/admin/promotions}" th:classappend="${activeNav == 'promotions'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'promotions'} ? 'font-variation-settings: FILL 1' : ''">sell</span>
+        <span class="font-medium text-sm">Khuyến mãi</span>
+      </a>
+
+      <a th:href="@{/admin/settings}" th:classappend="${activeNav == 'settings'} ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'settings'} ? 'font-variation-settings: FILL 1' : ''">settings</span>
+        <span class="font-medium text-sm">Cấu hình chung</span>
+      </a>
+    </nav>
+    
+    <div class="p-4 border-t border-slate-800/80 bg-slate-950">
+      <a th:href="@{/admin/profile}" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-900/80 transition-colors border border-transparent hover:border-slate-800">
+        <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700">
+          <span class="material-symbols-outlined text-[20px]">shield_person</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xs font-bold text-slate-200">Super Admin</span>
+          <span class="text-[10px] text-cyan-400 font-medium">Administrator</span>
+        </div>
+      </a>
+      <a th:href="@{/auth/login}" class="mt-3 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-slate-900 text-slate-400 hover:text-red-400 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/20 transition-all font-medium text-xs">
+        <span class="material-symbols-outlined text-[16px]">logout</span> Đăng xuất
+      </a>
+    </div>
+  </aside>
+
+  <!-- Mobile Drawer & Topbar -->
+  <div class="md:hidden fixed top-0 inset-x-0 h-16 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 z-40 flex items-center justify-between px-4">
+    <div class="font-extrabold text-lg text-white">MotoRent <span class="text-cyan-400">Admin</span></div>
+    <button id="mobileAdminMenuBtn" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <!-- Mobile Menu Content -->
+  <div id="mobileAdminMenu" class="hidden md:hidden fixed inset-x-0 top-16 bottom-0 bg-[#090d16] z-40 overflow-y-auto px-4 py-6 border-t border-slate-800/80">
+     <a th:href="@{/admin/dashboard}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-cyan-400">dashboard</span> Tổng quan</a>
+     <a th:href="@{/admin/rental-orders}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-cyan-400">list_alt</span> Đơn thuê xe</a>
+     <a th:href="@{/admin/motorbikes}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-cyan-400">two_wheeler</span> Danh mục xe</a>
+     <a th:href="@{/admin/customers}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-cyan-400">groups</span> Khách hàng</a>
+     <a th:href="@{/admin/statistics}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-cyan-400">bar_chart</span> Thống kê</a>
+     <a th:href="@{/admin/settings}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300"><span class="material-symbols-outlined text-cyan-400">settings</span> Cài đặt</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 md:ml-64 pt-16 md:pt-0 min-h-screen flex flex-col relative">
+    <!-- Ambient top glow for main content -->
+    <div class="absolute inset-x-0 top-0 h-96 radial-glow pointer-events-none z-0 opacity-40"></div>
+    
+    <!-- Topbar desktop -->
+    <header class="hidden md:flex h-20 items-center justify-between px-8 border-b border-slate-800/80 bg-slate-950/40 backdrop-blur-md sticky top-0 z-30">
+      <div>
+        <div class="relative w-72 group">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-[20px] group-focus-within:text-cyan-400 transition-colors">search</span>
+          <input type="text" placeholder="Tìm kiếm nhanh (Alt+K)" class="w-full bg-slate-900/80 backdrop-blur-md rounded-xl pl-10 pr-4 py-2 text-sm font-medium border border-slate-700/80 text-slate-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 transition-colors shadow-sm">
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a th:href="@{/preview}" class="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-semibold tracking-wide text-slate-400 hover:text-white hover:border-slate-700 transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[14px]">visibility</span> PREVIEW HUB
+        </a>
+      </div>
+    </header>
+    
+    <!-- Dynamic Content -->
+    <div class="p-4 md:p-8 relative z-10 flex-1">
+      <th:block th:replace="${content}"></th:block>
+    </div>
+  </main>
+
+  <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('mobileAdminMenuBtn');
+      const menu = document.getElementById('mobileAdminMenu');
+      if (btn && menu) {
+        btn.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+        });
+      }
+    });
+  </script>
+</div>
+</html>

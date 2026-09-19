@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<!-- Staff Layout Fragment -->
+<div th:fragment="layout(activeNav, content)" class="min-h-screen bg-[#090d16] text-slate-200 flex font-sans antialiased selection:bg-orange-500 selection:text-white">
+  
+  <!-- Sidebar (Desktop) -->
+  <aside class="hidden md:flex flex-col w-64 bg-slate-950/80 backdrop-blur-xl border-r border-slate-800/80 fixed inset-y-0 z-40 shadow-2xl">
+    <div class="h-20 flex items-center gap-3 px-6 border-b border-slate-800/80">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20 text-white">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1">two_wheeler</span>
+      </div>
+      <div class="font-extrabold text-lg text-white tracking-tight">MotoRent <span class="text-orange-500 font-bold">Staff</span></div>
+    </div>
+    
+    <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1.5 scrollbar-none">
+      <a th:href="@{/staff/dashboard}" th:classappend="${activeNav == 'dashboard'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'dashboard'} ? 'font-variation-settings: FILL 1' : ''">dashboard</span>
+        <span class="font-medium text-sm">Tổng quan</span>
+      </a>
+      
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Quản lý dịch vụ</div>
+      
+      <a th:href="@{/staff/rental-orders}" th:classappend="${activeNav == 'rental-orders'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'rental-orders'} ? 'font-variation-settings: FILL 1' : ''">receipt_long</span>
+        <span class="font-medium text-sm">Đơn thuê xe</span>
+      </a>
+      
+      <a th:href="@{/staff/extension-requests}" th:classappend="${activeNav == 'extension-requests'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined" th:style="${activeNav == 'extension-requests'} ? 'font-variation-settings: FILL 1' : ''">update</span>
+          <span class="font-medium text-sm">Gia hạn</span>
+        </div>
+        <span class="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md shadow-orange-500/30">1</span>
+      </a>
+
+      <div class="text-[10px] text-slate-500 uppercase tracking-widest mt-6 mb-2 px-4 font-bold">Vận hành xe</div>
+
+      <a th:href="@{/staff/motorbike-status}" th:classappend="${activeNav == 'motorbike-status'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'motorbike-status'} ? 'font-variation-settings: FILL 1' : ''">moped</span>
+        <span class="font-medium text-sm">Trạng thái xe</span>
+      </a>
+
+      <a th:href="@{/staff/maintenance-reports}" th:classappend="${activeNav == 'maintenance-reports'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'maintenance-reports'} ? 'font-variation-settings: FILL 1' : ''">build</span>
+        <span class="font-medium text-sm">Bảo trì</span>
+      </a>
+      
+      <a th:href="@{/staff/payments}" th:classappend="${activeNav == 'payments'} ? 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-inner' : 'text-slate-400 hover:bg-slate-900/50 hover:text-slate-200 border border-transparent'" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200">
+        <span class="material-symbols-outlined" th:style="${activeNav == 'payments'} ? 'font-variation-settings: FILL 1' : ''">payments</span>
+        <span class="font-medium text-sm">Thanh toán</span>
+      </a>
+    </nav>
+    
+    <div class="p-4 border-t border-slate-800/80 bg-slate-950">
+      <a th:href="@{/staff/profile}" class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-900/80 transition-colors border border-transparent hover:border-slate-800">
+        <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700">
+          <span class="material-symbols-outlined text-[20px]">person</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xs font-bold text-slate-200">Nguyễn Văn Nhân</span>
+          <span class="text-[10px] text-emerald-400 font-medium">● Ca sáng</span>
+        </div>
+      </a>
+      <a th:href="@{/auth/login}" class="mt-3 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-slate-900 text-slate-400 hover:text-red-400 hover:bg-red-500/10 border border-slate-800 hover:border-red-500/20 transition-all font-medium text-xs">
+        <span class="material-symbols-outlined text-[16px]">logout</span> Đăng xuất
+      </a>
+    </div>
+  </aside>
+
+  <!-- Mobile Drawer & Topbar -->
+  <div class="md:hidden fixed top-0 inset-x-0 h-16 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 z-40 flex items-center justify-between px-4">
+    <div class="font-extrabold text-lg text-white">MotoRent <span class="text-orange-500">Staff</span></div>
+    <button id="mobileStaffMenuBtn" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <!-- Mobile Menu Content -->
+  <div id="mobileStaffMenu" class="hidden md:hidden fixed inset-x-0 top-16 bottom-0 bg-[#090d16] z-40 overflow-y-auto px-4 py-6 border-t border-slate-800/80">
+     <a th:href="@{/staff/dashboard}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-orange-400">dashboard</span> Tổng quan</a>
+     <a th:href="@{/staff/rental-orders}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-orange-400">receipt_long</span> Đơn thuê xe</a>
+     <a th:href="@{/staff/extension-requests}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-orange-400">update</span> Gia hạn</a>
+     <a th:href="@{/staff/motorbike-status}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-orange-400">moped</span> Trạng thái xe</a>
+     <a th:href="@{/staff/maintenance-reports}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300 border-b border-slate-800/50"><span class="material-symbols-outlined text-orange-400">build</span> Bảo trì</a>
+     <a th:href="@{/staff/payments}" class="flex items-center gap-3 px-4 py-3.5 rounded-xl text-slate-300"><span class="material-symbols-outlined text-orange-400">payments</span> Thanh toán</a>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 md:ml-64 pt-16 md:pt-0 min-h-screen flex flex-col relative">
+    <!-- Ambient top glow for main content -->
+    <div class="absolute inset-x-0 top-0 h-96 radial-glow pointer-events-none z-0 opacity-50"></div>
+    
+    <!-- Topbar desktop -->
+    <header class="hidden md:flex h-20 items-center justify-between px-8 border-b border-slate-800/80 bg-slate-950/40 backdrop-blur-md sticky top-0 z-30">
+      <div class="flex items-center space-x-2 text-xs font-medium text-slate-400">
+        <span>Khu vực</span>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-slate-200">Đà Nẵng Center</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a th:href="@{/preview}" class="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-semibold tracking-wide text-slate-400 hover:text-white hover:border-slate-700 transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[14px]">visibility</span> PREVIEW HUB
+        </a>
+        <a th:href="@{/staff/notifications}" class="relative w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-slate-800 transition-colors text-slate-400 hover:text-white">
+          <span class="material-symbols-outlined text-[18px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-orange-500"></span>
+        </a>
+      </div>
+    </header>
+    
+    <!-- Dynamic Content -->
+    <div class="p-4 md:p-8 relative z-10 flex-1">
+      <th:block th:replace="${content}"></th:block>
+    </div>
+  </main>
+
+  <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('mobileStaffMenuBtn');
+      const menu = document.getElementById('mobileStaffMenu');
+      if (btn && menu) {
+        btn.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) icon.textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+        });
+      }
+    });
+  </script>
+</div>
+</html>

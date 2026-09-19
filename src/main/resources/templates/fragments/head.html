@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title} + ' - MotoRent Đà Nẵng'">MotoRent Đà Nẵng</title>
+  <meta name="description" content="MotoRent Đà Nẵng - Dịch vụ cho thuê xe máy uy tín, đa dạng tại Đà Nẵng.">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script th:src="@{/js/tailwind-config.js}"></script>
+
+  <!-- Shared CSS -->
+  <link th:href="@{/css/motorent.css}" rel="stylesheet">
+
+  <!-- Page-specific head content -->
+  <th:block th:replace="${headExtra} ?: ~{}"></th:block>
+</head>
+</html>

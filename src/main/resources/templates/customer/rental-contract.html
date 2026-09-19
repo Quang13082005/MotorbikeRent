@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{fragments/head :: head(title='Hợp đồng thuê xe')}"></head>
+<body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+  <!-- Header -->
+  <div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div>
+
+<div class="w-full max-w-[1140px] mx-auto px-margin-sm md:px-margin py-space-lg flex flex-col gap-space-xl">
+<!-- TOP NAVIGATION & BREADCRUMB -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<a class="inline-flex items-center gap-space-xs text-primary font-label-lg text-label-lg hover:text-primary-fixed transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="">Quay lại chi tiết xe</span>
+</a>
+<nav class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
+<span class="">Trang chủ</span>
+<span class="text-secondary/40">/</span>
+<span class="">Xe cho thuê</span>
+<span class="text-secondary/40">/</span>
+<span class="text-on-surface">Honda Air Blade 160cc ABS (2024)</span>
+<span class="text-secondary/40">/</span>
+<span class="text-primary-container">Hợp đồng thuê xe điện tử</span>
+</nav>
+</div>
+<!-- Live Contract Status Tag -->
+<div class="flex items-center gap-space-sm bg-surface-container-high px-space-md py-space-xs rounded-full">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Mã số: <strong class="text-primary font-bold">#HD-ND-2025/AB160</strong></span>
+<span class="text-secondary/30">•</span>
+<span class="font-label-sm text-label-sm text-tertiary">Xác thực thời gian thực</span>
+</div>
+</div>
+<!-- 4-STEP PROGRESS INDICATOR -->
+
+<!-- VEHICLE SUMMARY BANNER -->
+<div class="bg-surface-container-high rounded-2xl p-space-md md:p-space-lg shadow-xl relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-space-lg relative z-10">
+<div class="flex flex-col sm:flex-row items-center gap-space-lg w-full md:w-auto">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden bg-surface-container-lowest flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up studio shot of a modern matte black and gold Honda Air Blade 160 scooter, dramatic moody lighting with amber highlights, cinematic deep navy background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2guNOPNI3owef9DyzcescLNSAsJUU1FZeD2SzB2wm4ubE4yVvGxTwdTSSctj7ZB2UByGxEgZ4saT9xqeEdYXN54PAPTTIeZcBXnNE0lPGa9FdxSQWLdUDekfE1N2EmBrJ8X1BQMGhviUK52pKaV6q5Gtbtje7WEQrlknvEZQDElIgpCdzlKg3hbkrp6NFQyhSql9kADpqsJraWC303nUC02ZZJxrUVf6w6AOmULuwnwljCmnU0vqZaw">
+<div class="absolute top-2 left-2 px-space-xs py-0.5 rounded-md bg-surface-container-lowest/80 backdrop-blur text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Còn xe
+            </div>
+</div>
+<div class="flex flex-col gap-space-xs text-center sm:text-left">
+<div class="flex flex-wrap items-center justify-center sm:justify-start gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-sm text-label-sm uppercase">Hợp đồng số hóa</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-sm text-label-sm">Phiên bản Đặc Biệt 2024</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Honda Air Blade 160cc ABS</h1>
+<p class="font-body-sm text-body-sm text-secondary">Khóa Smartkey chống trộm • Động cơ eSP+ 4 van • Hệ thống phanh chống bó cứng ABS</p>
+<div class="flex items-center justify-center sm:justify-start gap-space-sm pt-1">
+<span class="font-headline-sm text-headline-sm text-primary-container">160.000đ</span>
+<span class="font-body-sm text-body-sm text-secondary">/ ngày thuê</span>
+</div>
+</div>
+</div>
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-space-sm border-t md:border-t-0 border-surface-variant/30 pt-space-md md:pt-0">
+<div class="flex flex-col text-left md:text-right">
+<span class="font-label-sm text-label-sm text-secondary">Chuẩn bị giao tại</span>
+<span class="font-label-lg text-label-lg text-on-surface">TP. Đà Nẵng (Giao trong 30p)</span>
+</div>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:underline" href="#">
+<span class="">Chi tiết thông số</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- MAIN LEGAL DOCUMENT CONTAINER -->
+<div class="bg-surface-container rounded-2xl p-space-md md:p-space-xl shadow-2xl flex flex-col gap-space-xl">
+<!-- NATIONAL HEADING & CONTRACT HEADER -->
+<div class="flex flex-col items-center text-center gap-space-xs pb-space-lg border-b border-surface-variant/40">
+<span class="font-label-lg text-label-lg font-bold uppercase tracking-widest text-on-surface">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+<span class="font-label-md text-label-md text-secondary tracking-wider">Độc lập – Tự do – Hạnh phúc</span>
+<div class="w-24 h-0.5 bg-primary-container/60 my-space-xs rounded-full"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-space-sm">HỢP ĐỒNG ĐIỆN TỬ CHO THUÊ XE MÁY</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lập theo mẫu quy chuẩn vận tải &amp; dịch vụ du lịch TP. Đà Nẵng</span>
+</div>
+<!-- SECTION I: REPRESENTATIVE PARTY A -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">I. ĐẠI DIỆN BÊN A (BÊN CHO THUÊ XE)</h3>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Chính chủ xác thực
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md bg-surface-container-low p-space-md rounded-xl">
+<div class="flex flex-col gap-space-xs font-body-sm text-body-sm">
+<div class="flex justify-between py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Đại diện chủ xe:</span>
+<strong class="text-on-surface font-label-lg">Nguyễn Tấn Đạt</strong>
+</div>
+<div class="flex justify-between py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Hotline / Zalo:</span>
+<a class="text-primary font-bold" href="tel:0931981789">0931.981.789</a>
+</div>
+<div class="flex justify-between py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Tài khoản thanh toán:</span>
+<span class="text-on-surface">45734787 (ACB Á Châu)</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-secondary">Chủ tài khoản:</span>
+<strong class="text-on-surface">Nguyễn Thị Liên</strong>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs font-body-sm text-body-sm">
+<div class="flex flex-col py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Cơ sở 1:</span>
+<span class="text-on-surface">11 Nguyễn Văn Tạo, P. An Khê, TP. Đà Nẵng (Nhà nghỉ Hồng Ân)</span>
+</div>
+<div class="flex flex-col py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Cơ sở 2:</span>
+<span class="text-on-surface">199 – 201 Tôn Đức Thắng, P. Hòa Khánh (KS Thy Phương, đối diện cổng bến xe)</span>
+</div>
+<div class="flex flex-col py-1">
+<span class="text-secondary">Khung giờ nhận/trả xe:</span>
+<span class="text-primary-container font-label-md">06h00 – 20h00 hàng ngày (Không nhận xe ngoài giờ)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high/60 rounded-lg p-space-sm text-on-surface-variant font-body-sm text-body-sm flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">schedule</span>
+<span class=""><strong>Quy chuẩn ca thuê MotoRent:</strong> Ca sáng (06h00 – 20h00 trong ngày) tính tròn 01 ngày; Ca chiều (từ 14h00 hôm nay đến 12h00 trưa hôm sau) tính tròn 01 ngày thuê.</span>
+</div>
+</div>
+<!-- SECTION II: RENTAL VEHICLE SPECIFICATIONS -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">II. THÔNG TIN TÀI SẢN CHO THUÊ</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm bg-surface-container-low p-space-md rounded-xl">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Dòng xe</span>
+<span class="font-label-lg text-label-lg text-on-surface"><span th:text="${motorbike.name}">Air Blade 160 ABS</span></span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Màu sắc</span>
+<span class="font-label-lg text-label-lg text-on-surface">Đen Nhám Gold</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Biển số đăng ký</span>
+<span class="font-label-lg text-label-lg text-primary">43-D1 888.68</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Trị giá xe cam kết</span>
+<span class="font-label-lg text-label-lg text-on-surface">62.000.000 VNĐ</span>
+</div>
+</div>
+</div>
+<!-- SECTION III: REPRESENTATIVE PARTY B (RENTER DETAILS) -->
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">III. THÔNG TIN NGƯỜI THUÊ XE (BÊN B)</h3>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-1 rounded bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Đã quét AI thành công
+            </span>
+<button class="px-space-sm py-1 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm hover:bg-surface-variant transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">document_scanner</span> Quét lại CCCD
+            </button>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">1. Người thuê chính (Đại diện pháp lý)</span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md"><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Họ và tên người thứ 2 *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="TRẦN THỊ BÍCH NGỌC"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số điện thoại / Zalo *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="tel" value="0912 345 678"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số CCCD / Hộ chiếu *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="048198005678"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Ngày sinh *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="20/11/1997"></div><div class="flex flex-col gap-space-xs md:col-span-2"><label class="font-label-sm text-label-sm text-secondary">Nơi thường trú theo CCCD *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng"></div></div>
+</div>
+</div>
+<!-- SECTION IV: COLLATERAL SECURITY POLICY -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">IV. HÌNH THỨC BẢO ĐẢM HỢP ĐỒNG</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Option 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-highest/70 transition-all opacity-60">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">01 Bản CCCD gốc</span>
+<div class="w-5 h-5 rounded-full bg-surface-variant flex items-center justify-center"></div>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">Yêu cầu giữ 01 CCCD gốc kèm tiền cọc giữ xe 2.000.000 VNĐ đối với xe tay ga thể thao. Hoàn trả khi thanh lý HĐ.</p>
+</div>
+<!-- Option 2 (Selected) -->
+<div class="p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-xs cursor-pointer transition-all relative overflow-hidden shadow-lg">
+<div class="absolute top-0 right-0 px-space-sm py-0.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm rounded-bl-lg font-bold">
+              KHUYÊN DÙNG • MIỄN TIỀN CỌC
+            </div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-headline-sm text-headline-sm text-primary">02 Bản CCCD (Bảo lãnh chéo)</span>
+<div class="w-5 h-5 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Giữ 02 bản CCCD (Người thuê chính &amp; Người đồng hành). <strong>Tiền cọc = 0 VNĐ</strong> (Không cần đóng cọc tiền mặt).</p>
+</div>
+</div>
+<!-- Co-renter CCCD #2 Fields -->
+<div class="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">2. Người thứ hai / Người đồng thuê (Bảo lãnh)</span>
+<span class="text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> Đã xác minh CCCD #2
+            </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md"><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Họ và tên người thứ 2 *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="TRẦN THỊ BÍCH NGỌC"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số điện thoại / Zalo *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="tel" value="0912 345 678"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số CCCD / Hộ chiếu *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="048198005678"></div><div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Ngày sinh *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="20/11/1997"></div><div class="flex flex-col gap-space-xs md:col-span-2"><label class="font-label-sm text-label-sm text-secondary">Nơi thường trú theo CCCD *</label><input class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value="Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng"></div></div>
+</div>
+</div>
+<!-- SECTION V & VI: RENTAL DURATION, DELIVERY & RETURN -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">V. THỜI GIAN &amp; PHƯƠNG THỨC GIAO NHẬN XE</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Time Grid -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase">Khung thời gian lưu hành</span>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-highest">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Thời điểm nhận xe:</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold">14/09/2026 – 08:00 AM</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">flight_land</span>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-highest">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Thời điểm hoàn trả:</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold">17/09/2026 – 06:00 PM</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">flight_takeoff</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container rounded-lg">
+<span class="font-body-sm text-body-sm text-secondary">Tổng thời lượng tính toán:</span>
+<span class="font-label-lg text-label-lg text-tertiary font-bold">04 Ngày trọn vẹn</span>
+</div>
+</div>
+<!-- Delivery Destination Grid -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase">Địa điểm giao xe tận nơi</span>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-secondary">Tên Khách sạn / Sân bay / Điểm hẹn tại Đà Nẵng</label>
+<div class="relative">
+<input class="w-full h-11 pl-space-md pr-10 bg-surface-container-highest rounded-lg text-on-surface font-label-md outline-none focus:bg-surface-variant transition-colors" type="text" value="Khách sạn Mường Thanh Grand Đà Nẵng, 962 Ngô Quyền, Sơn Trà">
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-primary text-[20px]">pin_drop</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Phí giao xe (8.2km):</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold">+50.000 VNĐ</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Phí nhận lại xe:</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold">+50.000 VNĐ</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">✓ Nhân viên bàn giao xe có mặt trước 15 phút tại sảnh khách sạn.</span>
+</div>
+</div>
+</div>
+<!-- SECTION VII: LEGAL TERMS & VIOLATIONS (DOCUMENT TRANSCRIPTION) -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VII. ĐIỀU KHOẢN PHÁP LÝ &amp; NGHĨA VỤ CAM KẾT</h3>
+</div>
+<!-- 3 Quick Condition Pills -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">alarm</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Khung giờ trả</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">06h00 – 20h00</span>
+</div>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">more_time</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Phí trễ quá giờ</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">30.000đ / 1 giờ</span>
+</div>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">local_car_wash</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">Rửa bù nếu xe bẩn</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">20.000đ / xe</span>
+</div>
+</div>
+</div>
+<!-- Legal Details Accordion / Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-xs font-body-sm text-body-sm">
+<strong class="text-primary font-label-md">1. Trách nhiệm của Bên A (Chủ xe)</strong>
+<p class="text-secondary">Giao xe đúng giờ, máy móc hoạt động tốt, đầy đủ gương chiếu hậu và giấy tờ lưu hành. Hỗ trợ cứu hộ kỹ thuật hỏng hóc tận nơi trong phạm vi bán kính 10km.</p>
+<p class="text-secondary">Đổi xe tương đương ngay lập tức nếu xe phát sinh sự cố động cơ trong quá trình di chuyển hợp pháp.</p>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-xs font-body-sm text-body-sm">
+<strong class="text-primary font-label-md">2. Trách nhiệm của Bên B (Người thuê)</strong>
+<p class="text-secondary">Kiểm tra kỹ tình trạng xe (lốp xe, đèn còi, thắng phanh, xi nhan) trước khi nhận bàn giao. Bắt buộc có Giấy phép lái xe hợp lệ theo luật định.</p>
+<p class="text-secondary">Bên B chịu 100% trách nhiệm trước pháp luật nếu vi phạm luật giao thông đường bộ, nộp phạt phạt nguội từ hệ thống camera TP. Đà Nẵng.</p>
+</div>
+</div>
+<!-- Critical Violation Warning Box -->
+<div class="p-space-md rounded-xl bg-surface-container-highest text-on-surface flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center gap-space-xs text-primary-container font-headline-sm text-headline-sm">
+<span class="material-symbols-outlined">warning</span>
+<span class="">Điều khoản chế tài &amp; Xử lý vi phạm nghiêm ngặt:</span>
+</div>
+<ul class="list-disc pl-space-md flex flex-col gap-1 font-body-sm text-body-sm text-on-surface-variant">
+<li class="">Nghiêm cấm sử dụng phương tiện để vận chuyển hàng cấm, hàng lậu, chất ma túy hoặc phục vụ mục đích vi phạm pháp luật.</li>
+<li class="">Nghiêm cấm chuyển nhượng, giao xe cho người thứ ba hoặc đem xe đi cầm cố, thế chấp dưới mọi hình thức.</li>
+<li class="">Nếu hết hạn thuê xe quá <strong>01 ngày</strong> mà Bên B không liên hệ gia hạn hoặc cố tình ngắt liên lạc, Bên A sẽ chính thức trình báo cơ quan Công an thụ lý hành vi lạm dụng tín nhiệm chiếm đoạt tài sản.</li>
+</ul>
+</div>
+</div>
+<!-- SECTION VIII: PRICING BREAKDOWN & BOOKING DEPOSIT -->
+<div class="flex flex-col gap-space-md pt-space-md border-t border-surface-variant/40">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VIII. TỔNG KẾT CHI PHÍ &amp; THANH TOÁN ĐẶT CỌC GIỮ XE</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Fee Calculation Table (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary">Giá thuê xe (160.000đ × 4 ngày):</span>
+<span class="text-on-surface font-bold">640.000 VNĐ</span>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary">Phí giao và nhận&nbsp; xe tận nơi :</span>
+<span class="text-on-surface font-bold">100.000 VNĐ</span>
+</div>
+
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary">Tiền cọc bảo đảm tài sản:</span>
+<span class="text-tertiary font-bold">0 VNĐ (Áp dụng 02 CCCD)</span>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Tổng giá trị hợp đồng:</span>
+<span class="font-headline-sm text-headline-sm text-primary">740.000 VNĐ</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary">Số tiền còn lại thanh toán khi nhận xe:</span>
+<strong class="font-headline-sm text-headline-sm text-on-surface">320.000 VNĐ</strong>
+</div>
+</div>
+<!-- Deposit Action Highlight Box (5 cols) -->
+<div class="lg:col-span-5 bg-gradient-to-br from-primary-container/20 via-surface-container-high to-surface-container-high p-space-lg rounded-xl flex flex-col justify-between gap-space-md shadow-xl">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="">Thanh toán giữ xe ngay</span>
+</div>
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-primary-container leading-none">420.000 <span class="font-headline-sm text-headline-sm text-on-surface">VNĐ</span></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant pt-1">Gồm 50% tiền thuê xe (320.000đ) + Phí giao nhận tận nơi (100.000đ)</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input checked="" class="mt-1 w-4 h-4 rounded accent-primary-container" type="checkbox">
+<span class="font-body-sm text-body-sm text-secondary">Tôi đã đọc, hiểu rõ và hoàn toàn đồng ý với các điều khoản trong hợp đồng thuê xe điện tử này.</span>
+</label>
+<!-- Main CTA -->
+<button id="submitBookingBtn" onclick="submitBooking()" class="w-full h-14 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm shadow-xl hover:bg-primary transition-all flex items-center justify-center gap-space-sm group">
+<span class="">XÁC NHẬN &amp; THANH TOÁN 420.000đ</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER SECURITY & HOTLINE ASSISTANCE -->
+<div class="pt-space-md border-t border-surface-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-md text-secondary font-label-sm text-label-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[18px]">lock</span>
+<span class="">Bảo mật chuẩn VietQR &amp; SSL</span>
+</div>
+<span class="">•</span>
+<span class="">Chữ ký số hợp chuẩn Nghị định 52/2013/NĐ-CP</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="">Hỗ trợ gấp hợp đồng:</span>
+<a class="text-primary font-bold hover:underline" href="tel:0931981789">0931.981.789</a>
+<span class="">-</span>
+<a class="text-primary font-bold hover:underline" href="tel:0986780177">098.678.0177</a>
+</div>
+</div>
+</div>
+</div>
+</div></main>
+
+  <!-- Scripts for Rental Contract Phase 1 -->
+  <script th:inline="javascript">
+    function submitBooking() {
+        const motorbikeId = /*[[${motorbike.id}]]*/ 1;
+        
+        // Mock data for Phase 1 MVP
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const requestBody = {
+            motorbikeId: motorbikeId,
+            pickupDate: now.toISOString().slice(0, 19),
+            returnDate: tomorrow.toISOString().slice(0, 19),
+            pickupType: "STORE",
+            pickupAddress: "11 Nguyễn Văn Thoại",
+            note: "Booking from Mobile MVP UI"
+        };
+
+        const btn = document.getElementById('submitBookingBtn');
+        btn.innerHTML = 'ĐANG XỬ LÝ...';
+        btn.disabled = true;
+
+        fetch('/api/rental-orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 5. Nếu thành công, hiển thị thông báo rồi chuyển hướng
+            alert('Tạo đơn thuê thành công! Mã đơn: ' + data.orderCode);
+            window.location.href = '/customer/my-rentals';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Lỗi đặt xe: ' + (error.message || 'Vui lòng thử lại'));
+            btn.innerHTML = '<span class="">XÁC NHẬN & ĐẶT XE</span>';
+            btn.disabled = false;
+        });
+    }
+  </script>
+
+  <!-- Footer -->
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>

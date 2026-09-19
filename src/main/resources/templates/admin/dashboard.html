@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi" class="h-full">
+<head th:replace="~{fragments/head :: head(title='Admin Dashboard')}"></head>
+<body class="bg-surface text-on-surface font-sans antialiased">
+  
+  <div th:replace="~{fragments/admin-layout :: layout(activeNav='dashboard', content=~{::#mainContent})}">
+    <div id="mainContent" class="relative">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+      <div class="mb-6 flex flex-col sm:flex-row justify-between sm:items-end gap-4 relative z-10">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-1">
+            Tổng quan <span class="text-cyan-400">Hệ Thống</span>
+          </h1>
+          <div class="flex items-center gap-2 text-sm text-slate-400">
+            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+            <span>Hôm nay: <span th:text="${#calendars.format(#calendars.createNow(), 'dd/MM/yyyy')}">14/09/2024</span></span>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-4 py-2 rounded-xl transition-all shadow-md shadow-cyan-500/20 text-sm font-bold tracking-wide">
+            <span class="material-symbols-outlined text-[18px]">download</span> Xuất Báo Cáo
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 relative z-10">
+        <div class="relative bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-xl overflow-hidden group">
+           <div class="absolute -right-4 -top-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl group-hover:bg-cyan-500/20 transition-all pointer-events-none"></div>
+           <div class="relative z-10 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Doanh thu hôm nay</div>
+           <div class="relative z-10 text-2xl font-extrabold text-cyan-400 mb-2">[[${stats.revenueToday}]]đ</div>
+           <div class="relative z-10 text-[11px] text-emerald-400 font-semibold flex items-center gap-1 bg-emerald-400/10 px-2 py-0.5 rounded w-max border border-emerald-400/20">
+             <span class="material-symbols-outlined text-[14px]">trending_up</span> +12% so với hôm qua
+           </div>
+        </div>
+        
+        <div class="relative bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-xl overflow-hidden group">
+           <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/10 rounded-full blur-xl group-hover:bg-blue-500/20 transition-all pointer-events-none"></div>
+           <div class="relative z-10 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Đơn đang thuê</div>
+           <div class="relative z-10 text-2xl font-extrabold text-white mb-2">[[${stats.activeRentals}]]</div>
+           <div class="relative z-10 text-[11px] text-emerald-400 font-semibold flex items-center gap-1 bg-emerald-400/10 px-2 py-0.5 rounded w-max border border-emerald-400/20">
+             <span class="material-symbols-outlined text-[14px]">trending_up</span> +5% so với tuần trước
+           </div>
+        </div>
+
+        <div class="relative bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-xl overflow-hidden group">
+           <div class="absolute -right-4 -top-4 w-24 h-24 bg-violet-500/10 rounded-full blur-xl group-hover:bg-violet-500/20 transition-all pointer-events-none"></div>
+           <div class="relative z-10 flex justify-between items-end mb-1">
+             <div class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Tỷ lệ khai thác xe</div>
+             <div class="text-2xl font-extrabold text-white">[[${stats.utilizationRate}]]%</div>
+           </div>
+           <div class="relative z-10 w-full bg-slate-800/80 rounded-full h-2 mt-2 border border-slate-700 overflow-hidden">
+             <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-full rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]" th:style="'width: ' + ${stats.utilizationRate} + '%'"></div>
+           </div>
+        </div>
+
+        <div class="relative bg-slate-900/80 backdrop-blur-md p-5 rounded-2xl border border-slate-800 shadow-xl overflow-hidden group">
+           <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all pointer-events-none"></div>
+           <div class="relative z-10 text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Đánh giá trung bình</div>
+           <div class="relative z-10 text-2xl font-extrabold text-amber-400 mb-2 flex items-center gap-1">
+             [[${stats.avgRating}]] <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1">star</span>
+           </div>
+           <div class="relative z-10 text-[11px] text-slate-400 font-semibold flex items-center gap-1">
+             Dựa trên 342 lượt đánh giá
+           </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+        
+        <!-- Recent Rentals -->
+        <div class="bg-slate-900/80 backdrop-blur-md p-6 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-cyan-400">fiber_new</span>
+              Đơn hàng mới nhất
+            </h2>
+            <a th:href="@{/admin/rental-orders}" class="text-[13px] font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors">
+              Xem tất cả <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </a>
+          </div>
+          
+          <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+            <table class="w-full text-left whitespace-nowrap">
+              <tbody class="text-sm divide-y divide-slate-700/50">
+                <tr th:each="rental : ${recentRentals}" class="hover:bg-slate-800/40 transition-colors">
+                  <td class="py-3 px-4">
+                    <div class="font-semibold text-white mb-0.5">[[${rental.customerName}]]</div>
+                    <div class="font-mono text-[11px] font-bold text-cyan-500">[[${rental.orderCode}]]</div>
+                  </td>
+                  <td class="py-3 px-4 text-slate-400 text-xs font-medium">[[${rental.pickupDate}]]</td>
+                  <td class="py-3 px-4 text-right">
+                    <span th:class="'inline-flex px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ' + ${rental.statusBg} + ' ' + ${rental.statusColor}">
+                      [[${rental.statusLabel}]]
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Fleet Overview -->
+        <div class="bg-slate-900/80 backdrop-blur-md p-6 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span class="material-symbols-outlined text-blue-400">pie_chart</span>
+              Tình trạng đội xe
+            </h2>
+            <a th:href="@{/admin/motorbikes}" class="text-[13px] font-semibold text-blue-400 hover:text-blue-300 transition-colors">Quản lý xe</a>
+          </div>
+
+          <div class="space-y-3">
+             <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20"><span class="material-symbols-outlined">check_circle</span></div>
+                  <span class="text-sm font-semibold text-slate-200">Sẵn sàng cho thuê</span>
+                </div>
+                <span class="font-extrabold text-white text-lg">[[${stats.availableMotorbikes}]] <span class="text-xs text-slate-400 font-medium">xe</span></span>
+             </div>
+
+             <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/20"><span class="material-symbols-outlined">flight_takeoff</span></div>
+                  <span class="text-sm font-semibold text-slate-200">Đang cho thuê</span>
+                </div>
+                <span class="font-extrabold text-white text-lg">[[${stats.activeRentals}]] <span class="text-xs text-slate-400 font-medium">xe</span></span>
+             </div>
+
+             <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/20"><span class="material-symbols-outlined">build</span></div>
+                  <span class="text-sm font-semibold text-slate-200">Đang bảo trì</span>
+                </div>
+                <span class="font-extrabold text-white text-lg">[[${stats.maintenanceMotorbikes}]] <span class="text-xs text-slate-400 font-medium">xe</span></span>
+             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi" class="h-full">
+<head th:replace="~{fragments/head :: head(title='Chi tiết đơn thuê')}"></head>
+<body class="bg-surface text-on-surface font-sans antialiased selection:bg-primary-container selection:text-on-primary-container relative flex flex-col min-h-screen">
+  
+  <div th:replace="~{fragments/customer-header :: header(isHome=false, activeNav='my-rentals')}"></div>
+
+  <main class="pt-24 pb-20 flex-grow">
+    <div class="max-w-[1024px] mx-auto px-margin-sm md:px-margin">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm text-secondary mb-6">
+        <a th:href="@{/customer/my-rentals}" class="hover:text-white transition-colors">Đơn thuê của tôi</a>
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+        <span class="text-white font-medium">[[${rental.orderCode}]]</span>
+      </nav>
+
+      <div class="flex flex-col md:flex-row gap-6 items-start justify-between mb-8">
+        <div>
+          <h1 class="text-headline-md font-bold text-white mb-2 flex items-center gap-3">
+            Đơn thuê [[${rental.orderCode}]]
+            <span th:if="${rental.status == 'PENDING'}" class="px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-md border-yellow-500/50 text-yellow-500 bg-yellow-500/10">
+              Chờ xác nhận
+            </span>
+            <span th:if="${rental.status == 'CONFIRMED'}" class="px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-md border-blue-500/50 text-blue-400 bg-blue-500/10">
+              Đã xác nhận
+            </span>
+            <span th:if="${rental.status == 'HANDED_OVER'}" class="px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-md border-purple-500/50 text-purple-400 bg-purple-500/10">
+              Đang thuê
+            </span>
+            <span th:if="${rental.status == 'COMPLETED'}" class="px-2.5 py-1 rounded-full text-xs font-bold border backdrop-blur-md border-emerald-500/50 text-emerald-400 bg-emerald-500/10">
+              Đã hoàn thành
+            </span>
+          </h1>
+          <p class="text-sm text-secondary" th:text="'Tạo lúc ' + ${#temporals.format(rental.createdAt, 'HH:mm - dd/MM/yyyy')}">Tạo lúc...</p>
+        </div>
+        
+        <div class="flex gap-3">
+          <a th:if="${rental.status == 'PENDING'}" href="#" class="px-4 py-2.5 rounded-xl border border-error text-error hover:bg-error/10 text-sm font-bold transition-colors">
+            Hủy đơn
+          </a>
+          <a th:if="${rental.status == 'HANDED_OVER'}" th:href="@{/customer/rental-extension/{id}(id=${rental.id})}" class="px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-white text-sm font-bold transition-colors">
+            Yêu cầu gia hạn
+          </a>
+          <a th:if="${rental.status == 'COMPLETED'}" th:href="@{/customer/review/{id}(id=${rental.id})}" class="px-4 py-2.5 rounded-xl bg-primary-container text-on-primary hover:bg-inverse-primary text-sm font-bold transition-colors">
+            Đánh giá chuyến đi
+          </a>
+          <a th:href="@{/customer/payment/{id}(id=${rental.id})}" th:if="${rental.status == 'CONFIRMED'}" class="px-4 py-2.5 rounded-xl bg-primary-container text-on-primary hover:bg-inverse-primary text-sm font-bold transition-colors">
+            Thanh toán cọc
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Left Col -->
+        <div class="md:col-span-2 space-y-6">
+          <!-- Motorbike Info -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/5">
+            <h2 class="text-label-lg font-bold text-white mb-4">Thông tin xe</h2>
+            <div class="flex gap-5">
+              <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-surface-container-highest overflow-hidden shrink-0">
+                <img th:src="@{'/' + ${rental.motorbike.imagePrimary}}" class="w-full h-full object-cover opacity-80" alt="">
+              </div>
+              <div class="flex-grow">
+                <h3 class="font-bold text-white text-label-lg mb-1">[[${rental.motorbike.name}]]</h3>
+                <div class="text-sm text-secondary mb-3">Biển số: <span class="font-mono text-white bg-surface-container px-2 py-0.5 rounded">43F1-123.45</span></div>
+                <div class="grid grid-cols-2 gap-y-2 text-sm">
+                  <div><span class="text-secondary">Loại xe:</span> [[${rental.motorbike.category}]]</div>
+                  <div><span class="text-secondary">Đời xe:</span> 2024</div>
+                  <div><span class="text-secondary">Giá thuê:</span> <span class="text-primary font-medium">[[${rental.motorbike.pricePerDay}]]/ngày</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rental Details -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/5">
+            <h2 class="text-label-lg font-bold text-white mb-4">Lịch trình &amp; Giao nhận</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
+              <div class="hidden sm:block absolute left-1/2 top-4 bottom-4 w-px bg-white/5"></div>
+              
+              <div>
+                <div class="flex items-center gap-2 text-primary font-medium mb-3">
+                  <span class="material-symbols-outlined">flight_land</span> Nhận xe
+                </div>
+                <div class="space-y-3 text-sm">
+                  <div>
+                    <div class="text-secondary text-xs uppercase tracking-wider mb-0.5">Thời gian</div>
+                    <div class="font-medium text-white" th:text="${#temporals.format(rental.pickupDate, 'HH:mm - dd/MM/yyyy')}">Date</div>
+                  </div>
+                  <div>
+                    <div class="text-secondary text-xs uppercase tracking-wider mb-0.5">Địa điểm</div>
+                    <div class="font-medium text-white">[[${rental.pickupType}]]</div>
+                    <div class="text-xs text-secondary mt-0.5">15 Lê Lợi, Hải Châu, Đà Nẵng</div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center gap-2 text-emerald-400 font-medium mb-3">
+                  <span class="material-symbols-outlined">flight_takeoff</span> Trả xe
+                </div>
+                <div class="space-y-3 text-sm">
+                  <div>
+                    <div class="text-secondary text-xs uppercase tracking-wider mb-0.5">Thời gian</div>
+                    <div class="font-medium text-white" th:text="${#temporals.format(rental.returnDate, 'HH:mm - dd/MM/yyyy')}">Date</div>
+                  </div>
+                  <div>
+                    <div class="text-secondary text-xs uppercase tracking-wider mb-0.5">Địa điểm</div>
+                    <div class="font-medium text-white">Cửa hàng</div>
+                    <div class="text-xs text-secondary mt-0.5">15 Lê Lợi, Hải Châu, Đà Nẵng</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Col -->
+        <div class="md:col-span-1 space-y-6">
+          <!-- Summary -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/5">
+            <h2 class="text-label-lg font-bold text-white mb-4">Chi tiết thanh toán</h2>
+            <div class="space-y-3 text-sm mb-4 pb-4 border-b border-white/5">
+              <div class="flex justify-between">
+                <span class="text-secondary">Tiền thuê ([[${rental.days}]] ngày)</span>
+                <span th:text="${#numbers.formatDecimal(rental.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-secondary">Phí giao nhận</span>
+                <span>0đ</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-secondary">Mã giảm giá</span>
+                <span class="text-tertiary">0đ</span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between items-center mb-6">
+              <span class="font-bold text-white">Tổng cộng</span>
+              <span class="text-lg font-bold text-primary" th:text="${#numbers.formatDecimal(rental.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">0đ</span>
+            </div>
+
+            <div class="bg-surface-container p-4 rounded-xl space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-secondary">Đã cọc:</span>
+                <span class="text-white font-medium">300.000đ</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-secondary">Còn lại:</span>
+                <span class="text-error font-bold">600.000đ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer info snapshot -->
+          <div class="glass-panel p-6 rounded-3xl border border-white/5">
+             <h2 class="text-label-lg font-bold text-white mb-4">Thông tin đăng ký</h2>
+             <div class="space-y-3 text-sm">
+               <div><span class="text-secondary block text-xs">Người nhận:</span> [[${rental.customerName}]]</div>
+               <div><span class="text-secondary block text-xs">Điện thoại:</span> [[${rental.customer.phone}]]</div>
+               <div class="pt-3 border-t border-white/5 text-xs text-secondary">
+                 * Vui lòng mang theo CMND/CCCD và Bằng lái xe bản gốc khi nhận xe.
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>

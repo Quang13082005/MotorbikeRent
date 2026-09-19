@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{fragments/head :: head(title='Danh sách xe')}"></head>
+<body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+  <!-- Header -->
+  <div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div>
+
+<!-- Top Atmospheric Glowing Backdrops -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-primary-container/10 rounded-full blur-[140px] pointer-events-none"></div>
+<div class="absolute top-48 -right-40 w-96 h-96 bg-tertiary-container/10 rounded-full blur-[120px] pointer-events-none"></div>
+<!-- 1. Hero Intro Section -->
+<section class="relative max-w-[1280px] mx-auto px-margin-sm md:px-margin pt-32 pb-space-md flex flex-col items-center text-center">
+<div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high/90 text-primary font-label-sm text-label-sm tracking-wider uppercase shadow-sm">
+<span class="material-symbols-outlined text-label-lg" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="">Đội xe đa dạng • Bảo dưỡng định kỳ • Giao tận nơi</span>
+</div>
+<h1 class="mt-space-md font-display-lg text-headline-lg-mobile md:text-display-lg text-on-surface max-w-4xl tracking-tight">
+        Chọn Chiếc Xe Phù Hợp Với <span class="text-primary">Hành Trình Của Bạn</span>
+</h1>
+<p class="mt-space-sm font-body-lg text-body-md md:text-body-lg text-secondary max-w-2xl leading-relaxed">
+        Hơn 120+ xe ga, xe số và xe côn tay đời mới (2022 - 2024), trang bị 2 mũ bảo hiểm 3/4 cao cấp, giá cước niêm yết minh bạch và hỗ trợ sự cố 24/7 toàn TP. Đà Nẵng &amp; Hội An.
+      </p>
+</section>
+<!-- 2. Sticky/Floating Search & Discovery Dock -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-lg">
+<div class="rounded-2xl bg-surface-container/90 backdrop-blur-xl p-space-md shadow-2xl shadow-surface-container-lowest/80">
+<form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-sm items-end" id="fleetSearchForm" onsubmit="event.preventDefault(); applyFilterSearch();">
+<!-- Column 1: Pickup Date & Time -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-label-md">calendar_today</span>
+              Ngày &amp; giờ nhận xe
+            </label>
+<div class="relative flex items-center rounded-xl bg-surface-container-lowest/80 px-space-md py-3 focus-within:ring-2 focus-within:ring-primary-container transition-all">
+<input class="w-full bg-transparent font-label-lg text-label-lg text-on-surface focus:outline-none placeholder-secondary/50" id="pickupTime" type="text" value="08:00 AM • 25/10/2025">
+<span class="material-symbols-outlined text-secondary text-headline-sm pointer-events-none">edit_calendar</span>
+</div>
+</div>
+<!-- Column 2: Return Date & Time -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-label-md">schedule</span>
+              Ngày &amp; giờ trả xe
+            </label>
+<div class="relative flex items-center rounded-xl bg-surface-container-lowest/80 px-space-md py-3 focus-within:ring-2 focus-within:ring-primary-container transition-all">
+<input class="w-full bg-transparent font-label-lg text-label-lg text-on-surface focus:outline-none placeholder-secondary/50" id="returnTime" type="text" value="18:00 PM • 28/10/2025">
+<span class="material-symbols-outlined text-secondary text-headline-sm pointer-events-none">timelapse</span>
+</div>
+</div>
+<!-- Column 3: Pickup Location Dropdown -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-label-md">location_on</span>
+              Địa điểm nhận xe
+            </label>
+<div class="relative rounded-xl bg-surface-container-lowest/80 px-space-md py-3 focus-within:ring-2 focus-within:ring-primary-container transition-all">
+<select class="w-full bg-transparent font-label-lg text-label-lg text-on-surface focus:outline-none cursor-pointer appearance-none pr-6" id="pickupLocation"><option class="bg-surface-container-high text-on-surface" value="store" selected="">Nhận xe ngay tại cửa hàng (Miễn phí)</option><option class="bg-surface-container-high text-on-surface" value="delivery">Chọn vị trí giao xe qua Google Maps trong TP. Đà Nẵng (Có tính phí)</option></select>
+<span class="material-symbols-outlined text-secondary text-label-lg absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Column 4 & CTA: Category & Action Button -->
+<div class="lg:col-span-3 flex flex-col sm:flex-row lg:flex-col gap-2">
+<button class="w-full h-12 inline-flex items-center justify-center gap-space-xs rounded-xl bg-gradient-to-r from-primary-container to-inverse-primary hover:from-primary hover:to-primary-container text-on-primary font-label-lg text-label-lg shadow-[0_4px_16px_rgba(249,115,22,0.35)] hover:shadow-[0_6px_24px_rgba(249,115,22,0.55)] transition-all transform active:scale-[0.99] cursor-pointer" type="submit">
+<span class="material-symbols-outlined text-headline-sm">search</span>
+<span class="">Kiểm tra xe trống</span>
+</button>
+</div>
+</form>
+<!-- Dynamic Status Notification Bar -->
+<div class="mt-space-md pt-space-sm flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-high/40 rounded-xl px-space-md py-2.5">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-tertiary">
+<span class="material-symbols-outlined text-label-lg animate-pulse" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span id="searchNotification" class="">Đã kiểm tra: Tìm thấy 18 xe khả dụng trong khung giờ 25/10 - 28/10 tại&nbsp; bến&nbsp; xe trung tâm&nbsp; Đà Nẵng.</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-ping"></span>
+<span class="">Cập nhật trực tiếp thời gian thực</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Filter & Sort Bar Section -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-lg flex flex-col gap-space-md">
+<!-- Row 1: Vehicle Category Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1.5 scrollbar-none" id="categoryPillContainer">
+<button class="category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-primary-container text-on-primary shadow-[0_2px_10px_rgba(249,115,22,0.35)]" onclick="setCategoryFilter('all', this)" type="button">
+          Tất cả xe (24)
+        </button>
+<button class="category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface" onclick="setCategoryFilter('xe-ga', this)" type="button">
+          Xe ga tiện lợi (10)
+        </button>
+<button class="category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface" onclick="setCategoryFilter('xe-so', this)" type="button">
+          Xe số tiết kiệm (8)
+        </button>
+<button class="category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface" onclick="setCategoryFilter('xe-con-tay', this)" type="button">
+          Xe côn tay thể thao (6)
+        </button>
+</div>
+<!-- Row 2: Secondary Multi-Filter & Ordering Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-md rounded-xl bg-surface-container-low p-space-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-grow">
+<!-- Price Range Filter -->
+<div class="relative">
+<select class="h-10 pl-space-md pr-8 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none cursor-pointer appearance-none" id="priceFilter" onchange="filterVehicleCards()">
+<option value="all">Mức giá: Tất cả mức giá</option>
+<option value="under120">Dưới 120k / ngày</option>
+<option value="120to180">120k - 180k / ngày</option>
+<option value="above180">Trên 180k / ngày</option>
+</select>
+<span class="material-symbols-outlined text-secondary text-label-md absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+<!-- Engine Displacement Filter -->
+<div class="relative">
+<select class="h-10 pl-space-md pr-8 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none cursor-pointer appearance-none" id="engineFilter" onchange="filterVehicleCards()">
+<option value="all">Dung tích: Tất cả</option>
+<option value="110">110cc</option>
+<option value="125">125cc</option>
+<option value="150">150cc</option>
+<option value="160">160cc</option>
+</select>
+<span class="material-symbols-outlined text-secondary text-label-md absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+<!-- Availability Filter -->
+<div class="relative">
+<select class="h-10 pl-space-md pr-8 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface focus:ring-1 focus:ring-primary-container focus:outline-none cursor-pointer appearance-none" id="statusFilter" onchange="filterVehicleCards()">
+<option value="all">Trạng thái: Tất cả</option>
+<option value="available">Chỉ hiển thị xe còn sẵn</option>
+</select>
+<span class="material-symbols-outlined text-secondary text-label-md absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Sorting & Counter -->
+<div class="flex items-center gap-space-md ml-auto">
+<span class="font-body-sm text-body-sm text-secondary hidden sm:inline-block" id="displayCount">Hiển thị 8 / 24 dòng xe</span>
+<div class="relative">
+<select class="h-10 pl-space-md pr-8 rounded-lg bg-surface-container-high font-label-md text-label-md text-primary focus:ring-1 focus:ring-primary-container focus:outline-none cursor-pointer appearance-none" id="sortBy" onchange="sortVehicleCards()">
+<option value="popular">Sắp xếp: Phổ biến nhất</option>
+<option value="price-asc">Giá: Thấp → Cao</option>
+<option value="price-desc">Giá: Cao → Thấp</option>
+<option value="newest">Đời xe mới nhất</option>
+</select>
+<span class="material-symbols-outlined text-primary text-label-md absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">tune</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Rental Fleet Grid (8 Exemplary Motorbikes for Page 1) -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter" id="fleetCardsContainer">
+        <!-- Dynamic Thymeleaf Cards for Mobile First -->
+        <article class="fleet-card flex flex-col justify-between rounded-2xl bg-surface-container/90 backdrop-blur-md p-space-md transition-all duration-300 hover:shadow-[0_8px_30px_rgba(249,115,22,0.15)] group" th:each="m : ${motorbikes}" th:data-category="${m.category}" th:data-price="${m.pricePerDay}" data-status="available">
+          <div>
+            <!-- Top Badges -->
+            <div class="flex items-center justify-between gap-2 mb-space-sm">
+              <span class="font-label-sm text-label-sm px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface-variant font-semibold" th:text="${m.brand}">Honda</span>
+              <span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2.5 py-1 rounded-md bg-tertiary-container/20 text-tertiary" th:if="${m.status == 'AVAILABLE'}">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span> Sẵn sàng
+              </span>
+              <span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2.5 py-1 rounded-md bg-error-container/20 text-error" th:unless="${m.status == 'AVAILABLE'}">
+                <span class="w-1.5 h-1.5 rounded-full bg-error"></span> Đã Thuê
+              </span>
+            </div>
+            
+            <!-- Vehicle Media Slot -->
+            <div class="relative w-full h-44 rounded-xl bg-gradient-to-b from-surface-container-high/60 to-surface-container-lowest/90 overflow-hidden flex items-center justify-center p-space-sm mb-space-sm group-hover:scale-[1.02] transition-transform duration-300">
+              <img class="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]" th:src="${m.imagePrimary != null && !m.imagePrimary.isEmpty() ? m.imagePrimary : 'https://lh3.googleusercontent.com/aida-public/AB6AXuB2I_Fyb6xVk4in311RNoBCSK5l1A3BSnFwrfbda5XyVqbz0fs-Y8QdgwEYYCDUE3OJlWBKIFmGvXK-ZC9dfIC70fOs2FvJetwqeHgHxkK55lH_NFriRg1tJx3_-zg9lyfOIUAOc5CWOzZRhgqMD7mRJ0AwvwW2xpmZ1HizPXOWPFn9IGlhq7xHyY8ms4qM1d2lNIovnFq-2eN0PMnlHZrFbjGebWDwRyvnvLptFA2EbLvR7wP_gNCBnw'}">
+            </div>
+            
+            <!-- Title & ODO -->
+            <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors" th:text="${m.name}">Tên Xe</h3>
+            <p class="font-body-sm text-body-sm text-secondary mt-1 flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary text-label-sm">navigation</span>
+              Odo: <span th:text="${m.odoKm} + ' km'">0 km</span>
+            </p>
+            
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-2 gap-2 mt-space-sm pt-space-sm bg-surface-container-low/60 rounded-xl p-2.5">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-label-md">speed</span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Phân loại</span>
+                  <span class="font-label-md text-label-md text-on-surface" th:text="${m.category}">Category</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-label-md">star</span>
+                <div class="flex flex-col">
+                  <span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Đánh giá</span>
+                  <span class="font-label-md text-label-md text-on-surface" th:text="${m.rating} + ' (' + ${m.reviewCount} + ')'">5.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CTA -->
+          <div class="mt-space-md pt-space-md border-t border-surface-container-highest/50 flex items-end justify-between">
+            <div class="flex flex-col">
+              <span class="font-label-sm text-label-sm text-secondary">Giá thuê / ngày</span>
+              <div class="flex items-baseline gap-1 text-primary">
+                <span class="font-headline-md text-headline-md font-bold" th:text="${m.pricePerDay}">130,000</span>
+                <span class="font-label-sm text-label-sm">đ</span>
+              </div>
+            </div>
+            <a th:href="@{/customer/motorbike-detail/{id}(id=${m.id})}" class="px-space-md py-2.5 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-fixed transition-colors text-center inline-block">
+              Chi tiết
+            </a>
+          </div>
+        </article>
+</div>
+</section>
+<!-- 5. Modern Pagination Bar -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-xl flex flex-col items-center gap-space-sm">
+<nav aria-label="Pagination" class="flex items-center gap-2 bg-surface-container-low p-2 rounded-2xl shadow-md">
+<button class="flex items-center gap-1 px-3 py-2 rounded-xl bg-surface-container/50 text-secondary/40 cursor-not-allowed font-label-md text-label-md" disabled="" type="button">
+<span class="material-symbols-outlined text-label-md">chevron_left</span>
+<span class="">Trước</span>
+</button>
+<button class="w-10 h-10 rounded-xl bg-primary-container text-on-primary font-bold shadow-[0_2px_8px_rgba(249,115,22,0.4)] flex items-center justify-center font-label-md text-label-md" type="button">
+          1
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all flex items-center justify-center font-label-md text-label-md" type="button">
+          2
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all flex items-center justify-center font-label-md text-label-md" type="button">
+          3
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all hidden sm:flex items-center justify-center font-label-md text-label-md" type="button">
+          4
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all hidden sm:flex items-center justify-center font-label-md text-label-md" type="button">
+          5
+        </button>
+<button class="flex items-center gap-1 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-all font-label-md text-label-md cursor-pointer" type="button">
+<span class="">Sau</span>
+<span class="material-symbols-outlined text-label-md">chevron_right</span>
+</button>
+</nav>
+<p class="font-body-sm text-body-sm text-secondary">
+        Hiển thị trang 1 trên tổng số 3 trang (24 mẫu xe khả dụng)
+      </p>
+</section>
+<!-- 6. Value Props Banner Section -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full"><div class="w-full rounded-2xl bg-surface-container-low/80 backdrop-blur-md p-space-lg flex items-center gap-space-md hover:bg-surface-container transition-all border border-surface-container-high/40"><div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">local_shipping</span></div><div class="flex flex-col flex-grow"><h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-1">Giao Tận Nơi 100% Miễn Phí</h4><p class="font-body-sm text-body-sm text-secondary leading-relaxed">Nhận xe trực tiếp tại 199–201 Tôn Đức Thắng đối diện cổng chính trung tâm bến xe Đà Nẵng</p></div></div><div class="w-full rounded-2xl bg-surface-container-low/80 backdrop-blur-md p-space-lg flex items-center gap-space-md hover:bg-surface-container transition-all border border-surface-container-high/40"><div class="w-12 h-12 rounded-xl bg-tertiary-container/20 flex items-center justify-center flex-shrink-0 text-tertiary"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">published_with_changes</span></div><div class="flex flex-col flex-grow"><h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-1">Đổi Trả &amp; Hoàn Tiền 100%</h4><p class="font-body-sm text-body-sm text-secondary leading-relaxed">Nếu xe chạy không mượt mà hoặc khách hàng không ưu ý, kỹ thuật viên đổi ngay chiếc xe tương đương khác trong 30 phút.</p></div></div></div></section>
+</div>
+<!-- Micro-interaction Filter Logic Script -->
+<script>
+    let activeCategory = 'all';
+
+    function setCategoryFilter(category, buttonElement) {
+      activeCategory = category;
+
+      // Update pill classes
+      const container = document.getElementById('categoryPillContainer');
+      const pills = container.querySelectorAll('.category-pill');
+      pills.forEach(pill => {
+        pill.className = 'category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface';
+      });
+
+      buttonElement.className = 'category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-primary-container text-on-primary shadow-[0_2px_10px_rgba(249,115,22,0.35)]';
+
+      filterVehicleCards();
+    }
+
+    function filterVehicleCards() {
+      const priceVal = document.getElementById('priceFilter').value;
+      const engineVal = document.getElementById('engineFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+
+      const cards = document.querySelectorAll('.fleet-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cCategory = card.getAttribute('data-category');
+        const cPrice = parseInt(card.getAttribute('data-price') || '0', 10);
+        const cEngine = card.getAttribute('data-engine');
+        const cStatus = card.getAttribute('data-status');
+
+        let matchesCat = (activeCategory === 'all' || activeCategory === cCategory);
+        let matchesEngine = (engineVal === 'all' || engineVal === cEngine);
+        let matchesStatus = (statusVal === 'all' || (statusVal === 'available' && cStatus === 'available'));
+
+        let matchesPrice = true;
+        if (priceVal === 'under120') {
+          matchesPrice = cPrice < 120000;
+        } else if (priceVal === '120to180') {
+          matchesPrice = (cPrice >= 120000 && cPrice <= 180000);
+        } else if (priceVal === 'above180') {
+          matchesPrice = cPrice > 180000;
+        }
+
+        if (matchesCat && matchesEngine && matchesStatus && matchesPrice) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countDisplay = document.getElementById('displayCount');
+      if (countDisplay) {
+        countDisplay.textContent = `Hiển thị ${visibleCount} / 24 dòng xe`;
+      }
+    }
+
+    function sortVehicleCards() {
+      const sortBy = document.getElementById('sortBy').value;
+      const container = document.getElementById('fleetCardsContainer');
+      const cards = Array.from(container.querySelectorAll('.fleet-card'));
+
+      cards.sort((a, b) => {
+        const priceA = parseInt(a.getAttribute('data-price') || '0', 10);
+        const priceB = parseInt(b.getAttribute('data-price') || '0', 10);
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Mức hao</span>
+<span class="font-label-md text-label-md text-on-surface">2.0 L/100km</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-label-md">shield</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">An toàn</span>
+<span class="font-label-md text-label-md text-on-surface">Phanh ABS</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-label-md">key</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Tiện ích</span>
+<span class="font-label-md text-label-md text-on-surface">Smartkey FOB</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between gap-space-xs">
+<div>
+<span class="font-headline-sm text-headline-sm text-secondary line-through font-bold">220.000đ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block text-xs">Hết xe khung giờ này</span>
+</div>
+<a class="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl bg-surface-container-high text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-all" href="#">
+<span class="">Xem lịch trống</span>
+<span class="material-symbols-outlined text-label-md">calendar_month</span>
+</a>
+</div>
+</article>
+<!-- Card 8: Honda Winner X 150 ABS -->
+<article class="fleet-card flex flex-col justify-between rounded-2xl bg-surface-container/90 backdrop-blur-md p-space-md transition-all duration-300 hover:shadow-[0_8px_30px_rgba(249,115,22,0.15)] group" data-category="xe-con-tay" data-engine="150" data-price="180000" data-status="available" data-year="2023">
+<div>
+<div class="flex items-center justify-between gap-2 mb-space-sm">
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface-variant font-semibold">Xe Côn Tay Vượt Đèo</span>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2.5 py-1 rounded-md bg-tertiary-container/20 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span> Còn xe
+              </span>
+</div>
+<div class="relative w-full h-44 rounded-xl bg-gradient-to-b from-surface-container-high/60 to-surface-container-lowest/90 overflow-hidden flex items-center justify-center p-space-sm mb-space-sm group-hover:scale-[1.02] transition-transform duration-300">
+<img class="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]" data-alt="Honda Winner X 150 ABS aggressive sports underbone bike with race livery parked along the winding road of Son Tra Peninsula at sunset, dramatic backlighting with vivid orange rim lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALyGfHtT55Q-sAHhP4fzFVJ0CeOD2Dow5_W7W0yvkwOeOZ7BfRcPSp95Xp2jt3GN2yMTQCujqgHeHUIsCwD6IGSCYCCVvCZW2PEXv-kC0XDYnIQAiYvoPEjEsCeKHxsIw_vKc4MlHD4WTm2w3981unjiqW7qaE80bkygUZRHt4RmIjMdi0Ti20Zqga-KT9H2ektNkv7Qlnu_y6PIRtU4ji9TOlG99wywUQA9t5k-7IJT7OFVxf-ot-iA">
+<span class="absolute bottom-2 right-2 font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-lowest/80 text-on-surface-variant">Đời 2023</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Honda Winner X 150 ABS</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-label-sm">sports_score</span>
+              Động cơ DOHC mạnh mẽ leo dốc Sơn Trà
+            </p>
+<div class="grid grid-cols-2 gap-2 mt-space-sm pt-space-sm bg-surface-container-low/60 rounded-xl p-2.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-label-md">speed</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Động cơ</span>
+<span class="font-label-md text-label-md text-on-surface">150cc DOHC</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-label-md">local_gas_station</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Mức hao</span>
+<span class="font-label-md text-label-md text-on-surface">1.98 L/100km</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-label-md">tune</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">Hộp số</span>
+<span class="font-label-md text-label-md text-on-surface">Côn 6 số</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-label-md">shield</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant leading-none">An toàn</span>
+<span class="font-label-md text-label-md text-on-surface">Phanh ABS</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between gap-space-xs">
+<div>
+<span class="font-headline-sm text-headline-sm text-primary-container font-extrabold">180.000đ</span>
+<span class="font-body-sm text-body-sm text-secondary">/ngày</span>
+</div>
+<a class="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl bg-surface-container-high hover:bg-primary-container text-on-surface hover:text-on-primary font-label-md text-label-md transition-all" th:href="@{/customer/motorbike-detail/1}">
+<span class="">Xem chi tiết</span>
+<span class="material-symbols-outlined text-label-md">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- 5. Modern Pagination Bar -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-xl flex flex-col items-center gap-space-sm">
+<nav aria-label="Pagination" class="flex items-center gap-2 bg-surface-container-low p-2 rounded-2xl shadow-md">
+<button class="flex items-center gap-1 px-3 py-2 rounded-xl bg-surface-container/50 text-secondary/40 cursor-not-allowed font-label-md text-label-md" disabled="" type="button">
+<span class="material-symbols-outlined text-label-md">chevron_left</span>
+<span class="">Trước</span>
+</button>
+<button class="w-10 h-10 rounded-xl bg-primary-container text-on-primary font-bold shadow-[0_2px_8px_rgba(249,115,22,0.4)] flex items-center justify-center font-label-md text-label-md" type="button">
+          1
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all flex items-center justify-center font-label-md text-label-md" type="button">
+          2
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all flex items-center justify-center font-label-md text-label-md" type="button">
+          3
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all hidden sm:flex items-center justify-center font-label-md text-label-md" type="button">
+          4
+        </button>
+<button class="w-10 h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface transition-all hidden sm:flex items-center justify-center font-label-md text-label-md" type="button">
+          5
+        </button>
+<button class="flex items-center gap-1 px-3 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-all font-label-md text-label-md cursor-pointer" type="button">
+<span class="">Sau</span>
+<span class="material-symbols-outlined text-label-md">chevron_right</span>
+</button>
+</nav>
+<p class="font-body-sm text-body-sm text-secondary">
+        Hiển thị trang 1 trên tổng số 3 trang (24 mẫu xe khả dụng)
+      </p>
+</section>
+<!-- 6. Value Props Banner Section -->
+<section class="max-w-[1280px] mx-auto px-margin-sm md:px-margin w-full mb-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full"><div class="w-full rounded-2xl bg-surface-container-low/80 backdrop-blur-md p-space-lg flex items-center gap-space-md hover:bg-surface-container transition-all border border-surface-container-high/40"><div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">local_shipping</span></div><div class="flex flex-col flex-grow"><h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-1">Giao Tận Nơi 100% Miễn Phí</h4><p class="font-body-sm text-body-sm text-secondary leading-relaxed">Nhận xe trực tiếp tại 199–201 Tôn Đức Thắng đối diện cổng chính trung tâm bến xe Đà Nẵng</p></div></div><div class="w-full rounded-2xl bg-surface-container-low/80 backdrop-blur-md p-space-lg flex items-center gap-space-md hover:bg-surface-container transition-all border border-surface-container-high/40"><div class="w-12 h-12 rounded-xl bg-tertiary-container/20 flex items-center justify-center flex-shrink-0 text-tertiary"><span class="material-symbols-outlined text-headline-md" style="font-variation-settings: 'FILL' 1;">published_with_changes</span></div><div class="flex flex-col flex-grow"><h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-1">Đổi Trả &amp; Hoàn Tiền 100%</h4><p class="font-body-sm text-body-sm text-secondary leading-relaxed">Nếu xe chạy không mượt mà hoặc khách hàng không ưu ý, kỹ thuật viên đổi ngay chiếc xe tương đương khác trong 30 phút.</p></div></div></div></section>
+</div>
+<!-- Micro-interaction Filter Logic Script -->
+<script>
+    let activeCategory = 'all';
+
+    function setCategoryFilter(category, buttonElement) {
+      activeCategory = category;
+
+      // Update pill classes
+      const container = document.getElementById('categoryPillContainer');
+      const pills = container.querySelectorAll('.category-pill');
+      pills.forEach(pill => {
+        pill.className = 'category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-surface-container hover:bg-surface-container-high text-secondary hover:text-on-surface';
+      });
+
+      buttonElement.className = 'category-pill whitespace-nowrap px-space-lg py-2 rounded-full font-label-lg text-label-lg transition-all cursor-pointer bg-primary-container text-on-primary shadow-[0_2px_10px_rgba(249,115,22,0.35)]';
+
+      filterVehicleCards();
+    }
+
+    function filterVehicleCards() {
+      const priceVal = document.getElementById('priceFilter').value;
+      const engineVal = document.getElementById('engineFilter').value;
+      const statusVal = document.getElementById('statusFilter').value;
+
+      const cards = document.querySelectorAll('.fleet-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cCategory = card.getAttribute('data-category');
+        const cPrice = parseInt(card.getAttribute('data-price') || '0', 10);
+        const cEngine = card.getAttribute('data-engine');
+        const cStatus = card.getAttribute('data-status');
+
+        let matchesCat = (activeCategory === 'all' || activeCategory === cCategory);
+        let matchesEngine = (engineVal === 'all' || engineVal === cEngine);
+        let matchesStatus = (statusVal === 'all' || (statusVal === 'available' && cStatus === 'available'));
+
+        let matchesPrice = true;
+        if (priceVal === 'under120') {
+          matchesPrice = cPrice < 120000;
+        } else if (priceVal === '120to180') {
+          matchesPrice = (cPrice >= 120000 && cPrice <= 180000);
+        } else if (priceVal === 'above180') {
+          matchesPrice = cPrice > 180000;
+        }
+
+        if (matchesCat && matchesEngine && matchesStatus && matchesPrice) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countDisplay = document.getElementById('displayCount');
+      if (countDisplay) {
+        countDisplay.textContent = `Hiển thị ${visibleCount} / 24 dòng xe`;
+      }
+    }
+
+    function sortVehicleCards() {
+      const sortBy = document.getElementById('sortBy').value;
+      const container = document.getElementById('fleetCardsContainer');
+      const cards = Array.from(container.querySelectorAll('.fleet-card'));
+
+      cards.sort((a, b) => {
+        const priceA = parseInt(a.getAttribute('data-price') || '0', 10);
+        const priceB = parseInt(b.getAttribute('data-price') || '0', 10);
+        const yearA = parseInt(a.getAttribute('data-year') || '0', 10);
+        const yearB = parseInt(b.getAttribute('data-year') || '0', 10);
+
+        if (sortBy === 'price-asc') return priceA - priceB;
+        if (sortBy === 'price-desc') return priceB - priceA;
+        if (sortBy === 'newest') return yearB - yearA;
+        return 0; // default order
+      });
+
+      cards.forEach(card => container.appendChild(card));
+    }
+
+    function applyFilterSearch() {
+      const locationSelect = document.getElementById('pickupLocation');
+      const selectedLocationName = locationSelect.options[locationSelect.selectedIndex].text;
+      const pickupTime = document.getElementById('pickupTime').value;
+      const notif = document.getElementById('searchNotification');
+      
+      if (notif) {
+        notif.textContent = `Đã kiểm tra: Tìm thấy 18 xe sẵn sàng tại ${selectedLocationName} (${pickupTime}).`;
+      }
+
+      // Quick visual feedback on notification badge
+      notif.parentElement.classList.add('scale-[1.01]');
+      setTimeout(() => notif.parentElement.classList.remove('scale-[1.01]'), 200);
+    }
+  </script>
+</div>
+</main>
+
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>
+

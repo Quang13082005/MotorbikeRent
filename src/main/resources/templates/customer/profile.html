@@ -1,0 +1,589 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{fragments/head :: head(title='Hồ sơ cá nhân')}"></head>
+<body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+  <!-- Header -->
+  <div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div>
+
+<!-- Subtle Ambient Glow Orbs -->
+<div class="relative w-full max-w-[1280px] mx-auto px-margin-sm md:px-margin pb-space-xl">
+<div class="absolute top-12 left-1/4 w-96 h-96 bg-primary-container/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute top-96 right-10 w-80 h-80 bg-tertiary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Breadcrumbs Navigation -->
+
+<!-- Header Section -->
+<div class="py-space-md flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<div class="inline-flex items-center gap-2 px-space-sm py-1 rounded-full bg-surface-container-high/80 text-primary font-label-sm text-label-sm uppercase tracking-wider mb-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+          Trung tâm tài khoản khách hàng
+        </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Tài Khoản &amp; Hồ Sơ Khách Hàng</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+          Quản lý thông tin định danh, bảo mật tài khoản và xác thực giấy tờ thuê xe tại MotoRent Đà Nẵng
+        </p>
+</div>
+<!-- Quick Trust Indicators Banner Badge -->
+<div class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl bg-surface-container-low shadow-sm self-start md:self-auto">
+<span class="material-symbols-outlined text-tertiary text-[22px]">verified_user</span>
+<div class="flex flex-col text-left">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Hồ sơ cấp độ 2</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Đã xác minh eKYC 100%</span>
+</div>
+</div>
+</div>
+<!-- Main Grid Layout (Sidebar + Content) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mt-space-md">
+<!-- LEFT COLUMN: Account Navigation Sidebar (approx 300px on desktop -> 4 of 12 cols / 3.5 cols) -->
+<aside class="lg:col-span-4 xl:col-span-3 flex flex-col gap-space-md">
+<!-- Profile Mini Summary Card -->
+<div class="p-space-md rounded-2xl bg-surface-container-low shadow-xl relative overflow-hidden">
+<div class="absolute -right-8 -top-8 w-28 h-28 bg-primary-container/10 rounded-full blur-2xl"></div>
+<div class="flex flex-col items-center text-center relative z-10">
+<!-- Profile Avatar with warm amber luminescence ring -->
+<div class="relative group cursor-pointer mb-space-sm">
+<div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-primary-container via-primary to-surface-bright shadow-[0_0_24px_rgba(249,115,22,0.35)]">
+<img class="w-full h-full object-cover rounded-full" data-alt="A portrait of a cheerful young Vietnamese woman in her twenties with natural makeup and stylish soft waves, soft cinematic warm lighting, modern coastal Da Nang aesthetic, realistic photography high quality portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb9WyKYZJZnJCDvgkYtKovBliI7xf7QTvQzXDK1LCVtRAB-Zw6uPReXH9zrIzVomeTWLmHIWXDUI5zxuaQimzoBqMJPfqxXcyAGN0_uQWn4dHPHFE9b1YSdmuFUFBQ7htki9colaiXXIkRe1v_9LNwRsbzXOQVB-laKLqr1IfmNFoFBDRH3gCwm_u5dEqTwgJJnD6qNIsEQ235NX2iFfVEMAtjfd5Uj06Celnc1nbPRV-gr73Q-5cCzw">
+</div>
+<button aria-label="Đổi ảnh đại diện" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-md hover:scale-105 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+</button>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Trần Thị Bích Ngọc</h2>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-container/60 text-secondary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">workspace_premium</span>
+                Hội viên Bạc (Silver)
+              </span>
+</div>
+<!-- Stats Ribbon -->
+<div class="grid grid-cols-2 w-full gap-2 mt-space-md pt-space-md bg-surface-container-lowest/50 rounded-xl p-space-sm text-center">
+<div>
+<span class="font-headline-sm text-headline-sm text-primary font-bold block">03</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Chuyến hoàn tất</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-tertiary font-bold block">620</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Điểm MotoPoint</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Navigation Menu -->
+<div class="p-space-sm rounded-2xl bg-surface-container-low shadow-lg flex flex-col gap-1">
+<!-- Item 1: Active Profile -->
+<a class="flex items-center justify-between px-space-md py-space-sm rounded-xl bg-primary-container text-on-primary-container shadow-[0_4px_16px_rgba(249,115,22,0.35)] font-label-lg text-label-lg transition-all" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">badge</span>
+<span class="">Hồ sơ cá nhân</span>
+</div>
+<span class="material-symbols-outlined text-[18px]">arrow_forward_ios</span>
+</a>
+<!-- Item 2: Rental History -->
+<a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-lg text-label-lg transition-all group" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">history_edu</span>
+<span class="">Lịch sử thuê xe</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-secondary-fixed text-label-sm font-semibold">03 đơn</span>
+</a>
+<!-- Item 3: Security & Passwords -->
+<a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-lg text-label-lg transition-all group" href="#section-security">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">lock_person</span>
+<span class="">Đổi mật khẩu &amp; Bảo mật</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</a>
+<!-- Divider -->
+<div class="my-space-xs h-[1px] bg-surface-container-highest/60 mx-space-sm"></div>
+<!-- Item 4: Logout -->
+<button class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-error hover:bg-error-container/20 font-label-lg text-label-lg transition-all text-left w-full" type="button">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="">Đăng xuất tài khoản</span>
+</button>
+</div>
+<!-- 24/7 Quick Support Widget Card -->
+<div class="p-space-md rounded-2xl bg-surface-container-low shadow-lg relative overflow-hidden flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Cần hỗ trợ hồ sơ?</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Đội CSKH xử lý ngay trong 5 phút</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Bạn cần cập nhật gấp giấy tờ trước giờ nhận xe tại&nbsp; Đà Nẵng hoặc thay đổi địa chỉ giao nhận?
+          </p>
+<div class="flex flex-col gap-2 pt-space-xs">
+<a class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors" href="tel:0986780177">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="">Hotline: 098.678.0177</span>
+</a>
+
+</div>
+</div>
+</aside>
+<!-- RIGHT COLUMN: Detailed Functional Cards (8 of 12 cols / 9 cols) -->
+<main class="lg:col-span-8 xl:col-span-9 flex flex-col gap-space-lg">
+<!-- SECTION 1: Personal Information Card -->
+<section class="p-space-md md:p-space-lg rounded-2xl bg-surface-container-low shadow-xl flex flex-col gap-space-md relative overflow-hidden">
+<!-- Card Header & Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">contact_page</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Thông Tin Cá Nhân</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Thông tin cơ bản dùng để liên hệ và lập hợp đồng thuê xe điện tử giao tận nơi
+              </p>
+</div>
+<!-- Mode Toggles: Edit / Save Demo Interaction -->
+<div class="flex items-center gap-2 self-start sm:self-auto" id="action-btn-group">
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md shadow-sm transition-all" id="btn-edit-profile" onclick="toggleEditMode(true)" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">edit</span>
+<span class="">Chỉnh sửa hồ sơ</span>
+</button>
+<div class="hidden flex items-center gap-2" id="editing-actions">
+<button class="px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface-variant font-label-md text-label-md transition-colors" onclick="toggleEditMode(false)" type="button">
+                  Hủy
+                </button>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-xl bg-primary-container text-on-primary-container font-label-md text-label-md shadow-md hover:shadow-lg hover:scale-[1.02] transition-all" onclick="saveProfile()" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span class="">Lưu thay đổi</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Banner Notification Toast for saved info (JS triggered) -->
+<div class="hidden px-space-md py-space-sm rounded-xl bg-tertiary-container/30 text-tertiary flex items-center justify-between transition-all" id="save-toast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-label-md text-label-md">Đã cập nhật thông tin cá nhân thành công!</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('save-toast').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Avatar Uploader Banner -->
+<div class="p-space-md rounded-xl bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 shadow-md ring-2 ring-primary/40">
+<img class="w-full h-full object-cover" data-alt="Close up avatar shot of an elegant Vietnamese traveler girl with subtle smile against Da Nang coastal sunset, high definition modern photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWuA33V-4E87m-p_CupYwBl0klo_Wjj3J20-VZEl63q58hpbSY-jP80hcHW0AtXT-eMqyTAkLBcxOddUwEnUd1efRJgfCK9Khl6OyrVATH4nsa7r76CXVdtnuh2fpZzj0MZdrc3hNNFjYE4YjtJBbGAvzmz5OQQ9HY29AA-Bxfb-0MJNwMNDwdOC7Fdg3EC40LwiOZO3e-1uc6lg8LlJsft3Djz_Y17zIuzGzr1Ylow8CUF7rz434c3Q">
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Ảnh chân dung đại diện</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Định dạng JPG, PNG dung lượng không vượt quá 5MB. Ảnh rõ mặt giúp đối chiếu khi giao xe nhanh hơn.</span>
+</div>
+</div>
+<label class="cursor-pointer flex-shrink-0 flex items-center gap-2 px-space-md py-2 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[18px] text-primary">upload</span>
+<span class="">Tải ảnh mới</span>
+<input accept="image/*" class="hidden" onchange="alert('Hệ thống đã nhận ảnh mới và đang tối ưu hóa!')" type="file">
+</label>
+</div>
+<!-- Form Fields Grid (Modern 2-column) -->
+<form class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-xs" id="profile-form" onsubmit="event.preventDefault(); saveProfile();">
+<!-- Full Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="input-fullname">
+<span class="">Họ và tên</span>
+<span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-fullname" type="text" value="Trần Thị Bích Ngọc">
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">person</span>
+</div>
+</div>
+<!-- Phone Number with Verification Badge -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="input-phone">
+<span class="">Số điện thoại liên hệ</span>
+<span class="text-error">*</span>
+</label>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Đã xác thực Zalo / SMS
+                </span>
+</div>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-phone" type="tel" value="0912 345 678">
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">phone_iphone</span>
+</div>
+</div>
+<!-- Email with Verification Badge -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="input-email">
+<span class="">Địa chỉ email nhận hóa đơn</span>
+<span class="text-error">*</span>
+</label>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Đã liên kết
+                </span>
+</div>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-email" type="email" value="bichngoc.tran@gmail.com">
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">mail</span>
+</div>
+</div>
+<!-- Date of Birth & Gender Subgrid -->
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="input-dob">Ngày sinh</label>
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed text-center" disabled="" id="input-dob" type="text" value="20/11/1997">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="input-gender">Giới tính</label>
+<select class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-gender">
+<option selected="" value="female">Nữ</option>
+<option value="male">Nam</option>
+<option value="other">Khác</option>
+</select>
+</div>
+</div>
+<!-- Full Address (Full-width on 2 columns) -->
+<div class="md:col-span-2 flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="input-address">Địa chỉ thường trú / Lưu trú hiện tại</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-address" type="text" value="Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng">
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">location_on</span>
+</div>
+</div>
+<!-- Preferred Delivery Hotspot Note (Full-width on 2 columns) -->
+
+</form>
+</section>
+<!-- SECTION 2: Document Verification Card (eKYC / CCCD / GPLX) -->
+<section class="p-space-md md:p-space-lg rounded-2xl bg-surface-container-low shadow-xl flex flex-col gap-space-md relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[22px]">verified</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Thông Tin Giấy Tờ Định Danh</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Bảo vệ dữ liệu chuẩn eKYC theo Nghị định 13/2023/NĐ-CP về Bảo vệ dữ liệu cá nhân
+              </p>
+</div>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors self-start sm:self-auto" onclick="alert('Tính năng tải lại hồ sơ giấy tờ mới đang kết nối camera quét eKYC!')" type="button">
+<span class="material-symbols-outlined text-[18px]">cached</span>
+<span class="">Cập nhật lại khi gia hạn</span>
+</button>
+</div>
+<!-- Document Cards Grid (CCCD + GPLX) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- CCCD Masked Card -->
+<div class="p-space-md rounded-xl bg-surface-container relative overflow-hidden flex flex-col justify-between gap-space-md shadow-md">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">id_card</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Căn Cước Công Dân (CCCD)</h3>
+<span class="font-label-sm text-label-sm text-secondary">Số định danh công dân gắn chip</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container/25 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                  eKYC Hợp lệ
+                </span>
+</div>
+<!-- Masked Value Presentation -->
+<div class="py-2 px-space-md rounded-lg bg-surface-container-lowest/80 flex items-center justify-between font-headline-sm text-headline-sm tracking-widest text-primary-fixed">
+<div class="flex items-center gap-2">
+<span class="">0481</span>
+<span class="text-secondary text-sm tracking-normal">••••</span>
+<span class="">5678</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]" title="Đã mã hóa bảo mật">lock</span>
+</div>
+<div class="grid grid-cols-2 gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<div>
+<span class="block text-secondary font-label-sm text-label-sm">Ngày cấp:</span>
+<span class="text-on-surface font-semibold">15/06/2021</span>
+</div>
+<div>
+<span class="block text-secondary font-label-sm text-label-sm">Nơi cấp:</span>
+<span class="text-on-surface font-semibold truncate block" title="Cục Cảnh sát QLHC về TTXH">Cục Cảnh sát QLHC về TTXH</span>
+</div>
+</div>
+</div>
+<!-- GPLX Masked Card -->
+<div class="p-space-md rounded-xl bg-surface-container relative overflow-hidden flex flex-col justify-between gap-space-md shadow-md">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[24px]">two_wheeler</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Giấy Phép Lái Xe (GPLX)</h3>
+<span class="font-label-sm text-label-sm text-secondary">Hạng A1 / B2 tích hợp</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container/25 text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Hợp lệ lưu hành
+                </span>
+</div>
+<!-- Masked GPLX -->
+<div class="py-2 px-space-md rounded-lg bg-surface-container-lowest/80 flex items-center justify-between font-headline-sm text-headline-sm tracking-widest text-on-surface">
+<div class="flex items-center gap-2">
+<span class="">B2</span>
+<span class="text-secondary text-sm tracking-normal">••••</span>
+<span class="">9821</span>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">check_circle</span>
+</div>
+<div class="grid grid-cols-2 gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<div>
+<span class="block text-secondary font-label-sm text-label-sm">Thời hạn:</span>
+<span class="text-on-surface font-semibold">Không thời hạn (A1)</span>
+</div>
+<div>
+<span class="block text-secondary font-label-sm text-label-sm">Được phép lái:</span>
+<span class="text-on-surface font-semibold">Xe số, Tay ga &lt;175cc</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Deposit Privilege Highlight Box -->
+<div class="p-space-md rounded-xl bg-gradient-to-r from-tertiary-container/20 via-surface-container to-surface-container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary text-[24px] mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-tertiary font-bold">Chính sách ưu đãi cọc xe đang kích hoạt</span>
+<span class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+                  ✓ Bạn đủ điều kiện <strong class="text-tertiary">miễn 100% tiền cọc xe</strong> khi đối chiếu giấy tờ gốc tại điểm nhận xe hoặc có người thân đi cùng xuất trình CCCD thứ hai.
+                </span>
+</div>
+</div>
+<span class="px-space-sm py-1 rounded-lg bg-surface-container-high text-on-surface font-label-sm text-label-sm whitespace-nowrap self-end sm:self-auto">
+              Áp dụng toàn bộ dòng xe
+            </span>
+</div>
+<!-- Data Security & Encryption Guarantee Footer Note -->
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm pt-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">enhanced_encryption</span>
+<span class="">Dữ liệu được mã hóa chuẩn Quân sự AES-256 phục vụ hợp đồng thuê xe điện tử và cam kết không chia sẻ cho bên thứ ba.</span>
+</div>
+</section>
+<!-- SECTION 3: Account Security Card (Password & 2FA) -->
+<section class="p-space-md md:p-space-lg rounded-2xl bg-surface-container-low shadow-xl flex flex-col gap-space-lg relative overflow-hidden" id="section-security">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">security</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Bảo Mật Tài Khoản</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Bảo vệ thông tin cá nhân, lịch sử giao dịch và phương thức thanh toán an toàn
+            </p>
+</div>
+<!-- Sub-Section: Change Password Form -->
+<div class="p-space-md rounded-xl bg-surface-container flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-xs">
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface font-semibold">Đổi mật khẩu tài khoản</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lần đổi mật khẩu gần nhất: <strong class="text-on-surface">3 tháng trước</strong> (Nên đổi định kỳ sau mỗi chuyến đi xa)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-high px-2.5 py-1 rounded-lg self-start sm:self-auto">
+                Khuyến nghị: Tối thiểu 8 ký tự
+              </span>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-3 gap-space-md" onsubmit="event.preventDefault(); updatePasswordDemo();">
+<!-- Current Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="current-pwd">Mật khẩu hiện tại</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors" id="current-pwd" placeholder="••••••••••••" type="password">
+<button class="absolute right-3 top-2.5 text-secondary hover:text-on-surface" onclick="togglePasswordVisibility('current-pwd')" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- New Password with Strength Meter -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="new-pwd">Mật khẩu mới</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors" id="new-pwd" oninput="calculatePasswordStrength(this.value)" placeholder="Tối thiểu 8 ký tự" type="password">
+<button class="absolute right-3 top-2.5 text-secondary hover:text-on-surface" onclick="togglePasswordVisibility('new-pwd')" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<!-- Password Strength Visual Bar -->
+<div class="flex items-center gap-1 mt-1">
+<div class="h-1 flex-1 rounded-full bg-surface-container-highest transition-all" id="str-1"></div>
+<div class="h-1 flex-1 rounded-full bg-surface-container-highest transition-all" id="str-2"></div>
+<div class="h-1 flex-1 rounded-full bg-surface-container-highest transition-all" id="str-3"></div>
+<div class="h-1 flex-1 rounded-full bg-surface-container-highest transition-all" id="str-4"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="pwd-strength-label">Độ mạnh mật khẩu: Chưa nhập</span>
+</div>
+<!-- Confirm New Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="confirm-pwd">Xác nhận mật khẩu</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors" id="confirm-pwd" placeholder="Nhập lại mật khẩu mới" type="password">
+<button class="absolute right-3 top-2.5 text-secondary hover:text-on-surface" onclick="togglePasswordVisibility('confirm-pwd')" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Submit Password Button -->
+<div class="md:col-span-3 flex justify-end pt-space-xs">
+<button class="flex items-center gap-2 px-space-lg py-2.5 rounded-xl bg-primary-container text-on-primary-container font-label-lg text-label-lg shadow-md hover:shadow-lg hover:scale-[1.01] transition-all" type="submit">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+<span class="">Cập nhật mật khẩu</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Sub-Section: 2FA & Active Sessions -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Two-Factor Authentication (2FA) Toggle Block -->
+
+<!-- Active Login Sessions -->
+
+</div>
+</section>
+</main>
+</div>
+</div>
+</div>
+<!-- Inline JavaScript for Client-side Micro-interactions -->
+<script>
+  function toggleEditMode(isEditing) {
+    const inputs = document.querySelectorAll('#profile-form input, #profile-form select');
+    const editBtn = document.getElementById('btn-edit-profile');
+    const editingActions = document.getElementById('editing-actions');
+    
+    inputs.forEach(input => {
+      input.disabled = !isEditing;
+      if (isEditing) {
+        input.classList.add('bg-surface-container-high', 'text-white');
+      } else {
+        input.classList.remove('bg-surface-container-high', 'text-white');
+      }
+    });
+
+    if (isEditing) {
+      editBtn.classList.add('hidden');
+      editingActions.classList.remove('hidden');
+      document.getElementById('input-fullname').focus();
+    } else {
+      editBtn.classList.remove('hidden');
+      editingActions.classList.add('hidden');
+    }
+  }
+
+  function saveProfile() {
+    toggleEditMode(false);
+    const toast = document.getElementById('save-toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 4000);
+  }
+
+  function togglePasswordVisibility(fieldId) {
+    const field = document.getElementById(fieldId);
+    if (field.type === 'password') {
+      field.type = 'text';
+    } else {
+      field.type = 'password';
+    }
+  }
+
+  function calculatePasswordStrength(pwd) {
+    const s1 = document.getElementById('str-1');
+    const s2 = document.getElementById('str-2');
+    const s3 = document.getElementById('str-3');
+    const s4 = document.getElementById('str-4');
+    const lbl = document.getElementById('pwd-strength-label');
+
+    // Reset styles
+    [s1, s2, s3, s4].forEach(bar => {
+      bar.className = 'h-1 flex-1 rounded-full bg-surface-container-highest transition-all';
+    });
+
+    if (!pwd || pwd.length === 0) {
+      lbl.innerText = 'Độ mạnh mật khẩu: Chưa nhập';
+      lbl.className = 'font-label-sm text-label-sm text-on-surface-variant';
+      return;
+    }
+
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+
+    if (score === 1) {
+      s1.classList.add('bg-error');
+      lbl.innerText = 'Độ mạnh mật khẩu: Yếu (Cần thêm chữ hoa/số)';
+      lbl.className = 'font-label-sm text-label-sm text-error';
+    } else if (score === 2) {
+      s1.classList.add('bg-primary-container');
+      s2.classList.add('bg-primary-container');
+      lbl.innerText = 'Độ mạnh mật khẩu: Trung bình';
+      lbl.className = 'font-label-sm text-label-sm text-primary';
+    } else if (score >= 3) {
+      s1.classList.add('bg-tertiary');
+      s2.classList.add('bg-tertiary');
+      s3.classList.add('bg-tertiary');
+      if (score === 4) s4.classList.add('bg-tertiary');
+      lbl.innerText = 'Độ mạnh mật khẩu: Rất mạnh & An toàn';
+      lbl.className = 'font-label-sm text-label-sm text-tertiary';
+    }
+  }
+
+  function updatePasswordDemo() {
+    const newPwd = document.getElementById('new-pwd').value;
+    const confirmPwd = document.getElementById('confirm-pwd').value;
+
+    if (!newPwd) {
+      alert('Vui lòng nhập mật khẩu mới.');
+      return;
+    }
+    if (newPwd !== confirmPwd) {
+      alert('Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.');
+      return;
+    }
+
+    alert('Cập nhật mật khẩu bảo vệ tài khoản thành công!');
+    document.getElementById('current-pwd').value = '';
+    document.getElementById('new-pwd').value = '';
+    document.getElementById('confirm-pwd').value = '';
+    calculatePasswordStrength('');
+  }
+
+  function toggle2FA(btn) {
+    const isChecked = btn.getAttribute('aria-checked') === 'true';
+    btn.setAttribute('aria-checked', !isChecked);
+    const circle = btn.querySelector('span');
+
+    if (!isChecked) {
+      btn.className = 'w-12 h-6 rounded-full bg-tertiary-container relative transition-colors focus:outline-none';
+      circle.style.transform = 'translateX(0)';
+      alert('Đã kích hoạt xác thực 2 bước (2FA) bảo vệ tài khoản.');
+    } else {
+      btn.className = 'w-12 h-6 rounded-full bg-surface-container-highest relative transition-colors focus:outline-none';
+      circle.style.transform = 'translateX(-24px)';
+      alert('Cảnh báo: Bạn đã tạm tắt xác thực 2 bước.');
+    }
+  }
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface mt-space-xl"><div class="max-w-[1280px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-3 gap-gutter pb-space-xl"><div class="flex flex-col space-y-3"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center text-on-primary-container flex-shrink-0"><span class="material-symbols-outlined text-[18px]">two_wheeler</span></div><div class="flex items-baseline gap-1"><span class="font-bold text-headline-sm text-on-surface leading-none">MotoRent</span><span class="font-bold text-headline-sm text-primary-container leading-none">Đà Nẵng</span></div></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Dịch vụ cho thuê xe máy uy tín tại Đà Nẵng, giao nhận xe tận nơi miễn phí tại sân bay, nhà ga và toàn bộ khách sạn nội thành.<br>Đảm bảo trải nghiệm an tâm, chu đáo.</p><div class="flex items-center gap-2 pt-1 text-tertiary font-body-sm text-body-sm"><span class="material-symbols-outlined text-[18px]">verified_user</span><span class="">Đăng ký kinh doanh &amp; Bảo hiểm lưu hành 100%</span></div></div><div class="flex flex-col space-y-2"><h3 class="font-bold text-headline-sm text-primary-container tracking-wide uppercase">HỖ TRỢ &amp; HOTLINE KHẨN CẤP</h3><p class="font-body-sm text-body-sm text-on-surface-variant">Đội ngũ trực điện thoại và cứu hộ kỹ thuật 24/7</p><div class="text-headline-lg font-bold text-on-surface tracking-wide py-0.5">098.678.0177</div><div class="flex flex-col space-y-0.5 font-body-sm text-body-sm text-on-surface-variant"><div class="">Cứu hộ lưu động: 0905.888.234</div><div class="">Email: hotro@motorentdanang.vn</div></div></div><div class="flex flex-col space-y-3"><h3 class="font-bold text-headline-sm text-primary-container tracking-wide uppercase">CAM KẾT DỊCH VỤ</h3><ul class="space-y-2 font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span><span class="">Cứu hộ sự cố tận nơi trong 30 phút</span></li><li class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span><span class="">100% đổi xe mới ngay nếu không hài lòng</span></li><li class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-[20px] flex-shrink-0">check_circle</span><span class="">Trang bị 02 mũ bảo hiểm đạt chuẩn</span></li></ul></div></div><div class="pt-space-md border-t border-surface-container-highest/30 flex flex-col md:flex-row items-center justify-between gap-space-sm"><p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 MotoRent Đà Nẵng. Bản quyền được bảo lưu.</p><div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant"><a class="hover:text-on-surface transition-colors" href="#">Điều khoản thuê xe</a><a class="hover:text-on-surface transition-colors" href="#">Chính sách bảo mật</a><a class="hover:text-on-surface transition-colors" href="#">Quy chuẩn an toàn</a></div></div></div></footer>
+
+</body></html>
+
+
+  <!-- Footer -->
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi" class="h-full">
+<head th:replace="~{fragments/head :: head(title='Kết quả thanh toán')}"></head>
+<body class="bg-surface text-on-surface font-sans antialiased selection:bg-primary-container selection:text-on-primary-container relative flex flex-col min-h-screen">
+  
+  <div th:replace="~{fragments/customer-header :: header(isHome=false, activeNav='my-rentals')}"></div>
+
+  <main class="pt-24 pb-20 flex-grow flex items-center justify-center">
+    <div class="max-w-lg w-full mx-auto px-margin-sm">
+      
+      <!-- Success State -->
+      <div th:if="${status == 'success'}" class="glass-panel p-8 sm:p-10 rounded-3xl border border-emerald-500/20 shadow-[0_0_40px_rgba(16,185,129,0.15)] text-center relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mb-6 relative z-10">
+          <span class="material-symbols-outlined text-[40px]">check</span>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-white mb-2 relative z-10">Thanh toán thành công!</h1>
+        <p class="text-secondary mb-8 relative z-10">Cảm ơn bạn. Đơn đặt xe <b>[[${rental.orderCode}]]</b> của bạn đã được xác nhận thành công.</p>
+        
+        <div class="bg-surface-container-lowest/50 border border-white/5 rounded-2xl p-4 text-left mb-8 relative z-10 text-sm">
+          <div class="flex justify-between py-2 border-b border-white/5">
+            <span class="text-secondary">Số tiền thanh toán</span>
+            <span class="font-bold text-white">396.000đ</span>
+          </div>
+          <div class="flex justify-between py-2 border-b border-white/5">
+            <span class="text-secondary">Phương thức</span>
+            <span class="font-medium text-white">VNPAY</span>
+          </div>
+          <div class="flex justify-between py-2">
+            <span class="text-secondary">Mã giao dịch</span>
+            <span class="font-mono text-white">VNP123456789</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 relative z-10">
+          <a th:href="@{/customer/rental-detail/{id}(id=${rental.id})}" class="flex-1 py-3.5 rounded-xl font-bold bg-primary-container text-on-primary hover:bg-inverse-primary transition-all">
+            Xem chi tiết đơn
+          </a>
+          <a th:href="@{/customer/home}" class="flex-1 py-3.5 rounded-xl font-bold bg-surface-container text-white hover:bg-surface-container-high transition-colors">
+            Về trang chủ
+          </a>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div th:if="${status == 'error'}" class="glass-panel p-8 sm:p-10 rounded-3xl border border-error/20 shadow-[0_0_40px_rgba(244,63,94,0.15)] text-center relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-error to-red-600"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-error/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-error/20 text-error border border-error/30 mb-6 relative z-10">
+          <span class="material-symbols-outlined text-[40px]">close</span>
+        </div>
+        
+        <h1 class="text-2xl font-bold text-white mb-2 relative z-10">Thanh toán thất bại</h1>
+        <p class="text-secondary mb-8 relative z-10">Đã có lỗi xảy ra trong quá trình thanh toán hoặc giao dịch bị hủy.</p>
+        
+        <div class="flex flex-col sm:flex-row gap-3 relative z-10">
+          <a th:href="@{/customer/payment/{id}(id=${rental.id})}" class="flex-1 py-3.5 rounded-xl font-bold bg-error text-white hover:bg-red-600 transition-all shadow-glow-orange-sm">
+            Thử lại
+          </a>
+          <a th:href="@{/customer/home}" class="flex-1 py-3.5 rounded-xl font-bold bg-surface-container text-white hover:bg-surface-container-high transition-colors">
+            Về trang chủ
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>
