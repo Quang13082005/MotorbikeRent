@@ -1,0 +1,485 @@
+<div th:fragment="mapModal">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Map Dialog -->
+  <dialog id="mapModal" class="backdrop:bg-black/70 rounded-2xl shadow-2xl p-0 w-full max-w-4xl border border-surface-container-highest bg-surface overflow-hidden">
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-surface-container-highest flex justify-between items-center bg-surface-container-low/50">
+      <h2 class="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+        Chọn vị trí giao xe
+      </h2>
+      <button type="button" onclick="document.getElementById('mapModal').close()" class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-highest flex items-center justify-center text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    
+    <!-- Body -->
+    <div class="p-6 flex flex-col md:flex-row gap-6">
+      <div class="flex-grow flex flex-col gap-4">
+        <div class="relative" id="searchWrapper">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant z-[500]">search</span>
+          <input type="text" id="mapSearchInput" placeholder="Tìm địa điểm tại Đà Nẵng (VD: Sân bay, Cầu Rồng...)" class="w-full bg-surface-container-lowest border border-surface-container-highest rounded-xl pl-12 pr-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all text-on-surface" autocomplete="off">
+          <div id="searchSuggestions" style="display:none;position:absolute;top:100%;left:0;right:0;background:#1a1a2e;border:1px solid #333;border-radius:0 0 12px 12px;max-height:220px;overflow-y:auto;z-index:10000;"></div>
+        </div>
+        
+        <div class="relative rounded-xl overflow-hidden border border-surface-container-highest h-[350px] bg-surface-container-low">
+          <div id="mapContainer" class="w-full h-full" style="z-index:1;"></div>
+          
+          <button type="button" onclick="goToMyLocation()" class="absolute bottom-4 right-4 w-10 h-10 bg-surface rounded-full shadow-lg border border-surface-container flex items-center justify-center text-primary hover:bg-surface-container-low transition-colors" style="z-index:500;">
+            <span class="material-symbols-outlined">my_location</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="w-full md:w-64 flex-shrink-0 flex flex-col gap-4">
+        <div class="bg-surface-container-low p-4 rounded-xl border border-surface-container-highest">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined text-primary text-[20px]">info</span>
+            <span class="font-bold text-on-surface text-sm">Hướng dẫn</span>
+          </div>
+          <div class="text-xs text-on-surface-variant leading-relaxed space-y-1.5">
+            <p>1. Gõ địa chỉ vào ô tìm kiếm để tìm địa điểm.</p>
+            <p>2. Hoặc bấm trực tiếp vào bản đồ để chọn vị trí.</p>
+            <p>3. Kéo thả ghim đỏ để điều chỉnh chính xác.</p>
+            <p>4. Bấm <strong class="text-primary">Xác nhận chọn</strong> để hoàn tất.</p>
+          </div>
+        </div>
+        
+        <div class="flex flex-col gap-1">
+          <span class="text-sm font-bold text-on-surface">Vị trí đã chọn:</span>
+          <span id="selectedAddressDisplay" class="text-sm text-primary font-medium">Chưa chọn</span>
+          
+          <div id="deliveryFeeInfo" class="mt-2 p-3 bg-primary-container/20 rounded-xl border border-primary/20 hidden">
+              <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs text-on-surface-variant font-medium">Khoảng cách từ Cửa hàng:</span>
+                  <span id="distanceDisplay" class="text-sm font-bold text-on-surface">-- km</span>
+              </div>
+              <div class="flex justify-between items-center">
+                  <span class="text-xs text-on-surface-variant font-medium">Phí giao xe:</span>
+                  <span id="feeDisplay" class="text-lg font-black text-primary">-- VNĐ</span>
+              </div>
+          </div>
+    
+          <input type="hidden" id="selectedLat">
+          <input type="hidden" id="selectedLng">
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-4 border-t border-surface-container-highest flex justify-end gap-3 bg-surface-container-low/50">
+      <button type="button" onclick="document.getElementById('mapModal').close()" class="px-6 py-2.5 rounded-xl border border-surface-container-highest hover:bg-surface-container-highest text-on-surface font-bold transition-colors">Hủy</button>
+      <button type="button" onclick="confirmMapLocation()" class="px-6 py-2.5 rounded-xl bg-primary text-on-primary font-bold shadow-md hover:bg-orange-600 transition-colors">Xác nhận chọn</button>
+    </div>
+  </dialog>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script th:inline="javascript">
+      // ===== CẤU HÌNH =====
+      const MAP_SHOP = /*[[${shop}]]*/ {};
+      const STORE_LAT = MAP_SHOP.lat;
+      const STORE_LNG = MAP_SHOP.lng;
+      const DA_NANG_CENTER = [STORE_LAT, STORE_LNG];
+
+      let leafletMap = null;
+      let leafletMarker = null;
+      let mapReady = false;
+
+      // ===== DANH SÁCH ĐỊA ĐIỂM PHỔ BIẾN Ở ĐÀ NẴNG =====
+
+
+      // ===== MỞ MODAL =====
+      const locationSelect = document.getElementById('pickupLocation') || document.getElementById('pickup-location');
+
+      function openMapModal() {
+          const modal = document.getElementById('mapModal');
+          modal.showModal();
+          setTimeout(function() {
+              if (!mapReady) {
+                  initLeafletMap();
+                  // Pre-fill vị trí đã chọn trước đó (nếu có)
+                  setTimeout(function() {
+                      var prefilledLat = parseFloat(document.getElementById('prefilledLat')?.value);
+                      var prefilledLng = parseFloat(document.getElementById('prefilledLng')?.value);
+                      var prefilledAddr = document.getElementById('prefilledAddress')?.value;
+                      if (prefilledLat && prefilledLng && prefilledAddr) {
+                          selectLocation(prefilledLat, prefilledLng, prefilledAddr);
+                      }
+                  }, 500);
+              } else {
+                  leafletMap.invalidateSize();
+              }
+          }, 100);
+      }
+
+      if (locationSelect) {
+          // Khi thay đổi giá trị dropdown (trang home)
+          locationSelect.addEventListener('change', function() {
+              if (this.value === 'maps_delivery' || this.value === 'delivery') {
+                  openMapModal();
+              }
+          });
+
+
+      }
+
+      // ===== KHỞI TẠO BẢN ĐỒ LEAFLET =====
+      function initLeafletMap() {
+          leafletMap = L.map('mapContainer').setView(DA_NANG_CENTER, 13);
+
+          // Thêm layer bản đồ Google Maps (Giao diện chuẩn Google Maps, miễn phí, không yêu cầu API key)
+          L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+              attribution: '&copy; <a href="https://www.google.com/maps">Google Maps</a>',
+              maxZoom: 20
+          }).addTo(leafletMap);
+
+          // Đánh dấu vị trí cửa hàng
+          var storeIcon = L.divIcon({
+              html: '<div style="background:#22c55e;color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);">🏪</div>',
+              iconSize: [32, 32],
+              iconAnchor: [16, 16],
+              className: ''
+          });
+          L.marker([STORE_LAT, STORE_LNG], { icon: storeIcon })
+           .addTo(leafletMap)
+           .bindPopup('<strong>MotoRent Đà Nẵng</strong><br>199-201 Tôn Đức Thắng');
+
+          // Tạo marker đỏ cho vị trí khách chọn (kéo thả được)
+          var redIcon = L.divIcon({
+              html: '<div style="background:#ef4444;color:white;border-radius:50% 50% 50% 0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:20px;border:3px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.4);transform:rotate(-45deg);"><span style="transform:rotate(45deg);display:block;">📍</span></div>',
+              iconSize: [36, 36],
+              iconAnchor: [18, 36],
+              className: ''
+          });
+
+          leafletMarker = L.marker(DA_NANG_CENTER, {
+              icon: redIcon,
+              draggable: true
+          }).addTo(leafletMap);
+
+          // Khi kéo thả marker
+          leafletMarker.on('dragend', function() {
+              var pos = leafletMarker.getLatLng();
+              reverseGeocode(pos.lat, pos.lng);
+          });
+
+          // Khi click vào bản đồ
+          leafletMap.on('click', function(e) {
+              leafletMarker.setLatLng(e.latlng);
+              reverseGeocode(e.latlng.lat, e.latlng.lng);
+          });
+
+          // Khởi tạo giá trị mặc định
+          updateLocationDetails(DA_NANG_CENTER[0], DA_NANG_CENTER[1], "Trung tâm TP. Đà Nẵng");
+
+          // Thiết lập tìm kiếm
+          setupSearch();
+
+          mapReady = true;
+      }
+
+      // ===== TÌM KIẾM ĐỊA ĐIỂM (Nominatim - tìm mọi địa chỉ) =====
+      var searchTimeout = null;
+      function setupSearch() {
+          var input = document.getElementById('mapSearchInput');
+          var suggestBox = document.getElementById('searchSuggestions');
+
+          input.addEventListener('input', function() {
+              var query = this.value.trim();
+              if (query.length < 2) { suggestBox.style.display = 'none'; return; }
+
+              // Debounce: đợi người dùng ngừng gõ 400ms rồi mới tìm
+              clearTimeout(searchTimeout);
+              searchTimeout = setTimeout(async function() {
+                  // Tìm trong danh sách offline trước
+                  var offlineMatches=[];
+                  try{var response=await fetch('/api/travel-places/search?query='+encodeURIComponent(query));if(response.ok)offlineMatches=await response.json();}catch(e){console.warn('Không tải được gợi ý cửa hàng');}
+                  if(input.value.trim()!==query)return;
+                  if(offlineMatches.length){renderSearchResults([],offlineMatches,suggestBox,input);return;}
+
+                  // Tìm online qua Nominatim (OpenStreetMap - MIỄN PHÍ)
+                  var searchQuery = query + ', Đà Nẵng, Việt Nam';
+                  fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(searchQuery) + '&limit=5&accept-language=vi&countrycodes=vn&viewbox=107.9,16.2,108.4,15.8&bounded=1')
+                      .then(function(res) { 
+                          if (!res.ok) throw new Error("Nominatim failed");
+                          return res.json(); 
+                      })
+                      .then(function(onlineResults) {
+                          renderSearchResults(onlineResults, offlineMatches, suggestBox, input);
+                      })
+                      .catch(function(err) {
+                          console.warn("Nominatim failed, trying Photon API...", err);
+                          // Fallback sang Photon API (miễn phí, không bị block)
+                          fetch('https://photon.komoot.io/api/?q=' + encodeURIComponent(query + ' Đà Nẵng') + '&limit=5')
+                              .then(function(res) { return res.json(); })
+                              .then(function(data) {
+                                  var formattedResults = [];
+                                  if (data && data.features) {
+                                      for (var k = 0; k < data.features.length; k++) {
+                                          var f = data.features[k];
+                                          var props = f.properties;
+                                          var nameParts = [];
+                                          if (props.name) nameParts.push(props.name);
+                                          if (props.street) nameParts.push(props.street);
+                                          if (props.district || props.city) nameParts.push(props.district || props.city);
+                                          
+                                          formattedResults.push({
+                                              display_name: nameParts.join(', ') || "Vị trí không tên",
+                                              lat: f.geometry.coordinates[1],
+                                              lon: f.geometry.coordinates[0]
+                                          });
+                                      }
+                                  }
+                                  renderSearchResults(formattedResults, offlineMatches, suggestBox, input);
+                              })
+                              .catch(function() {
+                                  // Lỗi cả 2 API, hiện kết quả offline
+                                  renderSearchResults([], offlineMatches, suggestBox, input);
+                              });
+                      });
+              }, 400);
+          });
+
+          function renderSearchResults(onlineResults, offlineMatches, suggestBox, input) {
+              var html = '';
+              // Hiển thị kết quả offline trước
+              for (var i = 0; i < offlineMatches.length; i++) {
+                  html += buildSuggestionItem(offlineMatches[i].name, offlineMatches[i].lat, offlineMatches[i].lng, true);
+              }
+              // Hiển thị kết quả online
+              for (var j = 0; j < onlineResults.length; j++) {
+                  var r = onlineResults[j];
+                  var displayName = r.display_name.split(', ').slice(0, 3).join(', ');
+                  html += buildSuggestionItem(displayName, parseFloat(r.lat), parseFloat(r.lon), false);
+              }
+              if (html === '') {
+                  html = '<div style="padding:12px 16px;color:#999;font-size:13px;">Bấm trực tiếp vào bản đồ để chọn vị trí.</div>';
+              }
+              suggestBox.innerHTML = html;
+              suggestBox.style.display = 'block';
+              attachSuggestionEvents(suggestBox, input);
+          }
+
+          input.addEventListener('blur', function() {
+              setTimeout(function() { suggestBox.style.display = 'none'; }, 300);
+          });
+
+          input.addEventListener('focus', function() {
+              if (this.value.length >= 2) {
+                  this.dispatchEvent(new Event('input'));
+              }
+          });
+      }
+
+      function buildSuggestionItem(name, lat, lng, isPopular) {
+          if(!Number.isFinite(Number(lat)) || !Number.isFinite(Number(lng)))return '';
+          var escaped=String(name).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+          var icon = isPopular ? 'star' : 'location_on';
+          var color = isPopular ? '#facc15' : '#f97316';
+          return '<div class="map-suggest-item" data-lat="'+Number(lat)+'" data-lng="'+Number(lng)+'" data-name="'+escaped+'" style="padding:10px 16px;cursor:pointer;font-size:13px;color:#e0e0e0;border-bottom:1px solid #2a2a3e;display:flex;align-items:center;gap:8px;">'
+               + '<span class="material-symbols-outlined" style="font-size:16px;color:'+color+';flex-shrink:0;">'+icon+'</span>'
+               + '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+escaped+'</span></div>';
+      }
+
+      function attachSuggestionEvents(suggestBox, input) {
+          var items = suggestBox.querySelectorAll('.map-suggest-item');
+          for (var j = 0; j < items.length; j++) {
+              items[j].addEventListener('click', function() {
+                  var lat = parseFloat(this.getAttribute('data-lat'));
+                  var lng = parseFloat(this.getAttribute('data-lng'));
+                  var name = this.getAttribute('data-name');
+                  selectLocation(lat, lng, name);
+                  suggestBox.style.display = 'none';
+                  input.value = name;
+              });
+              items[j].addEventListener('mouseenter', function() { this.style.background = '#2a2a3e'; });
+              items[j].addEventListener('mouseleave', function() { this.style.background = 'transparent'; });
+          }
+      }
+
+      function selectLocation(lat, lng, name) {
+          leafletMarker.setLatLng([lat, lng]);
+          leafletMap.setView([lat, lng], 16);
+          updateLocationDetails(lat, lng, name);
+      }
+
+      // ===== REVERSE GEOCODE (Nominatim - OpenStreetMap, MIỄN PHÍ) =====
+      function reverseGeocode(lat, lng) {
+          // Hiển thị tọa độ tạm trong khi chờ kết quả
+          updateLocationDetails(lat, lng, "Đang tìm địa chỉ...");
+
+          // 1. Dùng Nominatim với email định danh để tránh bị block
+          fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&accept-language=vi')
+              .then(function(res) { 
+                  if (!res.ok) throw new Error("Nominatim failed");
+                  return res.json(); 
+              })
+              .then(function(data) {
+                  if (data && data.display_name) {
+                      var address = data.display_name;
+                      var parts = address.split(', ');
+                      if (parts.length > 4) {
+                          address = parts.slice(0, 4).join(', ');
+                      }
+                      updateLocationDetails(lat, lng, address);
+                  } else {
+                      throw new Error("No display_name");
+                  }
+              })
+              .catch(function(err) {
+                  console.warn("Nominatim failed, trying fallback...", err);
+                  // 2. Fallback sang BigDataCloud API (miễn phí, không giới hạn client-side)
+                  fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + lat + '&longitude=' + lng + '&localityLanguage=vi')
+                      .then(function(res) { return res.json(); })
+                      .then(function(data) {
+                          if (data && (data.locality || data.city)) {
+                              var addressParts = [];
+                              if (data.locality || data.city) addressParts.push(data.locality || data.city);
+                              if (data.principalSubdivision) addressParts.push(data.principalSubdivision);
+                              if (data.countryName) addressParts.push(data.countryName);
+                              var address = addressParts.join(', ');
+                              updateLocationDetails(lat, lng, address);
+                          } else {
+                              updateLocationDetails(lat, lng, "Vị trí: " + lat.toFixed(5) + ", " + lng.toFixed(5));
+                          }
+                      })
+                      .catch(function() {
+                          updateLocationDetails(lat, lng, "Vị trí: " + lat.toFixed(5) + ", " + lng.toFixed(5));
+                      });
+              });
+      }
+
+      // ===== VỊ TRÍ CỦA TÔI =====
+      function goToMyLocation() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(pos) {
+                  var lat = pos.coords.latitude;
+                  var lng = pos.coords.longitude;
+                  leafletMarker.setLatLng([lat, lng]);
+                  leafletMap.setView([lat, lng], 16);
+                  reverseGeocode(lat, lng);
+              }, function() {
+                  alert("Không thể lấy vị trí. Vui lòng cho phép truy cập vị trí trên trình duyệt.");
+              });
+          }
+      }
+
+      // ===== CẬP NHẬT VỊ TRÍ & TÍNH PHÍ =====
+      function updateLocationDetails(lat, lng, address) {
+          document.getElementById('selectedAddressDisplay').textContent = address;
+          document.getElementById('selectedLat').value = lat;
+          document.getElementById('selectedLng').value = lng;
+          calculateDeliveryFee(lat, lng);
+      }
+
+      function calculateDeliveryFee(destLat, destLng) {
+          // Haversine formula
+          var R = 6371;
+          var dLat = (destLat - STORE_LAT) * Math.PI / 180;
+          var dLng = (destLng - STORE_LNG) * Math.PI / 180;
+          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(STORE_LAT * Math.PI / 180) * Math.cos(destLat * Math.PI / 180) *
+                  Math.sin(dLng / 2) * Math.sin(dLng / 2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          var distanceKm = R * c; // x1.3 ước lượng đường thực tế
+
+          var fee = MAP_SHOP.deliveryBaseFee;
+          if (distanceKm > MAP_SHOP.deliveryBaseKm) {
+              fee += Math.ceil(distanceKm - MAP_SHOP.deliveryBaseKm) * MAP_SHOP.deliveryPerKm;
+          }
+
+          document.getElementById('distanceDisplay').textContent = distanceKm.toFixed(1) + ' km';
+          document.getElementById('feeDisplay').textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(fee);
+          document.getElementById('deliveryFeeInfo').classList.remove('hidden');
+          
+          // Lưu lại giá trị thô để trang hợp đồng có thể lấy tính toán
+          window.lastCalculatedFee = fee;
+          window.lastCalculatedDist = distanceKm.toFixed(1);
+      }
+
+      // ===== XÁC NHẬN CHỌN VỊ TRÍ =====
+      function confirmMapLocation() {
+          var addr = document.getElementById('selectedAddressDisplay').textContent;
+          var lat = document.getElementById('selectedLat').value;
+          var lng = document.getElementById('selectedLng').value;
+          var fee = document.getElementById('feeDisplay').textContent;
+          if (addr && addr !== 'Chưa chọn' && addr !== 'Đang tìm địa chỉ...') {
+              // --- HỖ TRỢ TRANG HỢP ĐỒNG (RENTAL CONTRACT) ---
+              if (window.currentMapTarget) {
+                  var targetInput = document.getElementById(window.currentMapTarget);
+                  if (targetInput) targetInput.value = addr;
+                  
+                  // Gọi callback global nếu có
+                  if (typeof onMapLocationConfirmed === 'function') {
+                      onMapLocationConfirmed(window.currentMapTarget, addr, lat, lng, window.lastCalculatedFee, window.lastCalculatedDist);
+                  }
+                  
+                  document.getElementById('mapModal').close();
+                  return;
+              }
+              // ----------------------------------------------
+              
+              var select = document.getElementById('pickupLocation') || document.getElementById('pickup-location');
+              if (select) {
+                  var opt = select.querySelector('option[value="maps_delivery"]') || select.querySelector('option[value="delivery"]');
+                  if (opt) {
+                      select.value = opt.value;
+                      var shortAddr = addr.length > 35 ? addr.substring(0, 35) + '...' : addr;
+                      opt.textContent = "Giao tại: " + shortAddr + " (Phí: " + fee + ")";
+                  }
+                  select.parentElement.classList.add('ring-2', 'ring-primary');
+                  setTimeout(function() { select.parentElement.classList.remove('ring-2', 'ring-primary'); }, 1000);
+              }
+
+              // Cập nhật hidden inputs để mở lại bản đồ vẫn nhớ vị trí cũ
+              var prefilledLatEl = document.getElementById('prefilledLat');
+              var prefilledLngEl = document.getElementById('prefilledLng');
+              var prefilledAddrEl = document.getElementById('prefilledAddress');
+              if (prefilledLatEl) prefilledLatEl.value = lat;
+              if (prefilledLngEl) prefilledLngEl.value = lng;
+              if (prefilledAddrEl) prefilledAddrEl.value = addr;
+
+              // Cập nhật ô hiển thị địa chỉ trên trang danh sách xe (nếu có)
+              var currentAddrText = document.getElementById('currentDeliveryAddressText');
+              if (currentAddrText) {
+                  var shortAddr2 = addr.length > 40 ? addr.substring(0, 40) + '...' : addr;
+                  currentAddrText.textContent = shortAddr2;
+                  // Flash hiệu ứng để báo đã cập nhật
+                  currentAddrText.style.color = 'var(--color-primary, #f97316)';
+                  setTimeout(function() { currentAddrText.style.color = ''; }, 1500);
+              }
+
+              // Cập nhật select (trường hợp trang chủ)
+              var select = document.getElementById('pickupLocation') || document.getElementById('pickup-location');
+              if (select) {
+                  var opt = select.querySelector('option[value="maps_delivery"]') || select.querySelector('option[value="delivery"]');
+                  if (opt) {
+                      select.value = opt.value;
+                      var shortAddr = addr.length > 35 ? addr.substring(0, 35) + '...' : addr;
+                      opt.textContent = "Giao tại: " + shortAddr + " (Phí: " + fee + ")";
+                  }
+                  select.parentElement.classList.add('ring-2', 'ring-primary');
+                  setTimeout(function() { select.parentElement.classList.remove('ring-2', 'ring-primary'); }, 1000);
+              }
+
+              // Cập nhật URL (không reload trang) để giữ thông tin khi F5
+              if (window.history && window.history.replaceState) {
+                  var url = new URL(window.location.href);
+                  url.searchParams.set('deliveryAddress', addr);
+                  url.searchParams.set('deliveryLat', lat);
+                  url.searchParams.set('deliveryLng', lng);
+                  url.searchParams.set('location', 'maps_delivery');
+                  window.history.replaceState({}, '', url.toString());
+              }
+
+              window.BookingContext?.save({location:'maps_delivery',deliveryAddress:addr,deliveryLat:String(lat),deliveryLng:String(lng),returnLocation:'maps_delivery',returnAddress:addr,returnLat:String(lat),returnLng:String(lng)});
+              document.getElementById('mapModal').close();
+          } else {
+              alert("Vui lòng chọn vị trí trên bản đồ trước khi xác nhận!");
+          }
+      }
+  </script>
+</div>

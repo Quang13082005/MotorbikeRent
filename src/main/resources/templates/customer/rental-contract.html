@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{fragments/head :: head(title='Hợp đồng thuê xe')}"></head>
+<body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+  <!-- Header -->
+  <div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div>
+
+<div class="w-full max-w-[1140px] mx-auto px-margin-sm md:px-margin py-space-lg flex flex-col gap-space-xl">
+<!-- TOP NAVIGATION & BREADCRUMB -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<a class="inline-flex items-center gap-space-xs text-primary font-label-lg text-label-lg hover:text-primary-fixed transition-colors" th:href="@{/customer/motorbike-detail/{id}(id=${motorbike.id})}">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="">Quay lại chi tiết xe</span>
+</a>
+<nav class="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm">
+<span class="">Trang chủ</span>
+<span class="text-secondary/40">/</span>
+<span class="">Xe cho thuê</span>
+<span class="text-secondary/40">/</span>
+<span class="text-on-surface" th:text="${motorbike.name}"></span>
+<span class="text-secondary/40">/</span>
+<span class="text-primary-container">Hợp đồng thuê xe điện tử</span>
+</nav>
+</div>
+<!-- Live Contract Status Tag -->
+<div class="flex items-center gap-space-sm bg-surface-container-high px-space-md py-space-xs rounded-full">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary-container animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Mã số: <strong class="text-primary font-bold">Mã được cấp khi bàn giao</strong></span>
+<span class="text-secondary/30">•</span>
+<span class="font-label-sm text-label-sm text-tertiary">Kiểm tra giấy tờ khi nhận xe</span>
+</div>
+</div>
+<!-- 4-STEP PROGRESS INDICATOR -->
+
+<!-- VEHICLE SUMMARY BANNER -->
+<div class="bg-surface-container-high rounded-2xl p-space-md md:p-space-lg shadow-xl relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-space-lg relative z-10">
+<div class="flex flex-col sm:flex-row items-center gap-space-lg w-full md:w-auto">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden bg-surface-container-lowest flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up studio shot of a modern matte black and gold Honda Air Blade 160 scooter, dramatic moody lighting with amber highlights, cinematic deep navy background" th:src="${display.image(motorbike.imagePrimary)}">
+<div class="absolute top-2 left-2 px-space-xs py-0.5 rounded-md bg-surface-container-lowest/80 backdrop-blur text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Còn xe
+            </div>
+</div>
+<div class="flex flex-col gap-space-xs text-center sm:text-left">
+<div class="flex flex-wrap items-center justify-center sm:justify-start gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-sm text-label-sm uppercase">Hợp đồng số hóa</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-sm text-label-sm"><span th:text="${motorbike.year}"></span></span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface" th:text="${motorbike.name}"></h1>
+<p class="font-body-sm text-body-sm text-secondary"><span th:text="${motorbike.highlights}"></span></p>
+<div class="flex items-center justify-center sm:justify-start gap-space-sm pt-1">
+<span class="font-headline-sm text-headline-sm text-primary-container" th:text="${display.money(motorbike.pricePerDay)}"></span>
+<span class="font-body-sm text-body-sm text-secondary">/ ngày thuê</span>
+</div>
+</div>
+</div>
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-space-sm border-t md:border-t-0 border-surface-variant/30 pt-space-md md:pt-0">
+<div class="flex flex-col text-left md:text-right">
+<span class="font-label-sm text-label-sm text-secondary">Chuẩn bị giao tại</span>
+<span class="font-label-lg text-label-lg text-on-surface"><span th:text="${shop.name}"></span></span>
+</div>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:underline" th:href="@{/customer/motorbike-detail/{id}(id=${motorbike.id})}">
+<span class="">Chi tiết thông số</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- MAIN LEGAL DOCUMENT CONTAINER -->
+<div class="bg-surface-container rounded-2xl p-space-md md:p-space-xl shadow-2xl flex flex-col gap-space-xl">
+<!-- NATIONAL HEADING & CONTRACT HEADER -->
+<div class="flex flex-col items-center text-center gap-space-xs pb-space-lg border-b border-surface-variant/40">
+<span class="font-label-lg text-label-lg font-bold uppercase tracking-widest text-on-surface">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+<span class="font-label-md text-label-md text-secondary tracking-wider">Độc lập – Tự do – Hạnh phúc</span>
+<div class="w-24 h-0.5 bg-primary-container/60 my-space-xs rounded-full"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-space-sm">HỢP ĐỒNG ĐIỆN TỬ CHO THUÊ XE MÁY</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Thông tin thuê xe và điều khoản của cửa hàng</span>
+</div>
+<!-- SECTION I: REPRESENTATIVE PARTY A -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-1.5 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">I. ĐẠI DIỆN BÊN A (BÊN CHO THUÊ XE)</h3>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm flex items-center gap-1.5 font-medium">
+<span class="material-symbols-outlined text-[16px]">store</span> Thông tin cửa hàng
+</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md bg-surface-container-low p-space-md md:p-space-lg rounded-xl">
+<div class="flex flex-col gap-space-xs font-body-sm text-body-sm">
+<div class="flex justify-between py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Đại diện chủ xe:</span>
+<strong class="text-on-surface font-label-lg font-bold" th:text="${shop.representative}"></strong>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-secondary">Hotline / Zalo:</span>
+<a class="text-primary-container font-bold hover:underline" th:href="${'tel:'+shop.phone}" th:text="${shop.phone}"></a>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs font-body-sm text-body-sm">
+<div class="flex flex-col py-1 border-b border-surface-variant/20">
+<span class="text-secondary">Địa chỉ cửa hàng:</span>
+<span class="text-on-surface" th:text="${shop.address}"></span>
+</div>
+
+<div class="flex flex-col py-1">
+<span class="text-secondary">Khung giờ nhận/trả xe:</span>
+<span class="text-primary-container font-label-md font-semibold" th:text="${shop.hours}"></span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high/60 rounded-lg p-space-sm text-on-surface-variant font-body-sm text-body-sm flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px] flex-shrink-0 mt-0.5">schedule</span>
+<span><strong class="text-on-surface">Cách tính thời gian thuê:</strong> Mỗi 24 giờ tính 01 ngày; phần thời gian lẻ làm tròn lên 01 ngày theo bảng giá bên dưới.</span>
+</div>
+</div>
+
+<!-- SECTION II: RENTAL VEHICLE SPECIFICATIONS -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-1.5 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">II. THÔNG TIN TÀI SẢN CHO THUÊ</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm bg-surface-container-low p-space-md md:p-space-lg rounded-xl">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Dòng xe</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold" th:text="${motorbike.name}">Yamaha Sirius Fi</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Màu sắc</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold" th:text="${motorbike.color ?: 'Tiêu chuẩn'}">Đen Nhám Gold</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Biển số đăng ký</span>
+<span class="font-label-lg text-label-lg text-primary-container font-bold" th:text="${motorbike.licensePlate}">43-D1 888.68</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary">Trị giá xe cam kết</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold" th:text="${motorbike.assetValue != null ? display.moneyVnd(motorbike.assetValue) : 'Chưa xác định'}">62.000.000 VNĐ</span>
+</div>
+</div>
+</div>
+
+<!-- SECTION III: REPRESENTATIVE PARTY B (RENTER DETAILS) -->
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">III. THÔNG TIN NGƯỜI THUÊ XE (BÊN B)</h3>
+</div>
+<div class="flex items-center gap-space-sm">
+<span id="p1_verify_badge" class="hidden px-space-sm py-1 rounded bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Thành công
+            </span>
+<span id="p1_error_badge" class="hidden px-space-sm py-1 rounded bg-error-container/20 text-error font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span> <span id="p1_error_text">Lỗi</span>
+            </span>
+<button id="p1_scan_btn" onclick="triggerScan(1)" class="px-space-lg py-2.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow hover:bg-primary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span> <span>Quét CCCD</span>
+            </button>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">1. Người thuê chính (Đại diện pháp lý)</span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Họ và tên *</label><input id="p1_name" th:value="${customer.lastName + ' ' + customer.firstName}" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" placeholder="Nhập họ và tên"></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số điện thoại / Zalo *</label><input id="p1_phone" th:value="${customer.phone}" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="tel" placeholder="Nhập số điện thoại"></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số CCCD / Hộ chiếu *</label><input id="p1_cccd" th:value="${customer.idCard}" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" placeholder="Nhập số CCCD"></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Ngày sinh *</label><input id="p1_dob" th:value="${customer.birthDate != null ? #temporals.format(customer.birthDate, 'dd/MM/yyyy') : ''}" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" placeholder="DD/MM/YYYY"></div>
+<div class="flex flex-col gap-space-xs md:col-span-2"><label class="font-label-sm text-label-sm text-secondary">Nơi thường trú theo CCCD *</label><input id="p1_address" th:value="${customer.address}" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" placeholder="Nhập địa chỉ thường trú"></div>
+</div>
+</div>
+</div>
+<!-- SECTION IV: COLLATERAL SECURITY POLICY -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">IV. HÌNH THỨC BẢO ĐẢM HỢP ĐỒNG</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Option 1 (Selected Default) -->
+<div id="option1Card" onclick="selectGuaranteeOption(1)" class="p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-xs cursor-pointer transition-all relative overflow-hidden shadow-lg border border-primary">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-primary">01 Bản CCCD gốc</span>
+<div id="option1Check" class="w-5 h-5 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Đối chiếu giấy tờ và tiền bảo đảm theo thông tin xe. Xem khoản bảo đảm trong bảng giá trước khi xác nhận.</p>
+</div>
+<!-- Option 2 -->
+<div id="option2Card" onclick="selectGuaranteeOption(2)" class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-highest/70 transition-all opacity-60">
+<div class="absolute top-0 right-0 px-space-sm py-0.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm rounded-bl-lg font-bold">
+              PHƯƠNG ÁN CÓ NGƯỜI ĐỒNG THUÊ
+            </div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">02 Bản CCCD (Bảo lãnh chéo)</span>
+<div id="option2Check" class="w-5 h-5 rounded-full bg-surface-variant flex items-center justify-center"></div>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">Khai báo người thuê chính và người đồng hành. Khoản bảo đảm tài sản và khoản thanh toán giữ xe được hiển thị riêng trong bảng giá.</p>
+</div>
+</div>
+<!-- Co-renter CCCD #2 Fields (Hidden by default) -->
+<div id="coRenterForm" style="display: none;" class="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">2. Người thứ hai / Người đồng thuê (Bảo lãnh)</span>
+<div class="flex items-center gap-space-sm">
+<span id="p2_verify_badge" class="hidden px-space-sm py-1 rounded bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Thành công
+</span>
+<span id="p2_error_badge" class="hidden px-space-sm py-1 rounded bg-error-container/20 text-error font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span> <span id="p2_error_text">Lỗi</span>
+</span>
+<button id="p2_scan_btn" onclick="triggerScan(2)" class="px-space-lg py-2.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow hover:bg-primary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">document_scanner</span> <span>Quét CCCD #2</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Họ và tên người thứ 2 *</label><input id="p2_name" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value=""></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số điện thoại / Zalo *</label><input id="p2_phone" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="tel" value=""></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Số CCCD / Hộ chiếu *</label><input id="p2_cccd" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value=""></div>
+<div class="flex flex-col gap-space-xs"><label class="font-label-sm text-label-sm text-secondary">Ngày sinh *</label><input id="p2_dob" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value=""></div>
+<div class="flex flex-col gap-space-xs md:col-span-2"><label class="font-label-sm text-label-sm text-secondary">Nơi thường trú theo CCCD *</label><input id="p2_address" class="w-full h-11 px-space-md bg-surface-container-highest rounded-lg text-on-surface font-label-lg outline-none focus:bg-surface-variant transition-colors" type="text" value=""></div>
+</div>
+<!-- Hidden File Input for Scanner -->
+<input type="file" id="cccdScannerInput" accept="image/*" class="hidden" onchange="handleScanImage(event)" />
+</div>
+</div>
+<!-- SECTION V & VI: RENTAL DURATION, DELIVERY & RETURN -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">V. THỜI GIAN &amp; PHƯƠNG THỨC GIAO NHẬN XE</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Time Grid -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase">Khung thời gian lưu hành</span>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-highest">
+<div class="flex flex-col w-full pr-4">
+<span class="font-label-sm text-label-sm text-secondary">Thời điểm nhận xe:</span>
+<input type="datetime-local" id="pickupTimeInput" onchange="calculateDurationAndPrice()" class="w-full bg-transparent border-none outline-none font-label-lg text-label-lg text-on-surface font-bold p-0 focus:ring-0 mt-1 cursor-pointer">
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">flight_land</span>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-highest">
+<div class="flex flex-col w-full pr-4">
+<span class="font-label-sm text-label-sm text-secondary">Thời điểm hoàn trả:</span>
+<input type="datetime-local" id="returnTimeInput" onchange="calculateDurationAndPrice()" class="w-full bg-transparent border-none outline-none font-label-lg text-label-lg text-on-surface font-bold p-0 focus:ring-0 mt-1 cursor-pointer">
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">flight_takeoff</span>
+</div>
+<span id="timeErrorMsg" class="hidden text-error font-label-sm text-label-sm mt-[-4px]">Thời điểm trả xe phải sau thời điểm nhận xe!</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container rounded-lg">
+<span class="font-body-sm text-body-sm text-secondary">Tổng thời lượng tính toán:</span>
+<span id="durationDisplay" class="font-label-lg text-label-lg text-tertiary font-bold">-- Ngày</span>
+</div>
+</div>
+<!-- Delivery Destination Grid -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-md">
+<span class="font-label-md text-label-md text-primary uppercase">Địa điểm giao và nhận xe tận nơi</span>
+<div class="flex flex-col gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-secondary">Vị trí GIAO xe (Nhận xe ban đầu)</label>
+<div class="relative cursor-pointer">
+<select id="pickupLocationSelect" class="w-full h-11 pl-space-md pr-12 bg-surface-container-highest rounded-lg text-on-surface font-label-md outline-none focus:bg-surface-variant transition-colors cursor-pointer appearance-none" onchange="handleContractLocationSelect('pickup')">
+  <option value="store">Nhận xe ngay tại cửa hàng (Miễn phí)</option>
+  <option value="maps_delivery" id="pickupMapOption">Chọn vị trí giao xe trên bản đồ (Tính phí)</option>
+</select>
+<button type="button" class="absolute right-2 top-1.5 p-1 rounded flex items-center justify-center text-primary pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+<input type="hidden" id="pickupAddressInput" value="Nhận tại cửa hàng" />
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-secondary">Vị trí TRẢ xe (Thu hồi xe lúc về)</label>
+<div class="relative cursor-pointer">
+<select id="returnLocationSelect" class="w-full h-11 pl-space-md pr-12 bg-surface-container-highest rounded-lg text-on-surface font-label-md outline-none focus:bg-surface-variant transition-colors cursor-pointer appearance-none" onchange="handleContractLocationSelect('return')">
+  <option value="store">Trả xe ngay tại cửa hàng (Miễn phí)</option>
+  <option value="maps_delivery" id="returnMapOption">Chọn vị trí trả xe trên bản đồ (Tính phí)</option>
+</select>
+<button type="button" class="absolute right-2 top-1.5 p-1 rounded flex items-center justify-center text-primary pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+<input type="hidden" id="returnAddressInput" value="Nhận tại cửa hàng" />
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm mt-1">
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary" id="pickupDistLabel">Phí giao xe (0km):</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold" id="pickupFeeDisplay">+0 VNĐ</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary" id="returnDistLabel">Phí nhận lại xe (0km):</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold" id="returnFeeDisplay">+0 VNĐ</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">✓ Hỗ trợ thay đổi địa điểm linh hoạt theo lộ trình của bạn.</span>
+</div>
+</div>
+</div>
+<!-- SECTION VII: LEGAL TERMS & VIOLATIONS (DOCUMENT TRANSCRIPTION) -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VI. ĐIỀU KHOẢN PHÁP LÝ &amp; NGHĨA VỤ CAM KẾT</h3>
+</div>
+<p class="text-secondary" style="white-space:pre-wrap" th:if="${!#strings.isEmpty(shop.terms)}" th:text="${shop.terms}"></p>
+<p class="text-secondary" th:if="${#strings.isEmpty(shop.terms)}">Cửa hàng chưa cập nhật điều khoản thuê xe. Vui lòng liên hệ cửa hàng trước khi xác nhận.</p>
+</div>
+<!-- SECTION VIII: PRICING BREAKDOWN & BOOKING DEPOSIT -->
+<div class="flex flex-col gap-space-md pt-space-md border-t border-surface-variant/40">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-6 rounded-full bg-primary-container"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VII. TỔNG KẾT CHI PHÍ &amp; THANH TOÁN ĐẶT CỌC GIỮ XE</h3>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Fee Calculation Table (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary" id="sumRentalLabel" th:text="'Giá thuê xe (' + ${#numbers.formatDecimal(motorbike.pricePerDay, 0, 'POINT', 0, 'COMMA')} + 'đ × 0 ngày):'">Giá thuê xe (160.000đ × 0 ngày):</span>
+<span class="text-on-surface font-bold" id="sumRentalCost">0 VNĐ</span>
+</div>
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary">Phí giao và nhận xe tận nơi :</span>
+<span class="text-on-surface font-bold" id="sumDeliveryCost">0 VNĐ</span>
+</div>
+
+<div class="flex items-center justify-between py-2 border-b border-surface-variant/20">
+<span class="text-secondary">Tiền cọc bảo đảm tài sản:</span>
+<span class="text-tertiary font-bold" id="sumSecurityDeposit">Đang tính theo phương án đã chọn…</span>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Tổng giá trị hợp đồng:</span>
+<span class="font-headline-sm text-headline-sm text-primary" id="sumTotalCost">0 VNĐ</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-highest flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary">Số tiền còn lại thanh toán khi nhận xe:</span>
+<strong class="font-headline-sm text-headline-sm text-on-surface" id="sumRemainingCost">0 VNĐ</strong>
+</div>
+</div>
+<!-- Deposit Action Highlight Box (5 cols) -->
+<div class="lg:col-span-5 bg-gradient-to-br from-primary-container/20 via-surface-container-high to-surface-container-high p-space-lg rounded-xl flex flex-col justify-between gap-space-md shadow-xl">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="">Thanh toán giữ xe ngay</span>
+</div>
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-primary-container leading-none" id="sumDepositAmount">0 <span class="font-headline-sm text-headline-sm text-on-surface">VNĐ</span></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant pt-1" id="sumDepositDesc">Khoản giữ xe và phí giao nhận được tính theo cấu hình cửa hàng.</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="flex items-start gap-space-sm cursor-pointer select-none">
+<input id="termsAccepted" class="mt-1 w-4 h-4 rounded accent-primary-container" type="checkbox">
+<span class="font-body-sm text-body-sm text-secondary">Tôi đã đọc, hiểu rõ và hoàn toàn đồng ý với các điều khoản trong hợp đồng thuê xe điện tử này.</span>
+</label>
+<!-- Main CTA -->
+<button id="submitBookingBtn" onclick="submitBooking()" class="w-full h-14 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm shadow-xl hover:bg-primary transition-all flex items-center justify-center gap-space-sm group">
+<span id="btnSubmitText">XÁC NHẬN &amp; THANH TOÁN</span>
+<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- FOOTER SECURITY & HOTLINE ASSISTANCE -->
+<div class="pt-space-md border-t border-surface-variant/30 flex flex-col sm:flex-row items-center justify-between gap-space-md text-secondary font-label-sm text-label-sm">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[18px]">lock</span>
+<span class="">Thanh toán qua PayOS</span>
+</div>
+<span class="">•</span>
+<span class="">Xác nhận điều khoản khi đặt xe</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="">Hỗ trợ gấp hợp đồng:</span>
+<a class="text-primary font-bold hover:underline" th:href="${'tel:'+shop.phone}" th:text="${shop.phone}"></a>
+
+</div>
+</div>
+</div>
+</div>
+</div></main>
+
+  <!-- Scripts for Rental Contract Phase 1 -->
+  <script th:inline="javascript">
+    // --- OCR & UI State Logic ---
+    let securityOption = 1;
+    const bookingBikeId=/*[[${motorbike.id}]]*/ null;
+    const shopConfig=/*[[${shop}]]*/ {};
+    const coordinates={pickup:null,return:null};
+    let quoteVersion=0,quoteReady=false;
+    function bookingRequest(){
+      const value=id=>document.getElementById(id).value;
+      const people=[1,2].slice(0,securityOption===2?2:1).map(i=>{let birth=value('p'+i+'_dob');if(birth.includes('/'))birth=birth.split('/').reverse().join('-');return {name:value('p'+i+'_name'),phone:value('p'+i+'_phone'),idCard:value('p'+i+'_cccd'),birthDate:birth,address:value('p'+i+'_address')};});
+      return {motorbikeId:bookingBikeId,pickupDate:value('pickupTimeInput'),returnDate:value('returnTimeInput'),pickupType:value('pickupLocationSelect')==='store'?'STORE':'DELIVERY',returnType:value('returnLocationSelect')==='store'?'STORE':'DELIVERY',pickupAddress:value('pickupAddressInput'),returnAddress:value('returnAddressInput'),pickupLat:coordinates.pickup?.lat,pickupLng:coordinates.pickup?.lng,returnLat:coordinates.return?.lat,returnLng:coordinates.return?.lng,securityOption,people,termsAccepted:document.getElementById('termsAccepted').checked};
+    }
+    let baseDailyPrice = /*[[${motorbike.pricePerDay}]]*/ 0;
+    let categoryName = /*[[${motorbike.category}]]*/ '';
+
+    function selectGuaranteeOption(option) {
+        const opt1Card = document.getElementById('option1Card');
+        const opt1Check = document.getElementById('option1Check');
+        const opt2Card = document.getElementById('option2Card');
+        const opt2Check = document.getElementById('option2Check');
+        const coRenterForm = document.getElementById('coRenterForm');
+
+        if (option === 1) {
+            opt1Card.className = "p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-xs cursor-pointer transition-all relative overflow-hidden shadow-lg border border-primary";
+            opt1Check.className = "w-5 h-5 rounded-full bg-primary-container flex items-center justify-center text-on-primary";
+            opt1Check.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span>';
+            
+            opt2Card.className = "p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-highest/70 transition-all opacity-60";
+            opt2Check.className = "w-5 h-5 rounded-full bg-surface-variant flex items-center justify-center";
+            opt2Check.innerHTML = '';
+            
+            coRenterForm.style.display = "none";
+        } else {
+            opt2Card.className = "p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-xs cursor-pointer transition-all relative overflow-hidden shadow-lg border border-primary";
+            opt2Check.className = "w-5 h-5 rounded-full bg-primary-container flex items-center justify-center text-on-primary";
+            opt2Check.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span>';
+            
+            opt1Card.className = "p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-xs cursor-pointer hover:bg-surface-container-highest/70 transition-all opacity-60";
+            opt1Check.className = "w-5 h-5 rounded-full bg-surface-variant flex items-center justify-center";
+            opt1Check.innerHTML = '';
+            
+            coRenterForm.style.display = "flex";
+        }
+        
+        securityOption = option;
+        updateTotalCost();
+    }
+
+    function triggerScan(person) {
+        currentScanPerson = person;
+        document.getElementById('cccdScannerInput').click();
+    }
+
+    async function handleScanImage(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // BƯỚC 1: Gọi API Backend (Proxy) thay vì gọi trực tiếp
+        const apiUrl = "/api/ocr/cccd";
+
+        // BƯỚC 2: Chuẩn bị dữ liệu hình ảnh
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Hiển thị trạng thái đang quét trên nút
+        const scanBtn = document.getElementById(`p${currentScanPerson}_scan_btn`);
+        const scanBtnText = scanBtn.querySelector('span:nth-child(2)');
+        const originalText = scanBtnText.innerText;
+        scanBtnText.innerText = "Đang xử lý...";
+        scanBtn.disabled = true;
+        scanBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+        try {
+            // BƯỚC 3: Gửi request tới server Backend của chúng ta
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                body: formData
+            });
+
+            // Ẩn các thông báo cũ
+            document.getElementById(`p${currentScanPerson}_verify_badge`).classList.add('hidden');
+            document.getElementById(`p${currentScanPerson}_error_badge`).classList.add('hidden');
+
+            const responseText = await response.text();
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (e) {
+                console.error("Non-JSON Response:", responseText);
+                const errorBadge = document.getElementById(`p${currentScanPerson}_error_badge`);
+                document.getElementById(`p${currentScanPerson}_error_text`).innerText = "Lỗi máy chủ không phản hồi JSON";
+                errorBadge.classList.remove('hidden');
+                return;
+            }
+            
+            // BƯỚC 4: Xử lý chuỗi JSON trả về
+            if (result.error_code === 0 && result.data && result.data.length > 0) {
+                const info = result.data[0].info;
+                
+                if (!info || (!info.name && !info.id)) {
+                    const errorBadge = document.getElementById(`p${currentScanPerson}_error_badge`);
+                    document.getElementById(`p${currentScanPerson}_error_text`).innerText = "Hình ảnh không rõ CCCD, vui lòng chụp lại.";
+                    errorBadge.classList.remove('hidden');
+                    return;
+                }
+
+                // Đổ dữ liệu vào các ô input tương ứng
+                document.getElementById(`p${currentScanPerson}_name`).value = info.name || "";
+                document.getElementById(`p${currentScanPerson}_cccd`).value = info.id || "";
+                document.getElementById(`p${currentScanPerson}_dob`).value = info.dob || "";
+                document.getElementById(`p${currentScanPerson}_address`).value = info.address || "";
+                
+                // Hiển thị badge thành công
+                document.getElementById(`p${currentScanPerson}_verify_badge`).classList.remove('hidden');
+            } else {
+                const errorBadge = document.getElementById(`p${currentScanPerson}_error_badge`);
+                document.getElementById(`p${currentScanPerson}_error_text`).innerText = result.error_message || "Lỗi không xác định";
+                errorBadge.classList.remove('hidden');
+                console.error("Lỗi từ API:", result);
+            }
+        } catch (error) {
+            console.error("Lỗi kết nối:", error);
+            const errorBadge = document.getElementById(`p${currentScanPerson}_error_badge`);
+            document.getElementById(`p${currentScanPerson}_error_text`).innerText = "Có lỗi xảy ra khi kết nối tới máy chủ.";
+            errorBadge.classList.remove('hidden');
+        } finally {
+            event.target.value = ''; // Reset thẻ input file
+            
+            // Khôi phục trạng thái nút quét
+            scanBtnText.innerText = currentScanPerson === 1 ? "Quét CCCD" : "Quét CCCD #2";
+            scanBtn.disabled = false;
+            scanBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+
+    // --- Original Booking Logic ---
+    function submitBooking() {
+        const motorbikeId = bookingBikeId;
+        
+        const pickupDate = document.getElementById('pickupTimeInput').value;
+        const returnDate = document.getElementById('returnTimeInput').value;
+        const pickupType = document.getElementById('pickupLocationSelect').value === 'store' ? 'STORE' : 'DELIVERY';
+        const pickupAddress = document.getElementById('pickupAddressInput').value;
+        
+        if (!pickupDate || !returnDate) {
+            alert('Vui lòng chọn thời gian nhận và trả xe.');
+            return;
+        }
+
+        const timeProblem=BookingContext.valid(pickupDate,returnDate,true);if(timeProblem){alert(timeProblem);return;}
+        const requestBody=bookingRequest();
+        if(!quoteReady){alert('Vui lòng chờ tính giá hoặc kiểm tra thông tin giao nhận.');return;}
+        if(!requestBody.termsAccepted){alert('Vui lòng đọc và đồng ý điều khoản thuê xe.');return;}
+        const btn = document.getElementById('submitBookingBtn');
+        btn.innerHTML = 'ĐANG XỬ LÝ...';
+        btn.disabled = true;
+
+        fetch('/api/rental-orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => {
+            if (!response.ok) return response.json().then(err => { throw err; });
+            return response.json();
+        })
+        .then(data => {
+            const orderId = data.id || data.orderId;
+            if(!orderId)throw new Error('Máy chủ chưa trả về mã đơn thuê.');
+            
+            // Gọi API tạo link thanh toán PayOS
+            return fetch(`/api/payment/create/${orderId}`, { method: 'POST' });
+        })
+        .then(res => {
+            return res.json().then(paymentData => {
+                if (res.ok && paymentData.checkoutUrl) {
+                    window.location.href = paymentData.checkoutUrl;
+                } else {
+                    alert('Lưu đơn thành công nhưng chưa thể tạo link thanh toán ngay:\n' + (paymentData.message || paymentData.error || 'Chưa kết nối được PayOS. Bạn có thể thanh toán lại trong Đơn thuê của tôi.'));
+                    // Chuyển về trang của tôi để khách thấy đơn màu đỏ và nút thanh toán lại
+                    window.location.href = '/customer/my-rentals';
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Lỗi đặt xe: ' + (error.message || 'Vui lòng thử lại'));
+            const deposit = window.currentDepositAmount || 0;
+            const formatter = new Intl.NumberFormat('vi-VN');
+            btn.innerHTML = '<span id="btnSubmitText">XÁC NHẬN & THANH TOÁN ' + formatter.format(deposit) + 'đ</span>';
+            btn.disabled = false;
+        });
+    }
+
+    // =========================================================================
+    // MAP & TIME SELECTION LOGIC
+    // =========================================================================
+    let rentalDurationDays = 0;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Init URL params for Delivery Address
+        const urlParams = new URLSearchParams(window.BookingContext.get());
+        const locationType = urlParams.get('location');
+        const deliveryAddress = urlParams.get('deliveryAddress');
+        
+        if ((locationType === 'maps_delivery' || locationType === 'delivery') && deliveryAddress) {
+            document.getElementById('pickupAddressInput').value = deliveryAddress;
+            document.getElementById('returnAddressInput').value = deliveryAddress;
+            
+            document.getElementById('pickupLocationSelect').value = 'maps_delivery';
+            document.getElementById('returnLocationSelect').value = 'maps_delivery';
+            
+            // Tính phí thực tế từ lat/lng nếu có
+            const deliveryLat = parseFloat(urlParams.get('deliveryLat'));
+            const deliveryLng = parseFloat(urlParams.get('deliveryLng'));
+            coordinates.pickup={lat:deliveryLat,lng:deliveryLng};coordinates.return={...coordinates.pickup};
+            
+            let fee = shopConfig.deliveryBaseFee;
+            let distKm = 0;
+            if (deliveryLat && deliveryLng) {
+                // Haversine (giống map-modal.html)
+                const STORE_LAT = shopConfig.lat, STORE_LNG = shopConfig.lng;
+                const R = 6371;
+                const dLat = (deliveryLat - STORE_LAT) * Math.PI / 180;
+                const dLng = (deliveryLng - STORE_LNG) * Math.PI / 180;
+                const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(STORE_LAT*Math.PI/180)*Math.cos(deliveryLat*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);
+                distKm = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                fee = shopConfig.deliveryBaseFee;
+                if (distKm > shopConfig.deliveryBaseKm) fee += Math.ceil(distKm - shopConfig.deliveryBaseKm) * shopConfig.deliveryPerKm;
+            }
+            
+            const feeStr = new Intl.NumberFormat('vi-VN').format(fee) + ' VNĐ';
+            const distStr = distKm > 0 ? distKm.toFixed(1) : 'Tạm tính';
+            
+            document.getElementById('pickupFeeDisplay').innerText = '+' + feeStr;
+            document.getElementById('returnFeeDisplay').innerText = '+' + feeStr;
+            document.getElementById('pickupDistLabel').innerText = 'Phí giao xe (' + distStr + (distKm > 0 ? 'km' : '') + '):';
+            document.getElementById('returnDistLabel').innerText = 'Phí nhận xe (' + distStr + (distKm > 0 ? 'km' : '') + '):';
+            
+            const shortAddr = deliveryAddress.length > 35 ? deliveryAddress.substring(0, 35) + '...' : deliveryAddress;
+            document.getElementById('pickupMapOption').innerText = 'Giao tại: ' + shortAddr + ' (Phí: ' + feeStr + ')';
+            document.getElementById('returnMapOption').innerText = 'Trả tại: ' + shortAddr + ' (Phí: ' + feeStr + ')';
+        } else {
+            // Default store pickup
+            document.getElementById('pickupAddressInput').value = 'Nhận tại cửa hàng';
+            document.getElementById('returnAddressInput').value = 'Trả tại cửa hàng';
+            
+            document.getElementById('pickupLocationSelect').value = 'store';
+            document.getElementById('returnLocationSelect').value = 'store';
+            
+            document.getElementById('pickupDistLabel').innerText = 'Phí giao xe (0km):';
+            document.getElementById('returnDistLabel').innerText = 'Phí nhận xe (0km):';
+        }
+        
+        if(urlParams.has('returnLocation')){
+            const type=urlParams.get('returnLocation');document.getElementById('returnLocationSelect').value=type;
+            document.getElementById('returnAddressInput').value=type==='store'?'Trả tại cửa hàng':urlParams.get('returnAddress')||'';
+            coordinates.return=type==='store'?null:{lat:Number(urlParams.get('returnLat')),lng:Number(urlParams.get('returnLng'))};
+            if(type!=='store')document.getElementById('returnMapOption').textContent='Trả tại: '+urlParams.get('returnAddress');
+            const point=coordinates.return;
+            let distance=0, fee=0;
+            if(point && Number.isFinite(point.lat) && Number.isFinite(point.lng)){
+                const rad=Math.PI/180;
+                const a=Math.sin((point.lat-shopConfig.lat)*rad/2)**2+Math.cos(shopConfig.lat*rad)*Math.cos(point.lat*rad)*Math.sin((point.lng-shopConfig.lng)*rad/2)**2;
+                distance=6371*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+                fee=shopConfig.deliveryBaseFee+Math.ceil(Math.max(0,distance-shopConfig.deliveryBaseKm))*shopConfig.deliveryPerKm;
+            }
+            document.getElementById('returnFeeDisplay').textContent='+'+new Intl.NumberFormat('vi-VN').format(fee)+' VNĐ';
+            document.getElementById('returnDistLabel').textContent='Phí nhận xe ('+distance.toFixed(1)+'km):';
+        }
+        // Init Time Pickers
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        // Offset to local time for datetime-local string format
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        tomorrow.setMinutes(tomorrow.getMinutes() - tomorrow.getTimezoneOffset());
+        
+        const nowStr = now.toISOString().slice(0,16);
+        const tomorrowStr = tomorrow.toISOString().slice(0,16);
+        
+        document.getElementById('pickupTimeInput').value = urlParams.get('pickup') || nowStr;
+        document.getElementById('pickupTimeInput').min = nowStr; // Vô hiệu hóa ngày quá khứ
+        
+        document.getElementById('returnTimeInput').value = urlParams.get('returnAt') || tomorrowStr;
+        document.getElementById('returnTimeInput').min = nowStr; // Hoàn trả cũng không được nhỏ hơn bây giờ
+        
+        calculateDurationAndPrice();
+    });
+
+    function handleContractLocationSelect(type) {
+        const select = document.getElementById(type + 'LocationSelect');
+        if (select.value === 'maps_delivery') {
+            openContractMap(type + 'AddressInput');
+        } else {
+            // Reset to store
+            document.getElementById(type + 'AddressInput').value = type === 'pickup' ? 'Nhận tại cửa hàng' : 'Trả tại cửa hàng';
+            coordinates[type]=null;BookingContext.save(type==='pickup'?{location:'store',deliveryAddress:'',deliveryLat:'',deliveryLng:''}:{returnLocation:'store',returnAddress:'',returnLat:'',returnLng:''});
+            document.getElementById(type + 'FeeDisplay').innerText = '+0 VNĐ';
+            document.getElementById(type === 'pickup' ? 'pickupDistLabel' : 'returnDistLabel').innerText = type === 'pickup' ? 'Phí giao xe (0km):' : 'Phí nhận lại xe (0km):';
+            document.getElementById(type + 'MapOption').innerText = type === 'pickup' ? 'Chọn vị trí giao xe trên bản đồ (Tính phí)' : 'Chọn vị trí trả xe trên bản đồ (Tính phí)';
+            calculateDurationAndPrice();
+        }
+    }
+
+    function openContractMap(targetInputId) {
+        window.currentMapTarget = targetInputId;
+        if (typeof openMapModal === 'function') {
+            openMapModal();
+        } else {
+            alert("Bản đồ chưa sẵn sàng!");
+        }
+    }
+
+    function onMapLocationConfirmed(targetId, addr, lat, lng, fee, dist) {
+        coordinates[targetId === "pickupAddressInput" ? "pickup" : "return"]={lat,lng};
+        BookingContext.save(targetId==='pickupAddressInput'?{location:'maps_delivery',deliveryAddress:addr,deliveryLat:String(lat),deliveryLng:String(lng)}:{returnLocation:'maps_delivery',returnAddress:addr,returnLat:String(lat),returnLng:String(lng)});
+        const formattedFee = new Intl.NumberFormat('vi-VN').format(fee) + ' VNĐ';
+        const shortAddr = addr.length > 35 ? addr.substring(0, 35) + '...' : addr;
+        
+        if (targetId === 'pickupAddressInput') {
+            document.getElementById('pickupLocationSelect').value = 'maps_delivery';
+            document.getElementById('pickupFeeDisplay').innerText = '+' + formattedFee;
+            document.getElementById('pickupDistLabel').innerText = 'Phí giao xe (' + dist + 'km):';
+            document.getElementById('pickupMapOption').innerText = 'Giao tại: ' + shortAddr + ' (Phí: ' + formattedFee + ')';
+            
+        } else if (targetId === 'returnAddressInput') {
+            document.getElementById('returnLocationSelect').value = 'maps_delivery';
+            document.getElementById('returnFeeDisplay').innerText = '+' + formattedFee;
+            document.getElementById('returnDistLabel').innerText = 'Phí nhận lại xe (' + dist + 'km):';
+            document.getElementById('returnMapOption').innerText = 'Trả tại: ' + shortAddr + ' (Phí: ' + formattedFee + ')';
+        }
+        
+        calculateDurationAndPrice();
+    }
+
+    function calculateDurationAndPrice() {
+        const pickupInput = document.getElementById('pickupTimeInput');
+        const returnInput = document.getElementById('returnTimeInput');
+        
+        // Lấy thời gian thực tại thời điểm chọn
+        const realNow = new Date();
+        realNow.setMinutes(realNow.getMinutes() - realNow.getTimezoneOffset());
+        const realNowStr = realNow.toISOString().slice(0,16);
+        
+        const problem=BookingContext.valid(pickupInput.value,returnInput.value,true);
+        pickupInput.min=BookingContext.now();
+        if(problem){quoteReady=false;document.getElementById('submitBookingBtn').disabled=true;const error=document.getElementById('timeErrorMsg');error.textContent=problem;error.classList.remove('hidden');return;}
+        BookingContext.save({pickup:pickupInput.value,returnAt:returnInput.value});
+        // Luôn cập nhật min của thời điểm trả xe bằng đúng thời điểm nhận xe
+        if (pickupInput.value) {
+            returnInput.min = pickupInput.value;
+        }
+        
+        const pickup = new Date(pickupInput.value);
+        const ret = new Date(returnInput.value);
+        const errorMsg = document.getElementById('timeErrorMsg');
+        
+        if (!pickup || !ret || isNaN(pickup) || isNaN(ret)) return;
+        
+        if (ret <= pickup) {
+            errorMsg.classList.remove('hidden');
+            document.getElementById('durationDisplay').innerText = '-- Ngày';
+            rentalDurationDays = 0;
+            updateTotalCost();
+            return;
+        } else {
+            errorMsg.classList.add('hidden');
+            const diffTime = Math.abs(ret - pickup);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            rentalDurationDays = diffDays;
+            document.getElementById('durationDisplay').innerText = (diffDays < 10 ? '0' + diffDays : diffDays) + ' Ngày trọn vẹn';
+        }
+        
+        updateTotalCost();
+    }
+
+    async function updateTotalCost() {
+        const seq=++quoteVersion;quoteReady=false;
+        const button=document.getElementById('submitBookingBtn');button.disabled=true;
+        const req=bookingRequest();const problem=BookingContext.valid(req.pickupDate,req.returnDate,true);if(problem){const error=document.getElementById('timeErrorMsg');error.textContent=problem;error.classList.remove('hidden');return;}
+        try {
+            const response=await fetch('/api/rental-orders/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(req)});
+            const q=await response.json();if(seq!==quoteVersion)return;if(!response.ok)throw new Error(q.message || 'Không tính được giá');
+            const money=n=>new Intl.NumberFormat('vi-VN').format(n)+' VNĐ';
+
+            document.getElementById('sumRentalLabel').textContent='Giá thuê xe ('+q.days+' ngày):';
+            document.getElementById('sumRentalCost').textContent=money(q.rentalFee);
+            document.getElementById('sumDeliveryCost').textContent=money(q.deliveryFee);
+            document.getElementById('sumSecurityDeposit').textContent=money(q.securityDeposit)+' (đối chiếu giấy tờ khi nhận xe)';
+            document.getElementById('sumTotalCost').textContent=money(q.totalPrice+q.securityDeposit);
+            document.getElementById('sumRemainingCost').textContent=money(q.totalPrice+q.securityDeposit-q.depositDue);
+            document.getElementById('sumDepositAmount').textContent=money(q.depositDue);
+            document.getElementById('sumDepositDesc').textContent='Khoản giữ xe và phí giao nhận theo cấu hình cửa hàng';
+            document.getElementById('btnSubmitText').textContent='XÁC NHẬN & THANH TOÁN '+money(q.depositDue);
+            window.currentDepositAmount=q.depositDue;quoteReady=true;button.disabled=false;
+            document.getElementById('timeErrorMsg').classList.add('hidden');
+        } catch(e) { if(seq===quoteVersion){const error=document.getElementById('timeErrorMsg');error.textContent=e.message;error.classList.remove('hidden');}}
+    }
+  </script>
+
+  <!-- Map Modal Fragment -->
+  <div th:replace="~{fragments/map-modal :: mapModal}"></div>
+
+  <!-- Footer -->
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+</body>
+</html>

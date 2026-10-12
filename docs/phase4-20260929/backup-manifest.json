@@ -1,0 +1,1437 @@
+[
+  {
+    "entry": "application.properties.example",
+    "paths": [
+      "src/main/resources/application.properties.example"
+    ],
+    "sha256": "44107bb1f72aad00aff39dc505b44fc134e60e56d20c486f8814fda96e1740ca"
+  },
+  {
+    "entry": "Phase1ConcurrencyTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/Phase1ConcurrencyTests.java"
+    ],
+    "sha256": "2a2b1647924461a5228fa10b25939ed3c8d8acdf7ceda3e51704f9c1e61aaeaf"
+  },
+  {
+    "entry": "OperationsWorkflowTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/OperationsWorkflowTests.java"
+    ],
+    "sha256": "dcba7d83587a94c2a11f7d8b0edd0ab08cd824ae0fb94f62720d4592e48180c3"
+  },
+  {
+    "entry": "OperationsPageControllerTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/OperationsPageControllerTests.java"
+    ],
+    "sha256": "60b9ebc48eb91d3377742571540dc509ed1b71063298d09af4695bc5785c80a8"
+  },
+  {
+    "entry": "MotorbikeRentalApplicationTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/MotorbikeRentalApplicationTests.java"
+    ],
+    "sha256": "edc7e5cbfe4f77c979edf94752a19767d94fa31a3812f655313b06c83aeb0a3d"
+  },
+  {
+    "entry": "JwtCsrfIntegrationTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/JwtCsrfIntegrationTests.java"
+    ],
+    "sha256": "a79e45c609937e2ce2a20cc2c0f88a2f77591ea1834cb46279886c98ee07a7f6"
+  },
+  {
+    "entry": "FinancialsTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/FinancialsTests.java"
+    ],
+    "sha256": "3f9b34d9985c9b32c8f50c8af460b734d128939db267b1c2477c84399f454538"
+  },
+  {
+    "entry": "CustomerSecurityIntegrationTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/CustomerSecurityIntegrationTests.java"
+    ],
+    "sha256": "61c8fc01980127391f710b085e7c56723670a36b34bfe6287ba2415fc7c2059b"
+  },
+  {
+    "entry": "CustomerPaymentResultRouteTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/CustomerPaymentResultRouteTests.java"
+    ],
+    "sha256": "924ddc07429124ccf46bce6ab8939099f172f94b33fdacdfcac007017a7f6a68"
+  },
+  {
+    "entry": "BeforeDeliveryChangeTests.java",
+    "paths": [
+      "src/test/java/com/motorrent/motorbikerental/BeforeDeliveryChangeTests.java"
+    ],
+    "sha256": "5e252d18dd91dbcb31aaf79a6fc3f9d98cffa22a6ed7dee93f2320bec953db04"
+  },
+  {
+    "entry": "reviews.html",
+    "paths": [
+      "src/main/resources/templates/staff/reviews.html"
+    ],
+    "sha256": "2e169f528b7021edb9993e4d3ad14140eef0a859dd8d04059f4c6c29c12e815b"
+  },
+  {
+    "entry": "rental-orders.html",
+    "paths": [
+      "src/main/resources/templates/staff/rental-orders.html"
+    ],
+    "sha256": "fe12a254eb825eb22159d5c875fbdc6206fc25ea1e03f273e25d68275aba68e0"
+  },
+  {
+    "entry": "profile.html",
+    "paths": [
+      "src/main/resources/templates/staff/profile.html"
+    ],
+    "sha256": "9476c34b91b306621e6e6b0505a927ddc6ba732d9bdf084696b2e5f248fe536b"
+  },
+  {
+    "entry": "payments.html",
+    "paths": [
+      "src/main/resources/templates/staff/payments.html"
+    ],
+    "sha256": "172c451b24c1351d12c1948c14cf676871082352809c3511138a0b5983e8937c"
+  },
+  {
+    "entry": "maintenance.html",
+    "paths": [
+      "src/main/resources/templates/staff/maintenance.html"
+    ],
+    "sha256": "a10ccd65f60dbd374f150cf3648d495407a9e8a6655a746029c8c889f98721a4"
+  },
+  {
+    "entry": "extensions.html",
+    "paths": [
+      "src/main/resources/templates/staff/extensions.html"
+    ],
+    "sha256": "b48373c0c7cb7142df10b53b291e9788bd8c533f89a7c68e1da659c2cf2b7e0f"
+  },
+  {
+    "entry": "dashboard.html",
+    "paths": [
+      "src/main/resources/templates/staff/dashboard.html"
+    ],
+    "sha256": "0c75e050ead70f97fd0c44e55f5c9796dd880f3d3af2d578d8c4786d290df335"
+  },
+  {
+    "entry": "index.html",
+    "paths": [
+      "src/main/resources/templates/preview/index.html"
+    ],
+    "sha256": "e710ca752e2d1d4decbf0020558a3616c94f81a9f9c695be0587642620080265"
+  },
+  {
+    "entry": "vehicle-changes.js",
+    "paths": [
+      "src/main/resources/static/js/vehicle-changes.js"
+    ],
+    "sha256": "af66ade4ad0fa63efb7276f87951b104fbc4efa5f2580ac9e5f4ea3c85760f5a"
+  },
+  {
+    "entry": "tailwind-config.js",
+    "paths": [
+      "src/main/resources/static/js/tailwind-config.js"
+    ],
+    "sha256": "ab9cd3f22b36f46b9a0359cbcfa192f1eebb652336708587f82cc143ce389754"
+  },
+  {
+    "entry": "staff.js",
+    "paths": [
+      "src/main/resources/static/js/staff.js"
+    ],
+    "sha256": "a240f2c315fadd52fd6a81938be7e7474f9127ac5a444b657f688ce1acb80666"
+  },
+  {
+    "entry": "request-security.js",
+    "paths": [
+      "src/main/resources/static/js/request-security.js"
+    ],
+    "sha256": "c36173b466f49a6a52e377605129e919cdbb7bc45cacae68ba75d2c219f24af5"
+  },
+  {
+    "entry": "operations.js",
+    "paths": [
+      "src/main/resources/static/js/operations.js"
+    ],
+    "sha256": "de70d84d1fdc80fc48ee6fabfcf1bbdaf79db6181855143d5adb2964a753f72d"
+  },
+  {
+    "entry": "operations-live.js",
+    "paths": [
+      "src/main/resources/static/js/operations-live.js"
+    ],
+    "sha256": "46306ab953f1f510f163230c8705ad4831166cb966d5b8d23d0eef367dc18269"
+  },
+  {
+    "entry": "customer.js",
+    "paths": [
+      "src/main/resources/static/js/customer.js"
+    ],
+    "sha256": "9ddaf07df5af2f9bd8fa4f958fb154b3e6771c66ee9002c40fb247a584b3e812"
+  },
+  {
+    "entry": "catalog.js",
+    "paths": [
+      "src/main/resources/static/js/catalog.js"
+    ],
+    "sha256": "5049c1e5b2ec8cbb6f1c4d2b5cb688e727c3370145e9a0265b13e482320ca6f2"
+  },
+  {
+    "entry": "booking-search.js",
+    "paths": [
+      "src/main/resources/static/js/booking-search.js"
+    ],
+    "sha256": "13e2545faf1f7ac48a5dfb1b2b02e74cae3381cd78728508d6786791bb88f473"
+  },
+  {
+    "entry": "booking-context.js",
+    "paths": [
+      "src/main/resources/static/js/booking-context.js"
+    ],
+    "sha256": "9b94e0811f1b91026f96ab679d1b662249421ca161fad25e8d5d4da7f3fb044a"
+  },
+  {
+    "entry": "travel-places.html",
+    "paths": [
+      "src/main/resources/templates/customer/travel-places.html"
+    ],
+    "sha256": "ac9aea80e419ca35c98afd489b1e6790c37f69320110d47bbdc94366b7fba415"
+  },
+  {
+    "entry": "shop-information.html",
+    "paths": [
+      "src/main/resources/templates/customer/shop-information.html"
+    ],
+    "sha256": "c4898ea65f864a21b5cefe63e60e7b2888375deb44d3e94def2b3b1c4d9a94de"
+  },
+  {
+    "entry": "review.html",
+    "paths": [
+      "src/main/resources/templates/customer/review.html"
+    ],
+    "sha256": "829de12799586200e7872453c990117d55b2a8e49a0d6851ea8a3cae2ca89edc"
+  },
+  {
+    "entry": "rental-history.html",
+    "paths": [
+      "src/main/resources/templates/customer/rental-history.html"
+    ],
+    "sha256": "1ba3451a19285f19ff8ca0c759cef7d014be914bf350ee3c16e5934dbd4dd3b8"
+  },
+  {
+    "entry": "rental-history-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/rental-history-content.txt"
+    ],
+    "sha256": "a8399d15b4e769ca6f3a617d9966232cd1d5a02a1e626dd9e67f91492a1c9540"
+  },
+  {
+    "entry": "rental-extension.html",
+    "paths": [
+      "src/main/resources/templates/customer/rental-extension.html"
+    ],
+    "sha256": "59aaabe0dac1b428899504aa374dfb13a50cf635fc6a0a1b8cb9118703651368"
+  },
+  {
+    "entry": "rental-detail.html",
+    "paths": [
+      "src/main/resources/templates/customer/rental-detail.html"
+    ],
+    "sha256": "655154a575a4dd31037bbc4178a584054c67e6dc13a3645ae117a6dfd0eefb9a"
+  },
+  {
+    "entry": "rental-contract.html",
+    "paths": [
+      "src/main/resources/templates/customer/rental-contract.html"
+    ],
+    "sha256": "e84dc97a14787733844957b52ef35b39a6fd73705217daf50ffab73e5f1543ce"
+  },
+  {
+    "entry": "rental-contract-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/rental-contract-content.txt"
+    ],
+    "sha256": "2e066f5f22da3575a7866f43a4e23a112a8e05a87bdcd5e87de736a7c6c2ede0"
+  },
+  {
+    "entry": "profile.html",
+    "paths": [
+      "src/main/resources/templates/customer/profile.html"
+    ],
+    "sha256": "7530118258a9f7759f1aed5ace21a73f8784fa259929979f17fdbb5c00db57ad"
+  },
+  {
+    "entry": "profile-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/profile-content.txt"
+    ],
+    "sha256": "d4e6d7dde1590798b561e9c58b2c94fec697f7a6080fa0cdb7f88b4c7e260339"
+  },
+  {
+    "entry": "payment.html",
+    "paths": [
+      "src/main/resources/templates/customer/payment.html"
+    ],
+    "sha256": "1da93e62db8cc21951c6dcba05f711bd864749c56cce357b1e9f793b7c1578c0"
+  },
+  {
+    "entry": "payment-result.html",
+    "paths": [
+      "src/main/resources/templates/customer/payment-result.html"
+    ],
+    "sha256": "88e233d08bfaea8e2e1a2b6cd4f4a9a6e616e22d032c37a7a6bef8bd7e33737c"
+  },
+  {
+    "entry": "notifications.html",
+    "paths": [
+      "src/main/resources/templates/customer/notifications.html"
+    ],
+    "sha256": "2c5801fce47403eab6962cc71e4eaed85ff391d433a23fc8d324f0947f5a8a81"
+  },
+  {
+    "entry": "my-rentals.html",
+    "paths": [
+      "src/main/resources/templates/customer/my-rentals.html"
+    ],
+    "sha256": "ffdea84008dc6c29555b67c1f26164d34eb3d44b3937410014385fc3e0ea0a8b"
+  },
+  {
+    "entry": "my-rentals-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/my-rentals-content.txt"
+    ],
+    "sha256": "824cec18d7b0aef960bf5f05aff11b809dd0ba5bc89745743d3d668437969f23"
+  },
+  {
+    "entry": "motorbike-list.html",
+    "paths": [
+      "src/main/resources/templates/customer/motorbike-list.html"
+    ],
+    "sha256": "81f399cb537770298cc5957ec3bce39fc15d69363862707dd6ba3f31ea1e9b13"
+  },
+  {
+    "entry": "motorbike-list-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/motorbike-list-content.txt"
+    ],
+    "sha256": "a1226f4ba844e6fcd5b1591af2abfa0c7db83723de7c3417cf4333cef33f748f"
+  },
+  {
+    "entry": "motorbike-detail.html",
+    "paths": [
+      "src/main/resources/templates/customer/motorbike-detail.html"
+    ],
+    "sha256": "281ea9595993feb355d55b57bc64618e1706dd0dac7c85db37423e8d7e23ee56"
+  },
+  {
+    "entry": "motorbike-detail-content.txt",
+    "paths": [
+      "src/main/resources/templates/customer/motorbike-detail-content.txt"
+    ],
+    "sha256": "97faaceef64acb42c9ce7b54b435887187d86901277e8201bcd2726e44af3657"
+  },
+  {
+    "entry": "home.html",
+    "paths": [
+      "src/main/resources/templates/customer/home.html"
+    ],
+    "sha256": "a78ed92ffd46d269b366fb88067a5c692834eb7fcb33803ce4c2bab7f9df37a4"
+  },
+  {
+    "entry": "edit-profile.html",
+    "paths": [
+      "src/main/resources/templates/customer/edit-profile.html"
+    ],
+    "sha256": "1da93e62db8cc21951c6dcba05f711bd864749c56cce357b1e9f793b7c1578c0"
+  },
+  {
+    "entry": "VehicleChangeService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/VehicleChangeService.java"
+    ],
+    "sha256": "751f6103bdecec04b9a941c9dbd268c720bd5afd362b91cc5a441be388942fe6"
+  },
+  {
+    "entry": "TravelPlaceService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/TravelPlaceService.java"
+    ],
+    "sha256": "a3516fa38d696ef4763b1bf0b79bd6244ab15a9762d24ce5c2d8b3ab63619bb3"
+  },
+  {
+    "entry": "SettlementService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/SettlementService.java"
+    ],
+    "sha256": "9a210a39f93004657a4c919527268fc2186321aac1054e7070079eb09782d92d"
+  },
+  {
+    "entry": "ReviewService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/ReviewService.java"
+    ],
+    "sha256": "d66e86f7ae83ef35bbd9845911d9fdffc013d057f99b80495a6fa61342d14498"
+  },
+  {
+    "entry": "RentalOrderService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/RentalOrderService.java"
+    ],
+    "sha256": "5e7347094e4122f2b314af3a67626149c5d6555add8c03e46775017d74b34623"
+  },
+  {
+    "entry": "PricingService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/PricingService.java"
+    ],
+    "sha256": "3625256170972a2b2dafa41ae81335eda6567e7afad088dfab61e5e07c02236a"
+  },
+  {
+    "entry": "PaymentService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/PaymentService.java"
+    ],
+    "sha256": "ee88cc1a96796f6d99fc144f8e5d9bbbeaa2f0ea880104ac9936703d3bac5a47"
+  },
+  {
+    "entry": "OperationsService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/OperationsService.java"
+    ],
+    "sha256": "107825fbba4f650764ec6310c32127fbe2ec5e8eb339c890245fcab799c456e8"
+  },
+  {
+    "entry": "NotificationService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/NotificationService.java"
+    ],
+    "sha256": "42c481b0a1237e66333610cd9036488f11c0e80c0b85ee9557b6bce5cb8d7063"
+  },
+  {
+    "entry": "MotorbikeService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/MotorbikeService.java"
+    ],
+    "sha256": "fe8c7455b3b02d4a440c42771b5b45698c88c7ff50d9a36784f583f114da0048"
+  },
+  {
+    "entry": "FinancialSummaryService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/FinancialSummaryService.java"
+    ],
+    "sha256": "f328107901a5d47a09d43cbbecc6850cca5c5fa452837fb1a509a4f8cc21db04"
+  },
+  {
+    "entry": "Financials.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/Financials.java"
+    ],
+    "sha256": "b3567d392452514deb01f87a8d49646b957711dc090623535ba019b72ef8c6f8"
+  },
+  {
+    "entry": "ExtensionService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/ExtensionService.java"
+    ],
+    "sha256": "7764f718fe5483bb30df1c314f8847c29bf4107d0fe4a9cdda540962d4c7931e"
+  },
+  {
+    "entry": "EmailService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/EmailService.java"
+    ],
+    "sha256": "c1a04793886cd4e559d625ddd5912c4a91dcfc2f19a1ce80cf379840e3918b75"
+  },
+  {
+    "entry": "Display.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/Display.java"
+    ],
+    "sha256": "00c0aa67a269a5fae6a01b1ed2375d1ba8fc2f9ec2c91a1675ee808db5d5c4d9"
+  },
+  {
+    "entry": "AvailabilityService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/AvailabilityService.java"
+    ],
+    "sha256": "bcdbba1aed56580bf46b4c58f8d05eff6441595c496c054553a966974e5de352"
+  },
+  {
+    "entry": "AuthService.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/service/AuthService.java"
+    ],
+    "sha256": "5be3e85db5f8f818a0b7ba530012d8da82272972041dc31a16f24fc542269cf5"
+  },
+  {
+    "entry": "staff-layout.html",
+    "paths": [
+      "src/main/resources/templates/fragments/staff-layout.html"
+    ],
+    "sha256": "5376e8a0ce9d8f2ce2e32e52eea032dd2c883394b5a156c012f74f63d4ab02d2"
+  },
+  {
+    "entry": "scripts.html",
+    "paths": [
+      "src/main/resources/templates/fragments/scripts.html"
+    ],
+    "sha256": "806766c61ed526eb2fefbe2aa47eb9451f9fd7558a7a0b2ee07c8f616fd3a1a3"
+  },
+  {
+    "entry": "operations-footer.html",
+    "paths": [
+      "src/main/resources/templates/fragments/operations-footer.html"
+    ],
+    "sha256": "d0b38cbb57f8084693c7378ccd40ec1ba38b9bae958d6d2a67be6207c7ca789b"
+  },
+  {
+    "entry": "map-modal.html",
+    "paths": [
+      "src/main/resources/templates/fragments/map-modal.html"
+    ],
+    "sha256": "bfa02d69478ead5bd470fa4469011da0688dec3750c1a772414f2dbac7e95b65"
+  },
+  {
+    "entry": "head.html",
+    "paths": [
+      "src/main/resources/templates/fragments/head.html"
+    ],
+    "sha256": "80ead982d8ca81530e4a4872664c7ba3b3d3ad0a1b65c2362ec766c76bba7813"
+  },
+  {
+    "entry": "customer-header.html",
+    "paths": [
+      "src/main/resources/templates/fragments/customer-header.html"
+    ],
+    "sha256": "05a672ed702ec5a3684fcd4a3bc76c25934b0a4543d20f1832e8dcc1de973ee4"
+  },
+  {
+    "entry": "customer-footer.html",
+    "paths": [
+      "src/main/resources/templates/fragments/customer-footer.html"
+    ],
+    "sha256": "644132ee5b314b37e63d393dfbc67102d62906a88f9e7c937ad7101175446371"
+  },
+  {
+    "entry": "admin-layout.html",
+    "paths": [
+      "src/main/resources/templates/fragments/admin-layout.html"
+    ],
+    "sha256": "f7cec6acd6944a09e2a7cc5dd292c4936be40e1c32eb224ea9c3f8a6eea80d10"
+  },
+  {
+    "entry": "motorbike-placeholder.svg",
+    "paths": [
+      "src/main/resources/static/images/motorbike-placeholder.svg"
+    ],
+    "sha256": "1826f07200f7735e2126557e625dedda3feb2ca1b5d1bceeab446710f1b10526"
+  },
+  {
+    "entry": "JwtUtil.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/security/JwtUtil.java"
+    ],
+    "sha256": "f5301ac38759ea09fe1d57b62913c04996e5587463ebe3163458719198ebd904"
+  },
+  {
+    "entry": "JwtAuthenticationFilter.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/security/JwtAuthenticationFilter.java"
+    ],
+    "sha256": "3006f8281b0e05b694a7ea98233bc5b358e9c4a356d241d1afd486f1069a9ed4"
+  },
+  {
+    "entry": "CustomUserDetails.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/security/CustomUserDetails.java"
+    ],
+    "sha256": "c3a4a93933fe4bb8f25861867322a57e985afa6d38858c6ca7f0b0d64f5c3e58"
+  },
+  {
+    "entry": "CurrentUser.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/security/CurrentUser.java"
+    ],
+    "sha256": "a056a4f06c952b03669bc2c78120fef7eebac7d635203740c5570e6dd35b6745"
+  },
+  {
+    "entry": "UserRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/UserRepository.java"
+    ],
+    "sha256": "a96dd4125a85dc799289bacf03422f52433137d347a3c9d55e0e2ac302ce151a"
+  },
+  {
+    "entry": "UserDocumentRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/UserDocumentRepository.java"
+    ],
+    "sha256": "b7e779f9aebe58797aa2f6da99aab171b0ed0b07ac278d525879d2614a110bad"
+  },
+  {
+    "entry": "TravelPlaceRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/TravelPlaceRepository.java"
+    ],
+    "sha256": "807e5459849076d03ff17d221c3eb8be09271221b2ff877150f4ceda1e6ee35c"
+  },
+  {
+    "entry": "TokenAuthenticationRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/TokenAuthenticationRepository.java"
+    ],
+    "sha256": "4f4409542ea1131d55f1183ad804bd5d90e438b1b489160284e580c05c5a7826"
+  },
+  {
+    "entry": "ShopSettingsRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/ShopSettingsRepository.java"
+    ],
+    "sha256": "f3e5d3ce944bfcb79a438ebdbe1a3cc983912673971ef70d35756cdcc2613914"
+  },
+  {
+    "entry": "ReviewRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/ReviewRepository.java"
+    ],
+    "sha256": "2200a1de1d987da5d9ac48ea26b87e216aa81e07b73d6632a65b63f4994eb5bb"
+  },
+  {
+    "entry": "RentalVehicleChangeRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/RentalVehicleChangeRepository.java"
+    ],
+    "sha256": "af7ffb2bdd8a1a76e9bb9305946abea97a72963ac0f1fd1bc54e925b14d737e5"
+  },
+  {
+    "entry": "RentalOrderRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/RentalOrderRepository.java"
+    ],
+    "sha256": "8450c25823b12db17df76d3b9c5e3166f5c7e94c405528bc5cd0bf7ed6e182f2"
+  },
+  {
+    "entry": "RentalExtensionRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/RentalExtensionRepository.java"
+    ],
+    "sha256": "84b52c512fbb05388edc5a6a2a795f76a203f3d5d371419a257b5d9ee4d6d6fd"
+  },
+  {
+    "entry": "RentalContractRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/RentalContractRepository.java"
+    ],
+    "sha256": "ad0ff4757b4effc07b85c5e96006fc3a40dc4af5774a26a5fc552b99cb15bd1d"
+  },
+  {
+    "entry": "PaymentRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/PaymentRepository.java"
+    ],
+    "sha256": "b04d06b67e1a7127bfef608e248bc875702c08183422d09d2a146ce998fdfc7e"
+  },
+  {
+    "entry": "OtpTokenRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/OtpTokenRepository.java"
+    ],
+    "sha256": "e1c42a425725ce6783cf22b027ee88f081a2c2aed397067f9f74b73e0f01552f"
+  },
+  {
+    "entry": "NotificationRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/NotificationRepository.java"
+    ],
+    "sha256": "ea5c1b9283a87f9383b6317eead4bc27b89ac99396cced4db443c6fdd23113e5"
+  },
+  {
+    "entry": "MotorbikeRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/MotorbikeRepository.java"
+    ],
+    "sha256": "afea395a0ddbf8dab2953a11e3916619b539abcdaae8211af28df4500af6b3c8"
+  },
+  {
+    "entry": "MotorbikeImageRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/MotorbikeImageRepository.java"
+    ],
+    "sha256": "2c6358d43343895c478c466a106554786b3035d015521dc2f6fbc33f951e0393"
+  },
+  {
+    "entry": "MotorbikeCategoryRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/MotorbikeCategoryRepository.java"
+    ],
+    "sha256": "9c27e118bd54487adf7104c635d958d41fb4ea267f45398260b86e1a8b4ead71"
+  },
+  {
+    "entry": "MotorbikeBrandRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/MotorbikeBrandRepository.java"
+    ],
+    "sha256": "77a51de8205851da7f98567a061a29ff17dd3dedcae96b07a874108ecb8385fe"
+  },
+  {
+    "entry": "MaintenanceRecordRepository.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/repository/MaintenanceRecordRepository.java"
+    ],
+    "sha256": "101753f3a337d4cec709d816febcfc9b14797fc925d26b553c4e606bee49396c"
+  },
+  {
+    "entry": "MotorbikeRentalApplication.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/MotorbikeRentalApplication.java"
+    ],
+    "sha256": "5850cba67ba76f353d09511ded4692325853b0d3130161671841ad978affe2d9"
+  },
+  {
+    "entry": "UserRole.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/enums/UserRole.java"
+    ],
+    "sha256": "87a8e2a7bfe38a970b54ea4b4b9892b82ee5be0cb4873ef10eacf0a0d44805d8"
+  },
+  {
+    "entry": "RentalStatus.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/enums/RentalStatus.java"
+    ],
+    "sha256": "01a3c35dd324b51ae224eaaf617866f67c4c8ea99f1ce83bfdab0d19337462f7"
+  },
+  {
+    "entry": "MotorbikeStatus.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/enums/MotorbikeStatus.java"
+    ],
+    "sha256": "f2dc284067ef60f7c4075e26c43533679f03379e1686ddfa8a4743b05856a9a3"
+  },
+  {
+    "entry": "UserMapper.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/mapper/UserMapper.java"
+    ],
+    "sha256": "12ef242f45951b12d546aca98426402e5c75ce3e29420328cd2fdfe191f65b59"
+  },
+  {
+    "entry": "ReviewMapper.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/mapper/ReviewMapper.java"
+    ],
+    "sha256": "dae3f5166cce9d99b857cc5c84f68467232fafb1b05febd8722cf83aba575d2c"
+  },
+  {
+    "entry": "RentalOrderMapper.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/mapper/RentalOrderMapper.java"
+    ],
+    "sha256": "6cc033dad0eaa96cf2bb6838792938708e3a94d20a382a6b065c24d5117b904c"
+  },
+  {
+    "entry": "PaymentMapper.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/mapper/PaymentMapper.java"
+    ],
+    "sha256": "e5ca7a6785924f0931f969c7ded4b2d8124e87deabe51b6b4dc2bba35d6305c6"
+  },
+  {
+    "entry": "MotorbikeMapper.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/mapper/MotorbikeMapper.java"
+    ],
+    "sha256": "0d5697e8aada2c23455afd232bd73133b700de8f1ec4b132644dd565502e6fdf"
+  },
+  {
+    "entry": "GlobalExceptionHandler.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/exception/GlobalExceptionHandler.java"
+    ],
+    "sha256": "2d17624707a45d81d59b408ae19e16e35780697fab0deed4df39a24c0d1d6c38"
+  },
+  {
+    "entry": "ErrorCode.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/exception/ErrorCode.java"
+    ],
+    "sha256": "f2665e3ec3d962ad8caa9d725529253cce62c6350f04947e9d2799cd039c66cb"
+  },
+  {
+    "entry": "AppException.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/exception/AppException.java"
+    ],
+    "sha256": "52485cb72af0e0e32b5c52bae65cfd9ec52a41368ffa647c54655f24cdbe53d7"
+  },
+  {
+    "entry": "forgot-password-content.txt",
+    "paths": [
+      "src/main/resources/templates/auth/forgot-password-content.txt"
+    ],
+    "sha256": "f29b5c64a168ae1f99c383f757e60461e687e42211132422304a61316c1712f9"
+  },
+  {
+    "entry": "reset-password.html",
+    "paths": [
+      "src/main/resources/templates/auth/reset-password.html"
+    ],
+    "sha256": "8c47a185afdc0449a92544dec01db78d0f800e50f046ac1a7db8ce47faf67d08"
+  },
+  {
+    "entry": "register.html",
+    "paths": [
+      "src/main/resources/templates/auth/register.html"
+    ],
+    "sha256": "39e3d537af4f3853bee14d2888162e6dc40775c1cf725d6c264bbbe073c39bb7"
+  },
+  {
+    "entry": "register-content.txt",
+    "paths": [
+      "src/main/resources/templates/auth/register-content.txt"
+    ],
+    "sha256": "28b710285e4b141d70fdb7aaa065d566bae8f63f085ccb8d1f59c452f2ec9034"
+  },
+  {
+    "entry": "login.html",
+    "paths": [
+      "src/main/resources/templates/auth/login.html"
+    ],
+    "sha256": "ed51ec857306287128ad724786b301b83298d93df48bcb0f6b5fcc54d6ddb85b"
+  },
+  {
+    "entry": "login-content.txt",
+    "paths": [
+      "src/main/resources/templates/auth/login-content.txt"
+    ],
+    "sha256": "13b7b37ae1c2848ea8f242fe8e58441310df4dae8563f69bddc8e8e6575c2298"
+  },
+  {
+    "entry": "forgot-password.html",
+    "paths": [
+      "src/main/resources/templates/auth/forgot-password.html"
+    ],
+    "sha256": "6229712c305cb8c099b0fa9e183c6df391995cf984904d81e0d5b4f99577b280"
+  },
+  {
+    "entry": "travel-places.html",
+    "paths": [
+      "src/main/resources/templates/admin/travel-places.html"
+    ],
+    "sha256": "03ee99f7d79ea2952031787b83700a5a0b0d808cfe9e0335a98b96d519c76c87"
+  },
+  {
+    "entry": "staffs.html",
+    "paths": [
+      "src/main/resources/templates/admin/staffs.html"
+    ],
+    "sha256": "a7dad01ec2739bfac5533a10883adbf5108c5ee687e70f4469061e827d2fab87"
+  },
+  {
+    "entry": "settings.html",
+    "paths": [
+      "src/main/resources/templates/admin/settings.html"
+    ],
+    "sha256": "47c0c4c0af8b20cdc34482889790b7c20baee7a27667add9c5504e72094c5aab"
+  },
+  {
+    "entry": "reviews.html",
+    "paths": [
+      "src/main/resources/templates/admin/reviews.html"
+    ],
+    "sha256": "52b88ed210e89b8fbe9e02a168f87fde6995685da17d21ecee5b5ded7c3f4515"
+  },
+  {
+    "entry": "reports.html",
+    "paths": [
+      "src/main/resources/templates/admin/reports.html"
+    ],
+    "sha256": "0c9cc8c5f4f3509396f8ddea7a0e5166e61d17b470d228d84c5b6219878c4726"
+  },
+  {
+    "entry": "rental-orders.html",
+    "paths": [
+      "src/main/resources/templates/admin/rental-orders.html"
+    ],
+    "sha256": "cfbe8a36b053fc6f90eb9b873ca2809fdf3df1d7d3be2263c54dfba99a739376"
+  },
+  {
+    "entry": "payments.html",
+    "paths": [
+      "src/main/resources/templates/admin/payments.html"
+    ],
+    "sha256": "0ce821659c2720ed4dbe23e77c8dc23e0f72b29f355460a2cd4172f4934cb712"
+  },
+  {
+    "entry": "motorbikes.html",
+    "paths": [
+      "src/main/resources/templates/admin/motorbikes.html"
+    ],
+    "sha256": "2a6cc155a205dc735cd1c1743969c76c6618c1095dcebfaee8d9a6f06a2ee779"
+  },
+  {
+    "entry": "maintenance.html",
+    "paths": [
+      "src/main/resources/templates/admin/maintenance.html"
+    ],
+    "sha256": "9f898911b851c44d2a94c374bb11d9d0e700986dd9325fdbbb2c1c37b069775d"
+  },
+  {
+    "entry": "extensions.html",
+    "paths": [
+      "src/main/resources/templates/admin/extensions.html"
+    ],
+    "sha256": "4a70c44c837d2aa7e8ee4f25347fedc0fade8f16adb2571cd443d501ab324272"
+  },
+  {
+    "entry": "dashboard.html",
+    "paths": [
+      "src/main/resources/templates/admin/dashboard.html"
+    ],
+    "sha256": "3eb7c714279a71984dadd43036376ae31091e06f79c39e89848211b19b1d012e"
+  },
+  {
+    "entry": "customers.html",
+    "paths": [
+      "src/main/resources/templates/admin/customers.html"
+    ],
+    "sha256": "8703cf2d0c48448a9f423af130f686c6548a63f60a8c249b4871f242e38457b8"
+  },
+  {
+    "entry": "UserDocument.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/UserDocument.java"
+    ],
+    "sha256": "aecef621e603bf7e2ca63ea1f80743a45a5243d537d3f8aa9720deb46ad31ff1"
+  },
+  {
+    "entry": "User.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/User.java"
+    ],
+    "sha256": "c72aa6b71bdfab36ac18fa0770c8e4d4e2b627aec99bfbcffbf09cae3dc0aeb1"
+  },
+  {
+    "entry": "TravelPlace.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/TravelPlace.java"
+    ],
+    "sha256": "c3861cd38d9b97dd0c6ad25fb4678e78a1b4f52459eacd355e39b3f998884b82"
+  },
+  {
+    "entry": "TokenAuthentication.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/TokenAuthentication.java"
+    ],
+    "sha256": "9f7a585ffa4018831be61f1286cada37fa93cc317158fe8f1b98db675dca154c"
+  },
+  {
+    "entry": "ShopSettings.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/ShopSettings.java"
+    ],
+    "sha256": "c407ef3c16e426aed2fd71ba73f840d980b6a59dd902c07c6be45fb6689de4da"
+  },
+  {
+    "entry": "Review.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/Review.java"
+    ],
+    "sha256": "c58485048cf751a359a0d4679b28cecc52e3878ed60df047946ee0d951094d5d"
+  },
+  {
+    "entry": "RentalVehicleChange.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/RentalVehicleChange.java"
+    ],
+    "sha256": "c602c8812eb3a1bd353d9913a30356910ace53a38eee9c0b013969595492e67e"
+  },
+  {
+    "entry": "RentalOrder.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/RentalOrder.java"
+    ],
+    "sha256": "7540a70a5c85d73914800cf814ff381f604d0d487b5b8b4dea58f3cf1bc51324"
+  },
+  {
+    "entry": "RentalExtension.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/RentalExtension.java"
+    ],
+    "sha256": "808388f5065d7371a2c6357ae8e361244f7a62f7f393c935a3b0d15973a821cb"
+  },
+  {
+    "entry": "RentalContract.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/RentalContract.java"
+    ],
+    "sha256": "989ae60d8bf38aadac5315c7883d9cb8e417b38e2320a88ccb7447b66ada9407"
+  },
+  {
+    "entry": "Payment.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/Payment.java"
+    ],
+    "sha256": "595c60fe66b339e51900d546ec19f7d12fc6a6ec4e4af57705043e9f4a6dcab7"
+  },
+  {
+    "entry": "OtpToken.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/OtpToken.java"
+    ],
+    "sha256": "0efc5d4f9f769174473e4c019c863378f868e2a7ca5d8864072cf356c483d30f"
+  },
+  {
+    "entry": "Notification.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/Notification.java"
+    ],
+    "sha256": "8bde8771f9db7de9cee4126a640dea2f7dadcf90ac7fba63597994a9ce333a18"
+  },
+  {
+    "entry": "MotorbikeImage.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/MotorbikeImage.java"
+    ],
+    "sha256": "948001d7c9bc7ea24bd8b4dda95fdac16ddedd2a2abf83bc2f59a26dc75daea8"
+  },
+  {
+    "entry": "MotorbikeCategory.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/MotorbikeCategory.java"
+    ],
+    "sha256": "d1a57e4ec750b1d23efe200065a3b1a588e108203c10cd4e8ac87c04a73f2f4c"
+  },
+  {
+    "entry": "MotorbikeBrand.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/MotorbikeBrand.java"
+    ],
+    "sha256": "93aa19f75a779679397795d989218dfb58a5ebc0292c83b17a428cad8a75c3ea"
+  },
+  {
+    "entry": "Motorbike.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/Motorbike.java"
+    ],
+    "sha256": "9827ac009bd74e56cf0c21a110a82cd2b1ace14a77d517c518c9ccbd9b404e4a"
+  },
+  {
+    "entry": "MaintenanceRecord.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/entity/MaintenanceRecord.java"
+    ],
+    "sha256": "77631b2bc1ea8846b8a4b4f64bc49e4d6fe6465cae628358ba8c65bce3b278ad"
+  },
+  {
+    "entry": "staff.css",
+    "paths": [
+      "src/main/resources/static/css/staff.css"
+    ],
+    "sha256": "07f77b1326e144ff92583e99efbb6031b55555797d09984ee251048c03ef9f15"
+  },
+  {
+    "entry": "operations.css",
+    "paths": [
+      "src/main/resources/static/css/operations.css"
+    ],
+    "sha256": "00f3bbf0bc8c9a09ae22ec668285463fcfb7779d2cdf5c24ddd696bea4460aae"
+  },
+  {
+    "entry": "motorent.css",
+    "paths": [
+      "src/main/resources/static/css/motorent.css"
+    ],
+    "sha256": "c069874cbd81e4c2eaa0efc1a07c66c88bb65ed3f3fbb2ea847d4ca988904388"
+  },
+  {
+    "entry": "customer-workspace.css",
+    "paths": [
+      "src/main/resources/static/css/customer-workspace.css"
+    ],
+    "sha256": "e971d99e16f77263dc77cf7d8e3e460dc4605f94a15fa3778d4049152da61a1c"
+  },
+  {
+    "entry": "UploadConfig.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/UploadConfig.java"
+    ],
+    "sha256": "0064bda9906027170da39e40e9eed016cbe966a93bd48523de7a545c534bc9fe"
+  },
+  {
+    "entry": "ThymeleafConfig.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/ThymeleafConfig.java"
+    ],
+    "sha256": "1e4a979b614a693d39dfbd2bc4607f46fbdc739a8bcec02640d4bc8293fcf775"
+  },
+  {
+    "entry": "ShopDataMigration.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/ShopDataMigration.java"
+    ],
+    "sha256": "85fe4a7061ff66d659fd4882a64f38e0d6075224f51737c746b2718f0cf59e31"
+  },
+  {
+    "entry": "SecurityConfig.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/SecurityConfig.java"
+    ],
+    "sha256": "f472ee5c81f2b760da114e145d20088d74e588245d61d9edb5edb4e98b8f08b6"
+  },
+  {
+    "entry": "PreviewSecurityConfig.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/PreviewSecurityConfig.java"
+    ],
+    "sha256": "c3143dc0c84b0a0189bc510788f21d38920d53bb392f5fa419cd100e3a32d2b8"
+  },
+  {
+    "entry": "PayOSConfig.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/PayOSConfig.java"
+    ],
+    "sha256": "3e9a7b332e1f3ff098e634dc0fb8264eaedb3e07053c3e4b851de8cf7747e2a6"
+  },
+  {
+    "entry": "DatabaseSeeder.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/config/DatabaseSeeder.java"
+    ],
+    "sha256": "f6956f9c095af518aaf85ca8e91672a1def03c87aef1fa58b1d51046a8eabc95"
+  },
+  {
+    "entry": "StaffPageController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/StaffPageController.java"
+    ],
+    "sha256": "776398566188e98bf58187a2e10aae023b8d623258a0b9b0b57614e071ffb74f"
+  },
+  {
+    "entry": "ShopModel.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/ShopModel.java"
+    ],
+    "sha256": "7f4875dc7773d2bea4aa391c66892261f8aec8e06c197e45d3d80eee2018d59d"
+  },
+  {
+    "entry": "PreviewController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/PreviewController.java"
+    ],
+    "sha256": "a083922da6f1e3129aa2fc8eede6d904985be2608c3a58888e78dadb31fa7a67"
+  },
+  {
+    "entry": "NotificationPageController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/NotificationPageController.java"
+    ],
+    "sha256": "ad02da98c1ad0ccb12dc883c0673c94fd47d2bd96d599f11d83d1450a1256e4a"
+  },
+  {
+    "entry": "CustomerPageController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/CustomerPageController.java"
+    ],
+    "sha256": "7f32799d97b47ba09584692abcfb6ea168aeb5f253dbb7f3db03a98491ef1578"
+  },
+  {
+    "entry": "AuthPageController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/AuthPageController.java"
+    ],
+    "sha256": "6bf9767d838a9e349ff57280413a3bd6c2a41d29773fb1bd225d940cf07b13e1"
+  },
+  {
+    "entry": "AdminPageController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/web/AdminPageController.java"
+    ],
+    "sha256": "4ebe7f3477d3062ac1d50eac7bf6e7ea7337d390042c119a7b22ff6156bf5b0b"
+  },
+  {
+    "entry": "VehicleChangeController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/VehicleChangeController.java"
+    ],
+    "sha256": "a1c942acce43d9c7ed1f626238bd37b7d203c21ee5166c6d427d00344759f994"
+  },
+  {
+    "entry": "ShopController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/ShopController.java"
+    ],
+    "sha256": "686d8e5e2345fed559e68d2e1cf712e67ac5a86c07195e26636eb296b62d40f7"
+  },
+  {
+    "entry": "SettlementController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/SettlementController.java"
+    ],
+    "sha256": "f8356060d4c23757811f37ab236b98bb737616a64c2aedb596269c67825b4da3"
+  },
+  {
+    "entry": "ReviewApiController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/ReviewApiController.java"
+    ],
+    "sha256": "940a73b5c12959b8e09dcec8f0d5628ee3c3566755e89681a3448f0376e39c50"
+  },
+  {
+    "entry": "RentalOrderApiController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/RentalOrderApiController.java"
+    ],
+    "sha256": "23683747009ee886ec6d0ac7461e11c752303973536844237c798d1cca3b4f17"
+  },
+  {
+    "entry": "PaymentController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/PaymentController.java"
+    ],
+    "sha256": "93f3ac8808ec754c64c6403ab3e7d552034e07c72b26d3c060b8cc33339baee0"
+  },
+  {
+    "entry": "OperationsController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/OperationsController.java"
+    ],
+    "sha256": "c482664f64a5733822f2ad2f84dac9ad10ff60a4c51abc8f05b484dd5136770d"
+  },
+  {
+    "entry": "OcrApiController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/OcrApiController.java"
+    ],
+    "sha256": "7c7cfa5ce82a033fb909cd1b9fdd1f34490ad314ad8390b21825157f5991fea8"
+  },
+  {
+    "entry": "MotorbikeApiController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/MotorbikeApiController.java"
+    ],
+    "sha256": "6bf9904ba70649e215b8ad2af5abf32220bdc417f48e93689c8215fae744298d"
+  },
+  {
+    "entry": "ExtensionController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/ExtensionController.java"
+    ],
+    "sha256": "e4cb11a8053579704fcedb59c34f4021b92659fb913c633ab5b9fc04c4375784"
+  },
+  {
+    "entry": "AuthController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/AuthController.java"
+    ],
+    "sha256": "cb34e06065594dbc5716c55cef86cf89ecefa947babc04de51a8ea6373c25cd3"
+  },
+  {
+    "entry": "AccountController.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/controller/api/AccountController.java"
+    ],
+    "sha256": "eb6efe1abb909ab3db0c507ee00ce42f5db64cf5761bdc32a43f6a5a1ffed6e2"
+  },
+  {
+    "entry": "PageResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/common/PageResponse.java"
+    ],
+    "sha256": "5149a565e7a3ea0c7c2ea7cee3cfe030f0b37b29fac34c048c0603c475d5e67f"
+  },
+  {
+    "entry": "ApiResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/common/ApiResponse.java"
+    ],
+    "sha256": "ba7c719c712dfd370297df69d909a43d3f85d7673fdc53ff7f4828b75b92eab0"
+  },
+  {
+    "entry": "LoginResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/LoginResponse.java"
+    ],
+    "sha256": "855fb442ed34180831cdc46c8794b689c813beb9ea17e3dbd7305eb51f58acbf"
+  },
+  {
+    "entry": "DashboardStatsResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/DashboardStatsResponse.java"
+    ],
+    "sha256": "f80497fa76417937c5b5b3525fe43849ac6681a9a5bd53171f7195d5d08ac9e6"
+  },
+  {
+    "entry": "MaintenanceResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/MaintenanceResponse.java"
+    ],
+    "sha256": "ec837ee8f218f622bb40032237faa8e8a08d4eca45904f135a3b3fb43d545a7a"
+  },
+  {
+    "entry": "MotorbikeDetailResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/MotorbikeDetailResponse.java"
+    ],
+    "sha256": "edd3efebcc6a9b892ff16031f770f6303124528061babd85aaaeba64df2dafc2"
+  },
+  {
+    "entry": "MaintenanceRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/MaintenanceRequest.java"
+    ],
+    "sha256": "5df98d96c5e046c210a5650af88aca5cfe7c56ef04dc54a2d19349b48d56593c"
+  },
+  {
+    "entry": "LoginRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/LoginRequest.java"
+    ],
+    "sha256": "437ebcf77976480368450a61eb3b6bb9869fdb01e4482f687369dbeecc77f602"
+  },
+  {
+    "entry": "HandoverRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/HandoverRequest.java"
+    ],
+    "sha256": "bbe906d0defcb49a9e2182309d984f3cbeebf1f010df0198de42fde2f613e612"
+  },
+  {
+    "entry": "ForgotPasswordRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/ForgotPasswordRequest.java"
+    ],
+    "sha256": "82f78f88cadb0c4a40efdcc34974ba9c4ad393232ae19ea6724d8b2f484613b9"
+  },
+  {
+    "entry": "RejectRentalOrderRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/RejectRentalOrderRequest.java"
+    ],
+    "sha256": "593d9295eda2e51972c3623f0ed97d5661a1aeb9c80d6f96048a24e2dbe16a01"
+  },
+  {
+    "entry": "RegisterRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/RegisterRequest.java"
+    ],
+    "sha256": "24ce88da3982566ca444aa9cb03cdc0b95510bb58b8b52f3ed1c8fdc3995010c"
+  },
+  {
+    "entry": "MotorbikeRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/MotorbikeRequest.java"
+    ],
+    "sha256": "0c293ffc8bf8c0f5eba7028063e21eb910db49f7bc38a8b955c1fcafe268737a"
+  },
+  {
+    "entry": "RentalOrderRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/RentalOrderRequest.java"
+    ],
+    "sha256": "6428a41d3c52e732aee8909e8fb4f07b9300e97da40854c1ae59e3a2b263b523"
+  },
+  {
+    "entry": "RentalExtensionRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/RentalExtensionRequest.java"
+    ],
+    "sha256": "45f4b01db37a8d64d6d54cda806f6ed2e07582f778014d0e5dd8b0e4ab26648d"
+  },
+  {
+    "entry": "ResetPasswordRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/ResetPasswordRequest.java"
+    ],
+    "sha256": "2a8212682d5be1ce0be7d28419bb7ecc26a4ac6ae18fa387a221a85a8248de3b"
+  },
+  {
+    "entry": "VerifyOtpRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/VerifyOtpRequest.java"
+    ],
+    "sha256": "a3a5dc8c1bc412ef62f818fa042cf7b5b87ba1736cfdc36b8c89338284b24f1a"
+  },
+  {
+    "entry": "VehicleChangeRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/VehicleChangeRequest.java"
+    ],
+    "sha256": "0b27e9710fe3425a66737302181570ce88d08547321eb0b5270b070a632e9c72"
+  },
+  {
+    "entry": "UserUpdateRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/UserUpdateRequest.java"
+    ],
+    "sha256": "3d4306a378d43d7bee91560f75024bb43b28f58fcc06e8ad2673a03f097a24bf"
+  },
+  {
+    "entry": "StaffActionRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/StaffActionRequest.java"
+    ],
+    "sha256": "f117b6d0755d02ac42376a573378efd61f9def3cc30b11c5491a8baad78c56d6"
+  },
+  {
+    "entry": "ReviewRequest.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/request/ReviewRequest.java"
+    ],
+    "sha256": "edbbb6e0996e2e34ada4b15486bb1921eaf74f4f2bd4d17e713cfcc1cd183e63"
+  },
+  {
+    "entry": "MotorbikeResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/MotorbikeResponse.java"
+    ],
+    "sha256": "658300c8440c8472c42fc3a49a77ebea8b5f24c5039e6416b205d85f449ee4b3"
+  },
+  {
+    "entry": "UserResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/UserResponse.java"
+    ],
+    "sha256": "e9feb31e90435b4f274c46a547df7eb499c6a1d1a1cb02728f3d9d885fff06e0"
+  },
+  {
+    "entry": "ReviewResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/ReviewResponse.java"
+    ],
+    "sha256": "0fc700171b2216a734c88a198cb51aa380acddd8171ab3153602ca57bd1f0ea1"
+  },
+  {
+    "entry": "RentalOrderResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/RentalOrderResponse.java"
+    ],
+    "sha256": "6c6c13aefba74f7626c43bd4a5c5f308e9faa49d9e5948254c59e5c411db9cb6"
+  },
+  {
+    "entry": "RentalDetailResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/RentalDetailResponse.java"
+    ],
+    "sha256": "9c263fcb8031bef5e26a6fbdae7adaff0bd0d5575310c9a2b467ee521e3530d0"
+  },
+  {
+    "entry": "PaymentResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/PaymentResponse.java"
+    ],
+    "sha256": "4fc517a528ee7dac5d5a969172d0f1a4a64df161546912fa86f69c5da64b17a6"
+  },
+  {
+    "entry": "NotificationResponse.java",
+    "paths": [
+      "src/main/java/com/motorrent/motorbikerental/dto/response/NotificationResponse.java"
+    ],
+    "sha256": "9b65e07aea2f0a3028ec414be406e2fd4abe16c860df2a010ec504536a787b58"
+  }
+]

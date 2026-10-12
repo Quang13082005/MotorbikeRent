@@ -1,0 +1,75 @@
+# ==============================================================================
+# MOTORENT .GITIGNORE
+# ==============================================================================
+
+# Compiled class files & build directories
+target/
+target*/
+build/
+bin/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs & crash dumps
+*.log
+*.log.*
+*.log.gz
+hs_err_pid*.log
+replay_pid*.log
+spring.log*
+
+# Temporary test & runtime files
+cookie.txt
+
+# Local configuration & credentials
+application-local.properties
+*.local.properties
+local.properties
+.env
+.env.local
+*.pem
+*.key
+
+# IDE & Editor files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.metadata/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Uploaded user files (keep directory structure)
+uploads/*
+!uploads/.gitkeep
+!uploads/avatars/
+uploads/avatars/*
+!uploads/avatars/.gitkeep
+
+# Large database dumps & archived binary snapshots
+*.sql.gz
+before-*.sql
+database-before*.sql
+*.zip
+*.tar
+*.gz
+*.bak
+*.tsv
+source-before/
+**/source-before/**
+
+

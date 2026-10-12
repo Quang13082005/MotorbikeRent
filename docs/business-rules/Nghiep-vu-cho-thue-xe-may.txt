@@ -1,0 +1,1682 @@
+HÃY ĐỌC KỸ TOÀN BỘ PROJECT HIỆN TẠI CỦA TÔI TRƯỚC KHI CHỈNH SỬA.
+
+Tôi muốn bạn chỉnh lại và hoàn thiện toàn bộ luồng thuê xe, thanh toán, giao xe, gia hạn, đổi xe, trả xe sớm, trả xe trễ, hoàn cọc và quản lý dòng tiền theo đúng yêu cầu dưới đây.
+
+==================================================
+I. NGUYÊN TẮC LÀM VIỆC BẮT BUỘC
+==================================================
+
+QUAN TRỌNG:
+
+1. Không được tự ý làm phức tạp hệ thống bằng quá nhiều:
+- status
+- checkbox
+- approval step
+- workflow trung gian
+- entity mới
+- module mới
+
+nếu chưa thực sự cần thiết.
+
+2. Những việc Staff xử lý ngoài thực tế thì Staff tự làm ngoài thực tế.
+
+Ví dụ:
+- kiểm tra CCCD
+- đối chiếu khách hàng
+- giữ giấy tờ
+- kiểm tra xe
+- giao xe
+- nhận lại xe
+- thu tiền trực tiếp
+- hoàn tiền trực tiếp
+- hoàn cọc
+- thương lượng đổi xe
+- thống nhất địa điểm giao/đổi xe
+
+Website KHÔNG cần tạo một status hoặc checkbox cho từng việc trên.
+
+3. Website có nhiệm vụ chính:
+
+- kiểm tra điều kiện nghiệp vụ
+- kiểm tra lịch xe
+- chống double booking
+- ghi nhận kết quả cuối cùng
+- ghi nhận dòng tiền
+- lưu Staff thực hiện
+- lưu thời gian thực hiện
+- cập nhật trạng thái Rental
+- cập nhật trạng thái Vehicle
+- lưu lịch sử thay đổi
+- cung cấp dữ liệu để Admin quản lý doanh thu
+
+4. Phải tận dụng:
+
+- Entity
+- Repository
+- Service
+- Controller
+- DTO
+- API
+- Transaction
+- Payment
+- History
+- Database
+
+hiện có trước khi tạo mới.
+
+5. Không được phá các flow hiện đang chạy.
+
+6. Không được code ngay.
+
+Trước tiên phải:
+
+- đọc code
+- phân tích luồng hiện tại
+- chỉ ra phần nào đã có
+- phần nào thiếu
+- phần nào sai
+- file nào cần sửa
+- có cần migration database không
+- sau đó mới lập kế hoạch
+
+Chỉ sau khi tôi đồng ý kế hoạch thì mới được bắt đầu code.
+
+==================================================
+1. NGUYÊN TẮC QUẢN LÝ LỊCH XE
+==================================================
+
+Không được chỉ dựa vào:
+
+vehicle.status = AVAILABLE
+
+để kết luận một xe có thể cho thuê.
+
+Một xe có thể AVAILABLE ở hiện tại nhưng đã có Booking trong tương lai.
+
+Backend phải kiểm tra:
+
+booking/rental overlap
+
+theo khoảng thời gian thực tế.
+
+Mọi thao tác sau đều phải kiểm tra overlap:
+
+- tạo đơn
+- thay đổi thời gian thuê
+- nhận xe sớm
+- gia hạn
+- đổi xe trước khi giao
+- đổi xe khi đang thuê
+- gán xe thay thế
+- Staff chọn xe khác cho Customer
+
+Ví dụ:
+
+Customer A:
+
+01/10 08:00
+→
+03/10 18:00
+
+Customer B đã đặt cùng xe:
+
+04/10 08:00
+→
+06/10 18:00
+
+A muốn gia hạn đến:
+
+05/10 18:00
+
+=> Không được phép.
+
+Backend phải phát hiện overlap.
+
+QUAN TRỌNG:
+
+Availability phải được kiểm tra tối thiểu:
+
+1. khi hiển thị danh sách xe
+2. khi Staff chọn xe
+3. ngay trước khi commit thay đổi
+
+để tránh race condition và double booking.
+
+==================================================
+2. LUỒNG ĐẶT XE BAN ĐẦU
+==================================================
+
+Customer chọn:
+
+- xe
+- ngày/giờ nhận
+- ngày/giờ trả
+- địa điểm giao
+- địa điểm trả
+- thông tin hợp đồng
+- phương án CCCD
+
+Quy tắc cọc tài sản giữ nguyên theo project hiện tại.
+
+Phải phân biệt rõ:
+
+A. TIỀN ĐẶT TRƯỚC / GIỮ XE
+
+- thanh toán qua PayOS
+- là một phần tiền thuê
+- cộng phí giao/trả nếu có
+
+B. CỌC TÀI SẢN
+
+- không thanh toán PayOS lúc đặt xe
+- Staff thu khi giao xe
+- không được tính là doanh thu
+
+Ví dụ:
+
+Tiền thuê:
+600.000đ
+
+Đặt trước 50%:
+300.000đ
+
+Phí giao/trả:
+100.000đ
+
+Customer thanh toán PayOS:
+400.000đ
+
+Khi webhook PayOS xác nhận SUCCESS:
+
+Backend ghi transaction:
+
+type = BOOKING_PAYMENT
+amount = 400000
+direction = IN
+paymentMethod = PAYOS
+status = SUCCESS
+rentalId = ...
+createdAt = ...
+
+Sau đó đơn chuyển sang:
+
+Chờ Staff duyệt
+
+==================================================
+3. XỬ LÝ XE KHÔNG THỂ PHỤC VỤ VÀ QUẢN LÝ ĐỔI XE
+==================================================
+
+Hệ thống phải phân biệt RÕ 2 trường hợp:
+
+----------------------------------
+A. BEFORE_DELIVERY
+ĐỔI XE TRƯỚC KHI GIAO
+----------------------------------
+
+Customer:
+
+- đã tạo đơn
+- có thể đã thanh toán PayOS
+- CHƯA nhận xe
+- CHƯA sử dụng xe cũ
+
+----------------------------------
+B. DURING_RENTAL
+ĐỔI XE TRONG LÚC ĐANG THUÊ
+----------------------------------
+
+Customer:
+
+- đã nhận xe
+- đang sử dụng xe cũ
+- Rental đang RENTING
+
+Hai trường hợp này KHÔNG được dùng chung cách tính tiền.
+
+==================================================
+3A. ĐỔI XE TRƯỚC KHI GIAO
+==================================================
+
+Trường hợp:
+
+Customer đã đặt xe nhưng Staff phát hiện xe đó không thể phục vụ.
+
+Ví dụ:
+
+- xe hỏng
+- xe chưa sẵn sàng
+- xe gặp sự cố
+- cửa hàng không thể giao đúng chiếc xe Customer chọn
+
+KHÔNG được lập tức:
+
+- REJECTED
+- refund
+- tạo đơn mới
+
+Staff phải liên hệ Customer trước.
+
+Sau khi liên hệ có 2 lựa chọn:
+
+1. Customer không muốn thuê xe khác
+2. Customer muốn chọn xe khác
+
+==================================================
+3A.1. CUSTOMER KHÔNG MUỐN THUÊ XE KHÁC
+==================================================
+
+Staff tự hoàn tiền ngoài thực tế.
+
+Sau khi Staff đã thật sự hoàn tiền:
+
+Staff bấm:
+
+"Xác nhận đã hoàn tiền"
+
+Staff nhập:
+
+- số tiền hoàn
+- phương thức hoàn
+- lý do
+- ghi chú
+
+paymentMethod:
+
+- BANK_TRANSFER
+- CASH
+- PAYOS_REFUND nếu sau này project hỗ trợ
+- OTHER
+
+Backend ghi:
+
+Rental:
+REJECTED hoặc CANCELLED_BY_STAFF
+
+Refund:
+COMPLETED
+
+Transaction:
+
+type = BOOKING_REFUND
+amount = số tiền hoàn
+direction = OUT
+paymentMethod = ...
+status = SUCCESS
+staffId = ...
+rentalId = ...
+processedAt = ...
+
+Admin phải thấy:
+
+BOOKING_PAYMENT:
++400.000
+
+BOOKING_REFUND:
+-400.000
+
+Net revenue:
+0
+
+Không được đánh dấu refund COMPLETED trước khi Staff xác nhận đã hoàn tiền thực tế.
+
+==================================================
+3A.2. CUSTOMER MUỐN ĐỔI XE TRƯỚC KHI NHẬN
+==================================================
+
+Nếu Customer đồng ý chọn xe khác:
+
+KHÔNG:
+
+- hủy Rental
+- refund BOOKING_PAYMENT
+- tạo Rental mới
+
+BOOKING_PAYMENT cũ tiếp tục thuộc về Rental hiện tại.
+
+Staff có chức năng:
+
+"Đổi xe cho đơn"
+
+Hệ thống lấy:
+
+plannedPickupTime
+plannedReturnTime
+
+sau đó tìm các xe còn trống toàn bộ khoảng thời gian đó.
+
+Ví dụ:
+
+01/10 08:00
+→
+03/10 18:00
+
+Chỉ hiển thị xe không overlap khoảng này.
+
+==================================================
+3A.3. DANH SÁCH XE THAY THẾ
+==================================================
+
+Khi Staff đang gọi Customer:
+
+Hệ thống phải hiện danh sách xe trống để Staff đề xuất.
+
+Thông tin nên có:
+
+- hình ảnh
+- tên xe
+- loại xe
+- biển số
+- giá/ngày
+- tổng giá theo khoảng thuê
+- mức cọc
+- lịch trống
+- chênh lệch giá so với xe cũ
+
+Ví dụ:
+
+Vision 02
+
+- Trống toàn bộ lịch
+- 150.000đ/ngày
+- Tổng: 450.000đ
+- Chênh lệch: -50.000đ
+
+Air Blade 01
+
+- Trống toàn bộ lịch
+- 180.000đ/ngày
+- Tổng: 540.000đ
+- Chênh lệch: +40.000đ
+
+Staff có thể dùng danh sách này để tư vấn Customer.
+
+==================================================
+3A.4. BACKEND KIỂM TRA LẠI
+==================================================
+
+Sau khi Customer chọn xe mới:
+
+Backend phải kiểm tra availability thêm lần cuối.
+
+Nếu xe không còn trống:
+
+=> không cho xác nhận
+
+=> Staff chọn xe khác.
+
+==================================================
+3A.5. CÁCH TÍNH TIỀN BEFORE_DELIVERY
+==================================================
+
+Customer chưa sử dụng xe cũ.
+
+Do đó:
+
+=> tính lại TOÀN BỘ thời gian thuê theo giá xe mới.
+
+Không áp dụng:
+
+"phần cũ giá cũ, phần mới giá mới"
+
+==================================================
+3A.6. XE MỚI CÙNG GIÁ
+==================================================
+
+Ví dụ:
+
+Xe cũ:
+600.000đ
+
+Xe mới:
+600.000đ
+
+Đã PayOS:
+300.000đ
+
+=> giữ nguyên 300.000đ.
+
+Remaining:
+
+600.000 - 300.000
+= 300.000đ
+
+Khi giao xe Staff thu:
+300.000đ
+
+==================================================
+3A.7. XE MỚI RẺ HƠN
+==================================================
+
+Ví dụ:
+
+Xe cũ:
+600.000đ
+
+Customer đã trả:
+300.000đ
+
+Xe mới:
+500.000đ
+
+Remaining:
+
+500.000 - 300.000
+= 200.000đ
+
+Staff chỉ thu:
+200.000đ
+
+Không refund rồi thu lại không cần thiết.
+
+Nếu:
+
+đã trả:
+300.000đ
+
+tổng đơn mới:
+250.000đ
+
+=> dư:
+50.000đ
+
+Hệ thống hiển thị:
+
+Credit / Refund:
+50.000đ
+
+Không được tạo remainingAmount âm.
+
+Staff hoàn phần dư.
+
+Backend ghi:
+
+BOOKING_ADJUSTMENT_REFUND
+hoặc transaction tương đương.
+
+==================================================
+3A.8. XE MỚI ĐẮT HƠN
+==================================================
+
+Ví dụ:
+
+Xe cũ:
+600.000đ
+
+Customer đã trả:
+300.000đ
+
+Xe mới:
+800.000đ
+
+Quy tắc đặt trước:
+
+50% tiền thuê
++
+phí giao/trả
+
+Required booking payment mới:
+400.000đ
+
+Đã trả:
+300.000đ
+
+=> trả thêm:
+100.000đ
+
+Hệ thống tạo PayOS:
+
+100.000đ
+
+Chỉ khi webhook SUCCESS:
+
+Backend mới:
+
+- xác nhận xe mới
+- cập nhật giá đơn
+- cập nhật amountPaid
+- lưu history
+
+Nếu Customer không thanh toán:
+
+=> chưa đổi xe
+
+Staff tiếp tục trao đổi:
+
+- xe khác
+hoặc
+- refund + cancel
+
+==================================================
+3A.9. PHÍ GIAO/TRẢ KHI ĐỔI XE TRƯỚC KHI GIAO
+==================================================
+
+Nếu phí giao/trả thay đổi:
+
+phải tính lại.
+
+Ví dụ:
+
+phí cũ:
+100.000đ
+
+phí mới:
+150.000đ
+
+=> chênh:
+50.000đ
+
+Nếu phải trả thêm:
+
+=> cộng vào PayOS.
+
+Nếu thấp hơn:
+
+=> giảm remainingAmount hoặc credit.
+
+==================================================
+3A.10. HISTORY BEFORE_DELIVERY
+==================================================
+
+Lưu:
+
+rentalId
+changeType = BEFORE_DELIVERY
+oldVehicleId
+newVehicleId
+oldRentalAmount
+newRentalAmount
+oldDeliveryReturnFee
+newDeliveryReturnFee
+amountAlreadyPaid
+additionalPaymentAmount
+refundAmount
+reason
+changedByStaffId
+changedAt
+
+Không xóa dấu vết xe ban đầu.
+
+==================================================
+3B. ĐỔI XE TRONG LÚC ĐANG THUÊ / KHI GIA HẠN
+==================================================
+
+Customer đang RENTING.
+
+Ví dụ:
+
+Customer thuê Vision:
+
+01/10
+→
+03/10
+
+Ngày 03/10 Customer muốn gia hạn đến:
+
+05/10
+
+Nhưng Vision đã có booking:
+
+04/10
+→
+06/10
+
+Backend phát hiện overlap.
+
+=> không cho gia hạn bằng Vision.
+
+Customer thấy:
+
+"Xe hiện tại đã có lịch đặt tiếp theo nên không thể gia hạn đến thời gian bạn yêu cầu."
+
+Hiển thị thêm:
+
+"Vui lòng liên hệ cửa hàng để được hỗ trợ đổi xe hoặc trao đổi phương án phù hợp."
+
+Kèm:
+
+- Hotline
+- nút gọi
+- nút liên hệ
+
+==================================================
+3B.1. DANH SÁCH XE TRỐNG CHO STAFF
+==================================================
+
+Staff mở:
+
+"Đổi xe / Tiếp tục thuê bằng xe khác"
+
+Hệ thống phải dựa vào:
+
+- thời điểm dự kiến đổi xe
+- plannedReturnTime mới
+
+để tìm xe còn trống toàn bộ khoảng tiếp theo.
+
+Ví dụ:
+
+đổi xe:
+03/10 18:00
+
+thuê đến:
+05/10 18:00
+
+=> kiểm tra:
+
+03/10 18:00
+→
+05/10 18:00
+
+Danh sách hiển thị:
+
+- hình ảnh
+- tên xe
+- loại xe
+- biển số
+- giá/ngày
+- giá phần thuê tiếp
+- mức cọc
+- lịch trống
+- chênh lệch dự kiến
+
+Ví dụ:
+
+Air Blade 02
+
+- Trống
+- 180.000đ/ngày
+- Thuê thêm: 360.000đ
+
+Vision 05
+
+- Trống
+- 150.000đ/ngày
+- Thuê thêm: 300.000đ
+
+Wave 03
+
+- Trống
+- 100.000đ/ngày
+- Thuê thêm: 200.000đ
+
+Staff dùng danh sách này để đề xuất với Customer.
+
+==================================================
+3B.2. STAFF VÀ CUSTOMER TRAO ĐỔI THỰC TẾ
+==================================================
+
+Staff tự trao đổi:
+
+- đổi ở đâu
+- Staff có mang xe đến không
+- Customer đang ở đâu
+- phí hỗ trợ bao nhiêu
+- Customer có đồng ý hay không
+
+Sau khi thống nhất:
+
+Staff nhập:
+
+- xe mới
+- ngày/giờ đổi
+- plannedReturnTime mới
+- phí giao/đổi
+- lý do
+
+==================================================
+3B.3. CÁCH TÍNH TIỀN DURING_RENTAL
+==================================================
+
+Customer đã sử dụng xe cũ.
+
+Do đó:
+
+phần đã sử dụng:
+=> giữ nguyên giá cũ.
+
+phần thời gian tiếp theo:
+=> tính theo giá xe mới.
+
+Ví dụ:
+
+Vision:
+150.000đ/ngày
+
+đã dùng:
+3 ngày
+
+=> giữ nguyên.
+
+Đổi sang Air Blade:
+
+180.000đ/ngày
+
+thuê tiếp:
+2 ngày
+
+=> 360.000đ
+
+Không tính lại 3 ngày trước.
+
+==================================================
+3B.4. PHÍ GIAO / ĐỔI XE
+==================================================
+
+Nếu Staff mang xe mới đến:
+
+Staff nhập:
+
+Vehicle Change Fee:
+100.000đ
+
+Ví dụ:
+
+Extension:
+360.000đ
+
+Change Fee:
+100.000đ
+
+Total:
+460.000đ
+
+Phải tách:
+
+EXTENSION_PAYMENT = 360.000đ
+VEHICLE_CHANGE_FEE = 100.000đ
+
+==================================================
+3B.5. PAYOS CHO ĐỔI XE KHI ĐANG THUÊ
+==================================================
+
+Sau khi thống nhất:
+
+Hệ thống tạo PayOS:
+
+460.000đ
+
+Customer thanh toán.
+
+Chỉ sau PayOS SUCCESS:
+
+Backend mới:
+
+- xác nhận extension
+- cập nhật plannedReturnTime
+- xác nhận xe thay thế
+- ghi EXTENSION_PAYMENT
+- ghi VEHICLE_CHANGE_FEE
+- lưu history
+
+Không đổi ngày trả trước khi PayOS thành công.
+
+==================================================
+3B.6. THỰC HIỆN ĐỔI XE THỰC TẾ
+==================================================
+
+Sau thanh toán:
+
+Staff thực hiện:
+
+- đem xe mới nếu cần
+- nhận lại xe cũ
+- kiểm tra xe cũ
+- giao xe mới
+
+Không cần nhiều checkbox.
+
+Sau khi xong:
+
+Staff bấm:
+
+"Xác nhận đã đổi xe"
+
+Backend lưu:
+
+actualVehicleChangeTime
+changedByStaffId
+oldVehicleId
+newVehicleId
+
+QUAN TRỌNG:
+
+xe cũ chỉ được AVAILABLE
+sau khi Staff xác nhận đã thật sự nhận lại xe cũ.
+
+Không được giải phóng xe cũ chỉ vì PayOS thành công.
+
+==================================================
+3B.7. CỌC TÀI SẢN KHI ĐỔI XE
+==================================================
+
+Nếu cọc xe mới = xe cũ:
+
+=> giữ nguyên.
+
+Nếu cọc mới cao hơn:
+
+Staff thu thêm phần chênh.
+
+Ví dụ:
+
+cọc cũ:
+1.000.000đ
+
+cọc mới:
+2.000.000đ
+
+=> thu thêm:
+1.000.000đ
+
+Transaction:
+
+type = ASSET_DEPOSIT_ADDITIONAL
+amount = 1000000
+direction = IN
+
+Không tính là doanh thu.
+
+Nếu cọc mới thấp hơn:
+
+=> chưa cần hoàn ngay.
+
+Giữ đến cuối Rental.
+
+==================================================
+3B.8. HISTORY DURING_RENTAL
+==================================================
+
+Lưu:
+
+rentalId
+changeType = DURING_RENTAL
+oldVehicleId
+newVehicleId
+oldVehiclePrice
+newVehiclePrice
+extensionStartTime
+newPlannedReturnTime
+extraRentalAmount
+vehicleChangeFee
+additionalDepositAmount
+reason
+changedByStaffId
+changedAt
+actualVehicleChangeTime
+
+==================================================
+3C. PHÂN BIỆT 2 LOẠI ĐỔI XE
+==================================================
+
+BEFORE_DELIVERY:
+
+- chưa nhận xe
+- tính lại toàn bộ theo xe mới
+- giữ BOOKING_PAYMENT cũ
+- xử lý chênh lệch
+- Rental giữ nguyên ID
+
+DURING_RENTAL:
+
+- đã dùng xe cũ
+- giữ nguyên phần đã dùng
+- phần tiếp theo theo giá xe mới
+- không sửa transaction cũ
+- phí đổi xe riêng
+- PayOS phần phát sinh
+- Staff xác nhận đổi thực tế
+- xe cũ mới được giải phóng
+
+==================================================
+4. LUỒNG GIAO XE
+==================================================
+
+Trước khi giao xe Staff tự:
+
+- kiểm tra CCCD
+- đối chiếu hợp đồng
+- giữ giấy tờ
+- kiểm tra khách
+- thu tiền còn lại
+- thu cọc tài sản
+
+KHÔNG cần checkbox.
+
+Trước khi bấm "Đã giao xe":
+
+Staff nhập:
+
+- tiền thuê còn lại đã thu
+- cọc tài sản đã thu
+- paymentMethod
+
+paymentMethod:
+
+- CASH
+- BANK_TRANSFER
+- OTHER
+
+Ví dụ:
+
+Rental remaining:
+300.000đ
+
+Asset deposit:
+2.000.000đ
+
+Khi Staff bấm:
+
+"Đã giao xe"
+
+Backend lưu:
+
+actualPickupTime
+deliveredByStaffId
+deliveredAt
+
+Rental = RENTING
+
+Vehicle = RENTED / IN_USE
+
+Transaction:
+
+type = RENTAL_REMAINING
+amount = 300000
+direction = IN
+paymentMethod = ...
+staffId = ...
+rentalId = ...
+
+Cọc:
+
+type = ASSET_DEPOSIT
+amount = 2000000
+direction = IN
+paymentMethod = ...
+staffId = ...
+rentalId = ...
+
+QUAN TRỌNG:
+
+ASSET_DEPOSIT không tính doanh thu.
+
+==================================================
+5. LUỒNG GIA HẠN BÌNH THƯỜNG
+==================================================
+
+Customer:
+
+Đơn thuê của tôi
+→ Gia hạn
+
+Customer chọn:
+
+newPlannedReturnTime
+
+bấm:
+
+"Gửi yêu cầu gia hạn"
+
+Backend kiểm tra xe.
+
+Nếu không overlap:
+
+=> cho gửi.
+
+Staff duyệt.
+
+Nếu Staff bấm:
+
+"Xác nhận gia hạn"
+
+KHÔNG được đổi ngày trả ngay.
+
+Extension:
+
+WAITING_FOR_PAYMENT
+
+Customer thấy:
+
+"Yêu cầu gia hạn đã được chấp nhận. Vui lòng thanh toán phí gia hạn."
+
+Hệ thống tạo PayOS.
+
+Ví dụ:
+
+2 ngày
+×
+180.000đ
+=
+360.000đ
+
+Sau PayOS SUCCESS:
+
+Transaction:
+
+type = EXTENSION_PAYMENT
+amount = 360000
+direction = IN
+paymentMethod = PAYOS
+
+Sau đó mới:
+
+- cập nhật plannedReturnTime
+- cập nhật extension = COMPLETED / PAID
+- cộng vào revenue
+
+Luồng:
+
+Request
+→ availability
+→ Staff approve
+→ PayOS
+→ SUCCESS
+→ update date
+
+==================================================
+6. TRẢ XE SỚM
+==================================================
+
+Customer có:
+
+"Yêu cầu trả xe sớm"
+
+Khi bấm:
+
+Không tự động COMPLETED.
+Không tự refund.
+
+Hiện:
+
+"Vui lòng liên hệ cửa hàng để xác nhận việc trả xe sớm và chính sách hoàn tiền."
+
+Kèm hotline.
+
+Staff và Customer trao đổi.
+
+Staff quyết định:
+
+- có hoàn hay không
+- hoàn bao nhiêu
+
+Nếu không hoàn:
+
+refundAmount = 0
+
+Nếu có hoàn:
+
+Staff nhập:
+
+refundAmount
+reason
+paymentMethod
+note
+
+Ví dụ:
+
+refundAmount = 150000
+
+reason =
+"Khách trả sớm 1 ngày"
+
+paymentMethod =
+BANK_TRANSFER
+
+Khi Staff xác nhận hoàn tất:
+
+Backend lưu:
+
+actualReturnTime
+completedByStaffId
+completedAt
+
+Rental = COMPLETED
+
+Vehicle = AVAILABLE
+
+Nếu hoàn tiền:
+
+type = EARLY_RETURN_REFUND
+amount = 150000
+direction = OUT
+staffId = ...
+rentalId = ...
+
+Nếu refund = 0:
+
+vẫn phải audit được Staff xử lý.
+
+==================================================
+7. TRẢ XE BÌNH THƯỜNG
+==================================================
+
+Staff tự thực hiện:
+
+- kiểm tra xe
+- chìa khóa
+- phụ kiện
+- phí phát sinh
+- tiền còn thiếu
+- hoàn cọc thực tế
+
+Sau khi xử lý xong:
+
+Staff bấm:
+
+"Hoàn tất đơn"
+
+Backend lưu:
+
+actualReturnTime
+completedByStaffId
+completedAt
+
+Rental = COMPLETED
+
+Vehicle = AVAILABLE
+
+Customer được đánh giá.
+
+Không cần:
+
+- chờ kiểm tra xe
+- chờ hoàn cọc
+- đã hoàn cọc
+- chờ hoàn tất
+
+==================================================
+8. HOÀN CỌC
+==================================================
+
+Nếu Staff đã hoàn cọc:
+
+Backend phải ghi:
+
+type = ASSET_DEPOSIT_REFUND
+amount = ...
+direction = OUT
+paymentMethod = CASH / BANK_TRANSFER
+staffId = ...
+rentalId = ...
+
+Nếu khấu trừ:
+
+Staff nhập:
+
+originalDeposit
+refundAmount
+deductionAmount
+reason
+
+Ví dụ:
+
+Deposit:
+2.000.000đ
+
+Deduction:
+300.000đ
+
+Refund:
+1.700.000đ
+
+Ghi:
+
+ASSET_DEPOSIT_REFUND:
+1.700.000đ
+
+DEPOSIT_DEDUCTION:
+300.000đ
+
+QUAN TRỌNG:
+
+cọc ban đầu không phải revenue.
+
+Chỉ khoản khấu trừ hợp lệ mới có thể được xem là khoản thu nếu business rule cho phép.
+
+==================================================
+9. TRẢ XE TRỄ
+==================================================
+
+Phân biệt:
+
+EXTENSION
+và
+LATE RETURN
+
+Extension:
+
+- được duyệt
+- thanh toán
+- update ngày trả
+
+Late return:
+
+- quá hạn
+- chưa có extension hợp lệ
+
+Nếu trả trễ:
+
+Hệ thống cảnh báo.
+
+Staff liên hệ Customer.
+
+Staff nhập:
+
+lateFee
+reason
+paymentMethod
+
+Ví dụ:
+
+lateFee:
+300.000đ
+
+reason:
+"Trả xe trễ 1 ngày"
+
+Transaction:
+
+type = LATE_FEE
+amount = 300000
+direction = IN
+staffId = ...
+rentalId = ...
+
+==================================================
+10. NHẬN XE SỚM
+==================================================
+
+Nếu Customer muốn nhận sớm:
+
+Backend kiểm tra:
+
+- xe thực tế đang có
+- không overlap
+- Staff đồng ý
+
+Không cần status mới.
+
+Staff thực tế giao xe.
+
+Sau đó bấm:
+
+"Đã giao xe"
+
+Backend lưu:
+
+actualPickupTime
+
+Nếu phát sinh phí:
+
+Staff có thể ghi nhận.
+
+Nếu cửa hàng cho nhận sớm miễn phí:
+
+không cần charge.
+
+==================================================
+11. TRANSACTION / DÒNG TIỀN
+==================================================
+
+Tất cả tiền vào/ra phải quản lý thống nhất.
+
+Nếu chưa có Transaction phù hợp:
+
+hãy đề xuất hoặc tạo.
+
+Ví dụ:
+
+Transaction
+
+id
+rentalId
+type
+amount
+direction
+paymentMethod
+status
+staffId
+createdAt
+note
+
+type:
+
+BOOKING_PAYMENT
+BOOKING_REFUND
+BOOKING_ADJUSTMENT_REFUND
+RENTAL_REMAINING
+EXTENSION_PAYMENT
+DELIVERY_FEE
+RETURN_FEE
+VEHICLE_CHANGE_FEE
+LATE_FEE
+EARLY_RETURN_REFUND
+ASSET_DEPOSIT
+ASSET_DEPOSIT_ADDITIONAL
+ASSET_DEPOSIT_REFUND
+DEPOSIT_DEDUCTION
+OTHER
+
+direction:
+
+IN
+OUT
+
+paymentMethod:
+
+PAYOS
+CASH
+BANK_TRANSFER
+OTHER
+
+==================================================
+12. DOANH THU ADMIN
+==================================================
+
+Admin phải xem được:
+
+- tiền PayOS
+- tiền Staff thu trực tiếp
+- tiền thuê
+- phí giao/trả
+- extension
+- vehicle change fee
+- late fee
+- refund
+- cọc đang giữ
+- cọc đã hoàn
+- deduction
+- net revenue
+
+Revenue:
+
+rental income
++
+delivery/return fee
++
+extension
++
+vehicle change fee
++
+late fee
++
+valid income
+-
+refund
+
+Asset deposit:
+
+quản lý riêng.
+
+Không cộng cọc vào revenue.
+
+==================================================
+13. THÔNG TIN THỜI GIAN
+==================================================
+
+Kiểm tra project đã có chưa.
+
+Nếu chưa:
+
+plannedPickupTime
+plannedReturnTime
+actualPickupTime
+actualReturnTime
+
+Ngoài ra nếu cần:
+
+actualVehicleChangeTime
+
+planned:
+
+theo hợp đồng.
+
+actual:
+
+thời gian thực tế.
+
+==================================================
+14. STAFF AUDIT
+==================================================
+
+Mọi thao tác tài chính hoặc nghiệp vụ quan trọng phải lưu:
+
+staffId
+processedAt
+rentalId
+amount nếu có
+type
+
+Admin phải biết Staff nào:
+
+- thu tiền
+- thu cọc
+- refund
+- hoàn cọc
+- nhập late fee
+- xử lý early return
+- đổi xe
+- giao xe
+- hoàn tất đơn
+
+==================================================
+15. TEST CASE BẮT BUỘC
+==================================================
+
+A. BOOKING
+
+1. PayOS booking thành công.
+2. Ghi BOOKING_PAYMENT.
+3. Không double booking.
+
+B. BEFORE DELIVERY CHANGE
+
+4. Xe ban đầu không phục vụ được.
+5. Staff liên hệ Customer.
+6. Customer không đổi xe → refund.
+7. BOOKING_REFUND đúng.
+8. Customer muốn đổi xe.
+9. Danh sách chỉ hiện xe thực sự trống.
+10. Xe cùng giá.
+11. Xe rẻ hơn.
+12. Xe đắt hơn.
+13. Xe đắt hơn tạo PayOS phần chênh.
+14. Chỉ đổi sau SUCCESS.
+15. Rental giữ nguyên ID.
+16. BOOKING_PAYMENT cũ giữ nguyên.
+17. Lưu oldVehicle/newVehicle.
+
+C. DELIVERY
+
+18. Staff giao xe.
+19. Ghi RENTAL_REMAINING.
+20. Ghi ASSET_DEPOSIT.
+21. Deposit không cộng revenue.
+22. Lưu deliveredByStaffId.
+23. Lưu actualPickupTime.
+
+D. EXTENSION
+
+24. Gia hạn xe trống.
+25. Staff approve.
+26. Không đổi ngày trước payment.
+27. PayOS extension SUCCESS.
+28. Sau SUCCESS mới update date.
+
+E. DURING RENTAL CHANGE
+
+29. Gia hạn overlap.
+30. Hiện hotline.
+31. Staff thấy danh sách xe thay thế.
+32. Chỉ hiện xe trống trong khoảng tiếp theo.
+33. Backend kiểm tra lại.
+34. Phần cũ giữ nguyên.
+35. Phần tiếp theo theo xe mới.
+36. Change fee riêng.
+37. PayOS đúng số tiền.
+38. Không update ngày trước SUCCESS.
+39. Staff xác nhận đổi thực tế.
+40. Chỉ sau xác nhận mới AVAILABLE xe cũ.
+41. Lưu DURING_RENTAL history.
+42. Deposit additional không tính revenue.
+
+F. EARLY RETURN
+
+43. Customer gửi yêu cầu.
+44. Không tự completed.
+45. Staff nhập refund.
+46. Ghi EARLY_RETURN_REFUND.
+47. Staff audit đúng.
+
+G. NORMAL RETURN
+
+48. Staff hoàn tất.
+49. Rental COMPLETED.
+50. Vehicle AVAILABLE.
+51. Customer đánh giá được.
+
+H. DEPOSIT
+
+52. Hoàn cọc.
+53. Transaction OUT.
+54. Deduction đúng.
+55. Deposit không revenue.
+
+I. LATE RETURN
+
+56. Cảnh báo overdue.
+57. Staff nhập late fee.
+58. Transaction IN.
+
+J. ADMIN
+
+59. Admin xem đúng PayOS.
+60. Admin xem đúng Staff collection.
+61. Admin xem đúng refund.
+62. Admin xem đúng cọc đang giữ.
+63. Admin xem đúng net revenue.
+64. Admin truy vết được Staff.
+
+K. REGRESSION
+
+65. Không làm hỏng các flow hiện tại.
+
+==================================================
+16. CÁCH LÀM VIỆC
+==================================================
+
+BƯỚC 1:
+
+Đọc code liên quan:
+
+- rental/order
+- booking
+- vehicle
+- extension
+- PayOS
+- payment
+- transaction
+- deposit
+- staff
+- admin statistics
+- rating
+- history
+
+BƯỚC 2:
+
+CHƯA CODE.
+
+Hãy trả lời trước:
+
+- luồng hiện tại
+- entity/table
+- API hiện có
+- service hiện có
+- phần có thể reuse
+- phần thiếu
+- phần sai
+- file dự kiến sửa
+- migration cần hay không
+- nguy cơ ảnh hưởng flow nào
+
+BƯỚC 3:
+
+Lập kế hoạch theo phase nhỏ.
+
+Gợi ý:
+
+Phase 1:
+Transaction / financial recording
+
+Phase 2:
+Before-delivery vehicle change
+
+Phase 3:
+Delivery financial recording
+
+Phase 4:
+Extension + PayOS
+
+Phase 5:
+During-rental vehicle change
+
+Phase 6:
+Early return / refund
+
+Phase 7:
+Deposit / return / late fee
+
+Phase 8:
+Admin revenue/statistics
+
+Phase 9:
+Regression tests
+
+BƯỚC 4:
+
+CHỜ TÔI DUYỆT.
+
+Không được tự động code.
+
+BƯỚC 5:
+
+Sau khi tôi đồng ý:
+
+- làm từng phase
+- không làm nhiều phase cùng lúc
+- sau mỗi phase chạy test
+- báo file đã sửa
+- báo API đã thêm/sửa
+- báo DB migration
+- báo test result
+- giải thích flow
+
+BƯỚC 6:
+
+Không được tự ý sửa các module ngoài phạm vi.
+
+==================================================
+17. NGUYÊN TẮC CUỐI CÙNG
+==================================================
+
+Triết lý:
+
+"Staff xử lý nghiệp vụ ngoài thực tế.
+Website quản lý lịch xe, trạng thái chính, dòng tiền, audit và kết quả cuối cùng."
+
+Phần bắt buộc:
+
+- không double booking
+- availability phải dựa vào time overlap
+- không chỉ dựa vào vehicle.status
+- BEFORE_DELIVERY và DURING_RENTAL phải tách business rule
+- gia hạn chỉ đổi ngày sau PayOS SUCCESS
+- đổi xe phải kiểm tra lịch xe mới
+- xe cũ chỉ AVAILABLE sau khi Staff nhận lại xe thật
+- mọi tiền Staff thu/hoàn phải ghi transaction
+- mọi payment/refund phải audit được
+- cọc tách khỏi revenue
+- Admin phải xem được net revenue
+- không tự thêm hàng loạt status
+- không tự thêm checkbox
+- không tự làm hệ thống phức tạp hơn yêu cầu

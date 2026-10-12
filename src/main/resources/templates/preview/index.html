@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi" class="h-full">
+<head th:replace="~{fragments/head :: head(title='Preview Hub')}"></head>
+<body class="h-full bg-surface text-on-surface font-sans antialiased flex flex-col items-center justify-center relative selection:bg-primary-container selection:text-on-primary-container p-4">
+  <div class="absolute inset-x-0 top-0 h-full radial-glow pointer-events-none z-0"></div>
+
+  <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/5 shadow-glass relative z-10 max-w-4xl w-full text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary-container shadow-glow-orange-sm mb-6">
+      <span class="material-symbols-outlined text-[32px] text-on-primary-container" style="font-variation-settings:'FILL' 1">two_wheeler</span>
+    </div>
+    
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">MotoRent Đà Nẵng</h1>
+    <p class="text-secondary mb-10 max-w-lg mx-auto">
+      Các trang bên dưới sử dụng dữ liệu của hệ thống. Quyền truy cập phụ thuộc tài khoản đang đăng nhập.<br>
+      Vui lòng chọn Role để xem giao diện tương ứng.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <!-- Customer Role -->
+      <a th:href="@{/customer/home}" class="group p-6 rounded-2xl bg-surface-container-lowest/50 border border-white/10 hover:border-primary/50 hover:bg-surface-container-low transition-all text-left flex flex-col justify-between hover:-translate-y-1 shadow-sm hover:shadow-glow-orange-sm">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[24px]">person</span>
+          </div>
+          <h2 class="text-xl font-bold text-on-surface mb-2">Customer</h2>
+          <p class="text-sm text-secondary line-clamp-2 mb-6">Giao diện khách hàng: Tìm xe, đặt xe, thanh toán, quản lý đơn hàng.</p>
+        </div>
+        <span class="text-sm font-bold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
+          Xem giao diện <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </span>
+      </a>
+
+      <!-- Staff Role -->
+      <a th:href="@{/staff/dashboard}" class="group p-6 rounded-2xl bg-surface-container-lowest/50 border border-white/10 hover:border-sky-400/50 hover:bg-surface-container-low transition-all text-left flex flex-col justify-between hover:-translate-y-1 shadow-sm hover:shadow-lg">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-sky-400/20 text-sky-400 flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[24px]">badge</span>
+          </div>
+          <h2 class="text-xl font-bold text-on-surface mb-2">Staff</h2>
+          <p class="text-sm text-secondary line-clamp-2 mb-6">Giao diện nhân viên: Giao/nhận xe, duyệt đơn, hỗ trợ khách hàng.</p>
+        </div>
+        <span class="text-sm font-bold text-sky-400 flex items-center gap-1 group-hover:gap-2 transition-all">
+          Xem giao diện <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </span>
+      </a>
+
+      <!-- Admin Role -->
+      <a th:href="@{/admin/dashboard}" class="group p-6 rounded-2xl bg-surface-container-lowest/50 border border-white/10 hover:border-error/50 hover:bg-surface-container-low transition-all text-left flex flex-col justify-between hover:-translate-y-1 shadow-sm hover:shadow-lg">
+        <div>
+          <div class="w-12 h-12 rounded-xl bg-error/20 text-error flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+          </div>
+          <h2 class="text-xl font-bold text-on-surface mb-2">Admin</h2>
+          <p class="text-sm text-secondary line-clamp-2 mb-6">Giao diện quản trị: Thống kê, quản lý nhân viên, danh mục xe, cài đặt.</p>
+        </div>
+        <span class="text-sm font-bold text-error flex items-center gap-1 group-hover:gap-2 transition-all">
+          Xem giao diện <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- Auth link -->
+    <div class="mt-10 pt-6 border-t border-white/5">
+      <a th:href="@{/auth/login}" class="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-white/20 text-sm font-medium hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">login</span>
+        Xem trang Đăng nhập / Đăng ký
+      </a>
+    </div>
+  </div>
+</body>
+</html>

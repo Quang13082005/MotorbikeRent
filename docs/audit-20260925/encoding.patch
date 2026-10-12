@@ -1,0 +1,224 @@
+--- src\main\resources\templates\customer\profile.html
++++ src\main\resources\templates\customer\profile.html
+@@ -20,7 +20,7 @@
+         </div>
+ <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Tài Khoản &amp; Hồ Sơ Cá Nhân</h1>
+ <p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-1">
+-          Quản lý thông tin định danh, bảo mật tài khoản và xác thực giấy tá» thuê xe tại MotoRent ÄÃ  Nẵng
++          Quản lý thông tin định danh, bảo mật tài khoản và xác thực giấy tờ thuê xe tại MotoRent Đà Nẵng
+         </p>
+ </div>
+ </div>
+@@ -63,7 +63,7 @@
+ <div class="hidden px-space-md py-space-sm rounded-xl bg-tertiary-container/30 text-tertiary flex items-center justify-between transition-all" id="save-toast">
+ <div class="flex items-center gap-2">
+ <span class="material-symbols-outlined text-[20px]">task_alt</span>
+-<span class="font-label-md text-label-md">Äã cập nhật thông tin cá nhân thành công!</span>
++<span class="font-label-md text-label-md">Đã cập nhật thông tin cá nhân thành công!</span>
+ </div>
+ <button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('save-toast').classList.add('hidden')">
+ <span class="material-symbols-outlined text-[18px]">close</span>
+@@ -77,7 +77,7 @@
+ </div>
+ <div class="flex flex-col">
+ <span class="font-label-lg text-label-lg text-on-surface font-semibold">Ảnh chân dung đại diện</span>
+-<span class="font-body-sm text-body-sm text-on-surface-variant">Äá»‹nh dạng JPG, PNG dung lượng không vượt quá 5MB. Ảnh rõ mặt giúp đối chiếu khi giao xe nhanh hơn.</span>
++<span class="font-body-sm text-body-sm text-on-surface-variant">Định dạng JPG, PNG dung lượng không vượt quá 5MB. Ảnh rõ mặt giúp đối chiếu khi giao xe nhanh hơn.</span>
+ </div>
+ </div>
+ <label class="cursor-pointer flex-shrink-0 flex items-center gap-2 px-space-md py-2 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-colors">
+@@ -91,11 +91,11 @@
+ <!-- Full Name -->
+ <div class="flex flex-col gap-1.5">
+ <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="input-fullname">
+-<span class="">Há» và tên</span>
++<span class="">Họ và tên</span>
+ <span class="text-error">*</span>
+ </label>
+ <div class="relative">
+-<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-fullname" type="text" value="Trần Thị Bích Ngá»c">
++<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-fullname" type="text" value="Trần Thị Bích Ngọc">
+ <span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">person</span>
+ </div>
+ </div>
+@@ -108,7 +108,7 @@
+ </label>
+ <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-semibold">
+ <span class="material-symbols-outlined text-[14px]">check_circle</span>
+-                  Äã xác thực Zalo / SMS
++                  Đã xác thực Zalo / SMS
+                 </span>
+ </div>
+ <div class="relative">
+@@ -120,12 +120,12 @@
+ <div class="flex flex-col gap-1.5">
+ <div class="flex items-center justify-between">
+ <label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1" for="input-email">
+-<span class="">Äá»‹a chỉ email nhận hóa đơn</span>
++<span class="">Địa chỉ email nhận hóa đơn</span>
+ <span class="text-error">*</span>
+ </label>
+ <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-semibold">
+ <span class="material-symbols-outlined text-[14px]">check_circle</span>
+-                  Äã liên kết
++                  Đã liên kết
+                 </span>
+ </div>
+ <div class="relative">
+@@ -150,9 +150,9 @@
+ </div>
+ <!-- Full Address (Full-width on 2 columns) -->
+ <div class="md:col-span-2 flex flex-col gap-1.5">
+-<label class="font-label-md text-label-md text-on-surface-variant" for="input-address">Äá»‹a chỉ thÆ°á»ng trú / Lưu trú hiện tại</label>
++<label class="font-label-md text-label-md text-on-surface-variant" for="input-address">Địa chỉ thường trú / Lưu trú hiện tại</label>
+ <div class="relative">
+-<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-address" type="text" value="PhÆ°á»ng Hải Châu 1, Quận Hải Châu, TP. ÄÃ  Nẵng">
++<input class="w-full px-space-md py-2.5 rounded-xl bg-surface-container text-on-surface font-body-md text-body-md focus:bg-surface-container-high focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed" disabled="" id="input-address" type="text" value="Phường Hải Châu 1, Quận Hải Châu, TP. Đà Nẵng">
+ <span class="absolute right-3 top-2.5 material-symbols-outlined text-[20px] text-secondary">location_on</span>
+ </div>
+ </div>
+@@ -274,7 +274,7 @@
+     });
+ 
+     if (!pwd || pwd.length === 0) {
+-      lbl.innerText = 'Äá»™ mạnh mật khẩu: Chưa nhập';
++      lbl.innerText = 'Độ mạnh mật khẩu: Chưa nhập';
+       lbl.className = 'font-label-sm text-label-sm text-on-surface-variant';
+       return;
+     }
+@@ -287,19 +287,19 @@
+ 
+     if (score === 1) {
+       s1.classList.add('bg-error');
+-      lbl.innerText = 'Äá»™ mạnh mật khẩu: Yếu (Cần thêm chữ hoa/số)';
++      lbl.innerText = 'Độ mạnh mật khẩu: Yếu (Cần thêm chữ hoa/số)';
+       lbl.className = 'font-label-sm text-label-sm text-error';
+     } else if (score === 2) {
+       s1.classList.add('bg-primary-container');
+       s2.classList.add('bg-primary-container');
+-      lbl.innerText = 'Äá»™ mạnh mật khẩu: Trung bình';
++      lbl.innerText = 'Độ mạnh mật khẩu: Trung bình';
+       lbl.className = 'font-label-sm text-label-sm text-primary';
+     } else if (score >= 3) {
+       s1.classList.add('bg-tertiary');
+       s2.classList.add('bg-tertiary');
+       s3.classList.add('bg-tertiary');
+       if (score === 4) s4.classList.add('bg-tertiary');
+-      lbl.innerText = 'Äá»™ mạnh mật khẩu: Rất mạnh & An toàn';
++      lbl.innerText = 'Độ mạnh mật khẩu: Rất mạnh & An toàn';
+       lbl.className = 'font-label-sm text-label-sm text-tertiary';
+     }
+   }
+@@ -332,7 +332,7 @@
+     if (!isChecked) {
+       btn.className = 'w-12 h-6 rounded-full bg-tertiary-container relative transition-colors focus:outline-none';
+       circle.style.transform = 'translateX(0)';
+-      alert('Äã kích hoạt xác thực 2 bước (2FA) bảo vệ tài khoản.');
++      alert('Đã kích hoạt xác thực 2 bước (2FA) bảo vệ tài khoản.');
+     } else {
+       btn.className = 'w-12 h-6 rounded-full bg-surface-container-highest relative transition-colors focus:outline-none';
+       circle.style.transform = 'translateX(-24px)';
+--- src\main\resources\templates\customer\rental-history.html
++++ src\main\resources\templates\customer\rental-history.html
+@@ -85,20 +85,20 @@
+ 
+ <!-- 3. RENTAL HISTORY CARDS LIST -->
+ <div class="flex flex-col space-y-space-md">
+-<!-- ITEM 1: Honda Air Blade 160cc ABS (Hoàn thành - ÄÃƒ ÄÃNH GIÃ) -->
++<!-- ITEM 1: Honda Air Blade 160cc ABS (Hoàn thành - ĐÃ ĐÁNH GIÁ) -->
+ <article th:each="rental : ${rentals}" th:data-status="${rental.status}" class="rental-item rounded-2xl bg-surface-container/90 backdrop-blur-xl p-space-md md:p-space-lg shadow-xl transition-all duration-300 hover:shadow-2xl flex flex-col space-y-space-md group">
+ <!-- Top Card Header: Contract Code & Status Badge -->
+ <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-sm border-b border-surface-container-highest/40">
+ <div class="flex items-center gap-space-sm flex-wrap">
+ <span class="px-2.5 py-1 rounded-lg bg-surface-container-low font-label-md text-label-md text-primary font-bold tracking-wide" th:text="${rental.orderCode}">
+-                  #HÄ-MR-2026081201
++                  #HĐ-MR-2026081201
+                 </span>
+ <span class="font-body-sm text-body-sm text-on-surface-variant" th:text="'Mã đơn: ' + ${rental.orderCode}">Mã đơn: #MR-2026081201</span>
+ </div>
+ <div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full font-label-md text-label-md font-bold"
+      th:classappend="${rental.status == 'COMPLETED' ? 'bg-tertiary-container/20 text-tertiary' : (rental.status == 'CANCELLED' ? 'bg-surface-variant text-on-surface-variant' : 'bg-error-container/20 text-error')}">
+ <span class="w-2 h-2 rounded-full" th:classappend="${rental.status == 'COMPLETED' ? 'bg-tertiary' : (rental.status == 'CANCELLED' ? 'bg-on-surface-variant' : 'bg-error')}"></span>
+-<span th:text="${rental.status == 'COMPLETED' ? 'Hoàn thành' : (rental.status == 'CANCELLED' ? 'Äã hủy' : 'Từ chối')}">Hoàn thành xuất sắc</span>
++<span th:text="${rental.status == 'COMPLETED' ? 'Hoàn thành' : (rental.status == 'CANCELLED' ? 'Đã hủy' : 'Từ chối')}">Hoàn thành xuất sắc</span>
+ </div>
+ </div>
+ <!-- Main Info Split: Image & Specs -->
+@@ -106,8 +106,8 @@
+ <!-- Vehicle Photography Slot -->
+ <div class="md:col-span-4 relative rounded-xl overflow-hidden bg-surface-container-low aspect-[16/10] group">
+ <img alt="Motorbike" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" th:src="@{'/' + ${rental.motorbike.imagePrimary}}">
+-<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/80 backdrop-blur-sm text-[11px] font-label-sm text-on-surface font-semibold" th:text="'Äá»i ' + ${rental.motorbike.year}">
+-                  Äá»i 2024
++<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-surface-container-lowest/80 backdrop-blur-sm text-[11px] font-label-sm text-on-surface font-semibold" th:text="'Đời ' + ${rental.motorbike.year}">
++                  Đời 2024
+                 </div>
+ </div>
+ <!-- Vehicle Detail & Timeline -->
+@@ -120,13 +120,13 @@
+ </div>
+ <div class="text-right">
+ <span class="font-headline-sm text-headline-sm text-primary font-extrabold" th:text="${#numbers.formatDecimal(rental.totalPrice, 0, 'COMMA', 0, 'POINT')} + 'đ'">740.000đ</span>
+-<p class="font-label-sm text-label-sm text-tertiary" th:text="${rental.status == 'COMPLETED' ? 'Äã hoàn tất thanh toán' : (rental.status == 'CANCELLED' ? 'Äã hủy đơn' : 'Từ chối duyá»‡t')}">Äã thanh toán đủ</p>
++<p class="font-label-sm text-label-sm text-tertiary" th:text="${rental.status == 'COMPLETED' ? 'Đã hoàn tất thanh toán' : (rental.status == 'CANCELLED' ? 'Đã hủy đơn' : 'Từ chối duyệt')}">Đã thanh toán đủ</p>
+ </div>
+ </div>
+ <!-- Rejection reason -->
+ <div th:if="${rental.status == 'REJECTED'}" class="mt-2 p-3 rounded-lg bg-error-container/10 border border-error/20 flex flex-col gap-1">
+   <span class="font-label-sm text-label-sm text-error font-bold uppercase">Lý do từ chối:</span>
+-  <span class="font-body-sm text-body-sm text-on-surface" th:text="${rental.rejectionReason}">Xe không đủ Ä‘iá»u kiện cho thuê</span>
++  <span class="font-body-sm text-body-sm text-on-surface" th:text="${rental.rejectionReason}">Xe không đủ điều kiện cho thuê</span>
+ </div>
+ </div>
+ <!-- Pickup & Return Schedule Route Matrix -->
+@@ -136,7 +136,7 @@
+ <span class="material-symbols-outlined text-primary text-[20px] mt-0.5">flight_land</span>
+ <div class="flex flex-col">
+ <span class="font-label-sm text-label-sm text-on-surface-variant" th:text="'Nhận xe: ' + ${#temporals.format(rental.pickupDate, 'HH:mm • EEEE, dd/MM')}">Nhận xe: 08:00 • Thứ Năm, 12/08</span>
+-<span class="font-body-sm text-body-sm text-on-surface font-semibold" th:text="${rental.pickupAddress != null ? rental.pickupAddress : 'Nhận tại cửa hàng'}">Sân bay Quốc tế ÄÃ  Nẵng</span>
++<span class="font-body-sm text-body-sm text-on-surface font-semibold" th:text="${rental.pickupAddress != null ? rental.pickupAddress : 'Nhận tại cửa hàng'}">Sân bay Quốc tế Đà Nẵng</span>
+ </div>
+ </div>
+ <!-- Trả xe -->
+@@ -152,7 +152,7 @@
+ <div class="flex items-center gap-space-md font-body-sm text-body-sm text-on-surface-variant">
+ <span class="flex items-center gap-1">
+ <span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+-                    Thá»i gian thuê: <strong class="text-on-surface font-semibold" th:text="${rental.days} + ' ngày'">3 ngày</strong>
++                    Thời gian thuê: <strong class="text-on-surface font-semibold" th:text="${rental.days} + ' ngày'">3 ngày</strong>
+ </span>
+ <span class="">•</span>
+ <span class="flex items-center gap-1">
+@@ -166,7 +166,7 @@
+ <div th:if="${false}" class="rounded-xl bg-surface-container-low/90 p-space-sm flex flex-col space-y-1">
+ <div class="flex items-center justify-between">
+ <div class="flex items-center gap-1.5">
+-<span class="font-label-sm text-label-sm text-on-surface-variant">Äánh giá của bạn:</span>
++<span class="font-label-sm text-label-sm text-on-surface-variant">Đánh giá của bạn:</span>
+ <div class="flex items-center text-primary">
+ <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+ <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+@@ -174,12 +174,12 @@
+ <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+ <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+ </div>
+-<span class="font-label-sm text-label-sm text-primary font-bold">5.0 / Tuyệt vá»i</span>
++<span class="font-label-sm text-label-sm text-primary font-bold">5.0 / Tuyệt vời</span>
+ </div>
+ <span class="font-label-sm text-label-sm text-on-surface-variant">Gửi ngày 16/08/2026</span>
+ </div>
+ <p class="font-body-sm text-body-sm text-on-surface italic">
+-                “Xe chạy cực êm, leo đèo Hải Vân bốc và phanh ABS rất an toàn. Chủ xe giao nhận cực đúng giá» ngay cửa ga Ä‘ến.â€
++                “Xe chạy cực êm, leo đèo Hải Vân bốc và phanh ABS rất an toàn. Chủ xe giao nhận cực đúng giờ ngay cửa ga đến.”
+               </p>
+ </div>
+ <!-- Action Buttons Footer -->
+@@ -191,7 +191,7 @@
+ </a>
+ <button th:if="${rental.status == 'COMPLETED'}" class="h-10 px-space-md rounded-xl bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md transition-all flex items-center gap-1.5" type="button">
+ <span class="material-symbols-outlined text-[18px]">rate_review</span>
+-<span class="">Äánh giá</span>
++<span class="">Đánh giá</span>
+ </button>
+ </div>
+ <a th:href="@{/customer/motorbike-list}" class="h-10 px-space-lg rounded-xl bg-surface-container-high text-on-surface border border-surface-variant hover:bg-surface-bright font-label-md text-label-md transition-all flex items-center gap-1.5">

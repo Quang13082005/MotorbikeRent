@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:replace="~{fragments/head :: head(title='Trang chủ')}"></head>
+<body class="home-page bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-500 selection:text-white">
+  <!-- Header -->
+  <div th:replace="~{fragments/customer-header :: header(isHome=true)}"></div>
+
+  <main>
+<!-- BEGIN: HeroSection -->
+<section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden" id="hero">
+<!-- Cinematic Sunset Danang Background directly using Reference Image -->
+<div class="absolute inset-0 z-0"><img alt="Cung đường ven biển Sơn Trà ngắm toàn cảnh vịnh biển và hoàng hôn Đà Nẵng cùng xe máy" class="w-full h-full object-cover object-center filter brightness-90 contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq5UDzK3f1VYMASgUdJADsrWB1zU1xfeVSgilqAw_hPsDlo-UyM3khFMnHzRaYd1sUW4MbsVmISid_7jyvzMQUIpHs6vq-SHVTK2NIDjXGftmuFNGQeqIUs9At_Q-7mc42yBxrF5FbeY0vHMMU9zPWfJQgMt0tMq1k2ZzwwdI1WTaZxlHXmU49_UMO9iUAiBfbgk69fRjqdbqoA7lmrTE7lsFhj8r5v2loqqHFBm1b7fT7iy7D-VcSBQ"><div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/40 to-slate-950/80"></div><div class="absolute inset-0 bg-radial-at-c from-transparent via-black/30 to-black/70"></div></div>
+<!-- Hero Content -->
+<div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center text-white mt-12">
+<!-- Quality Badge -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium text-amber-200 mb-6 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Xem danh sách xe và kiểm tra lịch trống theo thời gian bạn muốn thuê
+      </div>
+<!-- Main Headline matching image typography -->
+<h1 class="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-tight text-white drop-shadow-md">
+        Thuê Xe Máy Dễ Dàng
+      </h1>
+<p class="mt-4 text-lg sm:text-2xl font-light text-slate-100 max-w-3xl mx-auto drop-shadow">
+        Khám phá Đà Nẵng tự do - Giao xe tận nơi chỉ sau 15 phút
+      </p>
+<p class="mt-2 text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-normal">&nbsp;xe ga &amp; xe số đời mới êm ái • Trang bị&nbsp; 2 nón bảo hiểm&nbsp;</p>
+<!-- Action Buttons -->
+<!-- 3 Key Value Commitments replacing single manager badge -->
+<div class="mt-14 pt-8 border-t border-white/15 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+<!-- Commitment 1 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Giao Xe Tận Nơi</h4>
+<p class="text-xs text-slate-300">Sân bay, khách sạn &amp; ga Đà Nẵng 15-30p</p>
+</div>
+</div>
+<!-- Commitment 2 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Xe Ga &amp; Xe Số Đời Mới</h4>
+<p class="text-xs text-slate-300">Bảo dưỡng định kỳ, lốp gai sâu, phanh tốt</p>
+</div>
+</div>
+<!-- Commitment 3 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Đồng Hành &amp; Cứu Hộ 24/7</h4>
+<p class="text-xs text-slate-300">Đủ 2 mũ bảo hiểm, hỗ trợ kỹ thuật</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: QuickBookingFilter -->
+<section class="relative z-20 -mt-8 max-w-6xl mx-auto px-4" id="quick-book"><div class="bg-white rounded-2xl p-4 sm:p-6 shadow-2xl border border-slate-200/80">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100 text-xs text-slate-500">
+<div class="inline-flex items-center gap-2 font-medium text-slate-700">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="">⚡ Kiểm tra xe còn trống theo thời gian thực</span>
+</div>
+<div class="hidden sm:flex items-center gap-3 text-[11px] text-slate-400">
+<span class="">•</span>
+</div>
+</div>
+<form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-end" id="home-search" method="get" action="/customer/motorbike-list">
+<!-- Field 1: Ngày & giờ nhận xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="pickup-datetime">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Ngày &amp; giờ nhận xe</span>
+</label>
+<input class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="pickup-datetime" name="pickup" required="" type="datetime-local">
+</div>
+<!-- Field 2: Ngày & giờ trả xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="return-datetime">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Ngày &amp; giờ trả xe</span>
+</label>
+<input class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="return-datetime" name="returnAt" required="" type="datetime-local">
+</div>
+<!-- Field 3: Loại xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="vehicle-type">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<circle cx="18.5" cy="17.5" r="3.5"></circle>
+<circle cx="5.5" cy="17.5" r="3.5"></circle>
+<path d="M12 17.5V14l-3-3 4-3 2 3h2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Loại xe</span>
+</label>
+<select class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="vehicle-type" name="category">
+<option value="all">Tất cả xe (Ga, Số, Côn)</option>
+<option value="xe-ga">Xe ga (Vision, Lead, Air Blade, SH)</option>
+<option value="xe-so">Xe số (Wave Alpha, Sirius, Future)</option>
+<option value="xe-con-tay">Xe côn (Exciter, Winner X, PG-1)</option>
+</select>
+</div>
+<!-- Field 4: Địa điểm nhận xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="pickup-location">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Địa điểm nhận xe</span>
+</label>
+<select class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="pickup-location" name="location"><option value="store">Nhận xe ngay tại cửa hàng (Miễn phí)</option><option value="maps_delivery">Chọn vị trí giao xe trên bản đồ trong TP. Đà Nẵng (Tính phí)</option></select>
+</div>
+<!-- Field 5: CTA Kiểm tra xe trống -->
+<div>
+<button class="w-full py-2.5 px-4 bg-gradient-to-r from-amber-500 to-brand-sunset hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl shadow-lg shadow-amber-500/25 border border-amber-300/30 transition duration-200 flex items-center justify-center gap-2 active:scale-95 text-xs sm:text-sm h-[42px]" type="submit">
+<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="tracking-wide">Kiểm tra xe trống</span>
+</button>
+</div>
+</form>
+</div></section>
+<!-- END: QuickBookingFilter -->
+<section id="bang-gia-xe" class="customer-workspace home-fleet"><div class="cw-row"><div><p class="fleet-eyebrow">KHÁM PHÁ ĐỘI XE</p><h2>Xe đề cử cho chuyến đi</h2></div><a class="cw-btn" href="/customer/motorbike-list">Xem tất cả xe →</a></div><p class="cw-muted">Tối đa 6 xe mỗi loại, ưu tiên đánh giá cao trong danh mục hiện có.</p><nav class="catalog-tabs" aria-label="Loại xe đề cử"><a th:href="@{/(recommended='xe-ga')}+'#bang-gia-xe'" th:classappend="${recommended=='xe-ga'?'active':''}" th:attr="aria-current=${recommended=='xe-ga'?'page':null}">Xe ga</a><a th:href="@{/(recommended='xe-so')}+'#bang-gia-xe'" th:classappend="${recommended=='xe-so'?'active':''}" th:attr="aria-current=${recommended=='xe-so'?'page':null}">Xe số</a><a th:href="@{/(recommended='xe-con-tay')}+'#bang-gia-xe'" th:classappend="${recommended=='xe-con-tay'?'active':''}" th:attr="aria-current=${recommended=='xe-con-tay'?'page':null}">Xe côn tay</a></nav><p class="cw-muted" th:text="${#lists.size(motorbikes)+' xe phù hợp'}"></p><p class="cw-card" th:if="${#lists.isEmpty(motorbikes)}">Không có xe phù hợp. Hãy thử lịch hoặc bộ lọc khác.</p><div class="bike-catalog-grid"><article class="cw-card bike-card" th:each="m : ${motorbikes}"><img class="cw-hero-image" style="height:210px" th:src="${display.image(m.imagePrimary)}" th:alt="${m.name}"><p class="cw-muted" th:text="${m.brand+' · '+m.category}"></p><h2 th:text="${m.name}"></h2><div class="cw-row"><span class="cw-price" th:text="${display.money(m.pricePerDay)+' / ngày'}"></span><span class="cw-tag" th:text="${display.status(m.status)}"></span></div><div class="cw-facts"><span th:text="${m.cc+' cc · '+m.year}"></span><span th:text="${m.rating+' / 5 · '+m.reviewCount+' đánh giá'}"></span></div><a class="cw-btn primary" data-preserve-query th:href="@{/customer/motorbike-detail/{id}(id=${m.id})}">Xem chi tiết</a></article></div></section>
+<!-- BEGIN: InteractiveLocationSlider -->
+<section class="py-20 bg-slate-900 text-white relative overflow-hidden" id="dia-diem-goi-y">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="flex flex-wrap items-center justify-between gap-4 mb-8"><div><h2 class="text-3xl font-bold">Gợi ý điểm đến</h2><p class="text-slate-400 mt-2">Danh mục địa điểm do cửa hàng cập nhật.</p></div><a class="cw-btn" href="/customer/travel-places">Xem tất cả địa điểm</a></div>
+<p th:if="${#lists.isEmpty(travelPlaces)}" class="cw-card">Cửa hàng chưa công bố địa điểm gợi ý.</p>
+<div th:unless="${#lists.isEmpty(travelPlaces)}">
+<article th:each="p, iter : ${travelPlaces}" class="dest-slide p-6 sm:p-10 rounded-3xl border border-white/10 bg-slate-950/60" th:classappend="${iter.first ? '' : 'hidden'}">
+<img th:if="${p.safeImageUrl!=null}" th:src="${p.safeImageUrl}" th:alt="${p.name}" loading="lazy" referrerpolicy="no-referrer" style="width:100%;max-height:320px;object-fit:contain;border-radius:16px;margin-bottom:20px"><p th:if="${p.safeImageUrl!=null and p.imageCredit!=null}" class="text-xs text-slate-400 mb-4"><span th:text="${p.imageCredit}"></span> · <a th:if="${p.safeImageSourceUrl!=null}" th:href="${p.safeImageSourceUrl}" target="_blank" rel="noopener noreferrer">Nguồn ảnh</a> · <a th:if="${p.safeImageLicenseUrl!=null}" th:href="${p.safeImageLicenseUrl}" target="_blank" rel="noopener noreferrer">Giấy phép</a></p><p class="text-amber-400 mb-3" th:text="${p.area}"></p><h3 class="text-2xl font-bold mb-3" th:text="${p.name}"></h3>
+<p class="text-slate-400 mb-3" th:text="${p.address}"></p><p class="text-slate-300 mb-5" th:text="${p.description}"></p>
+<p class="text-xs text-slate-400 mb-5" th:if="${!#strings.isEmpty(p.reviewedAt)}" th:text="${'Thông tin nguồn: '+p.reviewedAt}"></p>
+<a class="cw-btn" th:if="${p.safeMapsUrl != null}" th:href="${p.safeMapsUrl}" target="_blank" rel="noopener noreferrer">Xem trên bản đồ</a>
+</article>
+<div class="flex items-center justify-center gap-3 mt-6" th:if="${#lists.size(travelPlaces)>1}"><button class="cw-btn" id="slider-prev-btn" aria-label="Địa điểm trước">←</button><div id="slider-dots" class="flex gap-2"><button type="button" th:each="p,iter : ${travelPlaces}" th:attr="aria-label=${'Xem địa điểm '+(iter.index+1)}" class="w-2.5 h-2 rounded-full bg-white/30"></button></div><button class="cw-btn" id="slider-next-btn" aria-label="Địa điểm tiếp theo">→</button></div>
+</div></div></section>
+<!-- END: InteractiveLocationSlider -->
+
+<!-- BEGIN: BookingProcess -->
+<section class="py-20 bg-white" id="quy-trinh">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs uppercase tracking-widest text-amber-600 font-bold bg-amber-100 px-3 py-1 rounded-full">Đơn Giản &amp; Minh Bạch</span>
+<h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">Quy Trình Thuê Xe 4 Bước Nhanh Gọn</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative"><!-- Step 1 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+1
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Chọn Mẫu Xe Ưa Thích</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Tham khảo bảng giá các dòng xe ga hoặc xe số phù hợp với sở thích và nhu cầu hành trình của bạn.</p>
+</div>
+<!-- Step 2 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+2
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Gửi Yêu Cầu &amp; Giấy Tờ</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Khai báo giấy tờ của người thuê và người đồng hành nếu có. Khoản bảo đảm tài sản theo từng xe được hiển thị trong bảng giá; khoản thanh toán giữ xe được tính riêng theo cấu hình cửa hàng.</p>
+</div>
+<!-- Step 3 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+3
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Nhân viên xác nhận đơn</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Nhân viên chốt thời gian, biển số xe và địa điểm hẹn gặp (Sân bay Đà Nẵng, ga tàu hoặc sảnh khách sạn....).</p>
+</div>
+<!-- Step 4 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+4
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Nhận Xe &amp; Khởi Hành</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Kiểm tra xe tại chỗ, nhận kèm 2 mũ bảo hiểm đạt chuẩn</p>
+</div></div>
+</div>
+</section>
+<!-- END: BookingProcess -->
+<section id="danh-gia" class="customer-workspace"><h2>Khách hàng chia sẻ</h2><p th:if="${#lists.isEmpty(recentReviews)}">Chưa có đánh giá.</p><article class="cw-card" th:each="r : ${recentReviews}"><strong th:text="${r.rating+' / 5'}"></strong><p th:text="${r.comment}"></p></article></section>
+
+
+
+
+<!-- BEGIN: InteractiveScripts -->
+<!-- JavaScript for Fleet Tab Filtering -->
+<script data-purpose="fleet-tab-filter">
+    function filterFleet(category) {
+      // Update Tab Styles
+      const tabs = document.querySelectorAll('.fleet-tab');
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-slate-900', 'text-white');
+        tab.classList.add('bg-white', 'text-slate-700');
+      });
+      event.target.classList.add('bg-slate-900', 'text-white');
+      event.target.classList.remove('bg-white', 'text-slate-700');
+
+      // Filter Cards
+      const cards = document.querySelectorAll('.fleet-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        if (category === 'all' || cat.includes(category)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+<!-- JavaScript for Destinations Interactive Carousel -->
+<script data-purpose="destinations-slider">
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.dest-slide');
+    const dotsContainer = document.getElementById('slider-dots');
+    const prevBtn = document.getElementById('slider-prev-btn');
+    const nextBtn = document.getElementById('slider-next-btn');
+
+    function showSlide(index) {
+      if (index >= slides.length) currentSlide = 0;
+      else if (index < 0) currentSlide = slides.length - 1;
+      else currentSlide = index;
+
+      slides.forEach((slide, i) => {
+        if (i === currentSlide) {
+          slide.classList.remove('hidden');
+        } else {
+          slide.classList.add('hidden');
+        }
+      });
+
+      // Update dot styles
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('button');
+        dots.forEach((dot, i) => {
+          if (i === currentSlide) {
+            dot.className = 'w-8 h-2 rounded-full bg-amber-400 transition-all';
+          } else {
+            dot.className = 'w-2.5 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all';
+          }
+        });
+      }
+    }
+
+    if (nextBtn && prevBtn) {
+      nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+      prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    }
+
+    if(dotsContainer) dotsContainer.querySelectorAll('button').forEach((button,i)=>button.addEventListener('click',()=>showSlide(i)));
+    if(slides.length) showSlide(0);
+    if(slides.length>1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(()=>showSlide(currentSlide+1),6000);
+  </script>
+
+
+<!-- END: InteractiveScripts -->
+
+
+</main>
+
+  <!-- Footer -->
+  <div th:replace="~{fragments/customer-footer :: footer}"></div>
+  <!-- Map Modal -->
+  <div th:replace="~{fragments/map-modal :: mapModal}"></div>
+<script src="/js/booking-search.js" defer></script><script src="/js/customer.js" defer></script></body>
+</html>
+
+
+

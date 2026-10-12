@@ -1,0 +1,3 @@
+c452600652b383e943065bc042ce393393dc3b1ef44630037b5c5c795f2771e5  source-before-phase2.zip
+c20efa09af22eb37316a3c0547af2dda2aeef050defb3dc3cd46aa01cbebe286  before-motorent_db.sql
+e7bd776f73b41f866def852b0f4b0c6759fc2f8e58730dc1b5c79487ec885b53  before-motorent_verify_20260926.sql

@@ -1,0 +1,8 @@
+
+Algorithm Hash                                                             Path
+--------- ----                                                             ----
+SHA256    EE7391384A5E6E39BA75848F0FB3C60F7492DC262088415CB37CA679974DF2B8 D:\Motorbike-rental\docs\phase1-20260928\before-motorent_db.sql
+SHA256    0934F57B32BB2620B7AB24C942015BD619F7D59AA9F4981A4FD597D83A8881B5 D:\Motorbike-rental\docs\phase1-20260928\before-motorent_verify_20260926.sql
+SHA256    C6AF423A60F1137BAFBB7797A309246CB311DE674341A95F540CFC452891A14C D:\Motorbike-rental\docs\phase1-20260928\source-before-phase1.zip
+
+

@@ -1,0 +1,6 @@
+Original schema inspected read-only: motorent_db
+SELECT COUNT(*) FROM motorbikes WHERE license_plate IS NULL OR TRIM(license_plate)='' => 0
+SELECT COUNT(*) FROM motorbikes b WHERE status='RENTED' AND NOT EXISTS (SELECT 1 FROM rental_orders o WHERE o.motorbike_id=b.motorbike_id AND o.status IN ('HANDED_OVER','EXTENDED','OVERDUE','RETURN_REQUESTED','RETURNED')) => 0
+SELECT COUNT(*) FROM rental_orders WHERE status='COMPLETED' AND actual_return_date IS NULL => 0
+SELECT COUNT(*) FROM payments => 2
+SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND table_name='deposit_attempts' => 0

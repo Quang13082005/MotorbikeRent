@@ -1,0 +1,475 @@
+<!DOCTYPE html><html class="dark scroll-smooth" lang="vi" style=""><head>
+<meta name="csrf-token" th:if="${_csrf != null}" th:content="${_csrf.token}">
+<script src="/js/request-security.js"></script>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MotoRent Đà Nẵng - Đăng Nhập</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316', // Primary Orange
+              600: '#ea580c',
+              700: '#c2410c',
+              dark: '#0b0f19',
+              card: '#0f172a',
+            }
+          },
+          boxShadow: {
+            'glow-orange': '0 0 25px -5px rgba(249, 115, 22, 0.35)',
+            'glow-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-scrollbars-and-glow">
+    /* Subtle background ambient gradients */
+    body {
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.7) 0px, transparent 100%);
+      background-attachment: fixed;
+    }
+    
+    /* Custom thin scrollbars for smooth UI */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f97316;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 font-sans antialiased flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+<!-- Subtle ambient top gradient lighting -->
+<div class="absolute inset-x-0 top-0 h-96 radial-glow pointer-events-none z-0"></div>
+<!-- BEGIN: MainHeader -->
+<header class="w-full border-b border-white/5 bg-slate-950/60 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center gap-3 group" th:href="@{/customer/home}">
+<div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform duration-200">
+<!-- Motorcycle Vector Icon -->
+<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<circle cx="18.5" cy="17.5" r="3.5"></circle>
+<circle cx="5.5" cy="17.5" r="3.5"></circle>
+<circle cx="15" cy="5" r="1"></circle>
+<path d="M12 9h4l2 4.5H9l4-4.5z"></path>
+<path d="M5 17.5l4-7.5h5"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<div class="text-xl font-bold tracking-tight text-white leading-none">
+            MotoRent <span class="text-brand-500">Đà Nẵng</span>
+</div>
+<span class="text-xs text-slate-400 mt-1 font-normal tracking-wide">Dịch vụ xe máy uy tín &amp; du lịch tự túc</span>
+</div>
+</a>
+<!-- Header Navigation & Action -->
+<div class="flex items-center gap-4 sm:gap-6">
+<!-- Hotline Badge -->
+<a class="hidden sm:flex items-center gap-2 text-sm text-slate-300 hover:text-brand-400 transition-colors py-2 px-3 rounded-full hover:bg-white/5" href="tel:0986780177">
+<span class="w-8 h-8 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-500">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<span class="">Hotline: <strong class="text-white font-semibold tracking-wide" th:text="${shop.phone}"></strong></span>
+</a>
+<!-- Back to Home Button -->
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-200 bg-white/5 hover:bg-white/10 border border-white/10 transition duration-200" th:href="@{/customer/home}">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Về trang chủ</span>
+</a>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="relative z-10 flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 md:py-12" data-purpose="auth-split-layout">
+<div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<!-- ============================================== -->
+<!-- LEFT COLUMN: Brand Experience & Visual Banner -->
+<!-- ============================================== -->
+<section class="hidden lg:flex lg:col-span-6 xl:col-span-7 flex-col justify-between rounded-3xl overflow-hidden relative border border-slate-800/80 shadow-2xl min-h-[640px]" data-purpose="brand-showcase-panel">
+<!-- Background Coastal Sunset Image -->
+<img alt="Bán đảo Sơn Trà và xe máy ngắm hoàng hôn Đà Nẵng" class="absolute inset-0 w-full h-full object-cover object-center transform hover:scale-105 transition-custom duration-1000" src="https://lh3.googleusercontent.com/aida/AEtjO1UpvGnGOhf_NizXE8X8BqJrpDrot8gga6VSscSOfwTc6eJkxyLPQFlqf6ho6fNlIcYeYBYCIF2LowijbGFU5BEtPMLlkcBkPkOP7N4eAaJWskmteg3CVJNzKM9RJKTbxcu8aHipXctyR0UYSJLHI7wHUtmNCdH7jC02u-PJz2-QsZwcJmPLaTYoMM1y25SfvH4yFF_76IDTVxwpzdatHIPBP_1RXNq_ey5pJAKsBhIi9ytc7GxQNgLHJAl2">
+<!-- Multi-layer Soft Darkening Overlays for high legibility -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#080c16] via-[#080c16]/55 to-slate-900/40"></div>
+<div class="absolute inset-0 bg-[#080c16]/20 backdrop-blur-[0.5px]"></div>
+<!-- Top Content on Visual Banner -->
+<div class="relative z-10 p-8 xl:p-10 flex flex-col gap-4">
+<!-- Member Privilege Badge -->
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill self-start shadow-sm">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
+</span>
+<span class="text-xs font-bold uppercase tracking-wider text-amber-300">✨ ĐẶC QUYỀN THÀNH VIÊN MOTORENT</span>
+</div>
+<h1 class="text-3xl xl:text-4xl font-extrabold text-white leading-tight mt-2 drop-shadow-md">
+            Khám Phá Đà Nẵng <br>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-amber-300 to-amber-100">Dễ Dàng &amp; Trọn Vẹn Hơn</span>
+</h1>
+<p class="text-slate-200 text-sm xl:text-base leading-relaxed max-w-lg font-normal drop-shadow">
+            Đăng nhập để đặt xe, quản lý lịch trình thuê, theo dõi thanh toán và gửi yêu cầu gia hạn chuyến đi.
+          </p>
+<!-- 3 Feature Highlight Pills -->
+<div class="mt-4 flex flex-col gap-2.5 max-w-md" data-purpose="membership-benefits">
+<!-- Benefit 1 -->
+<div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl glass-pill shadow-sm hover:border-brand-orange/40 transition-custom">
+<div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 text-emerald-400">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-xs xl:text-sm font-medium text-slate-100">Giao xe tận nơi&nbsp;</span>
+</div>
+<!-- Benefit 2 -->
+<div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl glass-pill shadow-sm hover:border-brand-orange/40 transition-custom">
+<div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 text-emerald-400">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-xs xl:text-sm font-medium text-slate-100">Theo dõi đơn thuê và thanh toán</span>
+</div>
+<!-- Benefit 3 -->
+<div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl glass-pill shadow-sm hover:border-brand-orange/40 transition-custom">
+<div class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center shrink-0 text-emerald-400">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-xs xl:text-sm font-medium text-slate-100">Lưu lịch sử hành trình &amp; nhận xe trong&nbsp; khoảng&nbsp; 15-30 phút</span>
+</div>
+</div>
+</div>
+<!-- Bottom Client Review Box -->
+<div class="relative z-10 p-8 xl:p-10 pt-0">
+<div class="glass-panel p-4 rounded-2xl border border-slate-700/60 max-w-lg shadow-lg relative overflow-hidden"><div class="flex items-center justify-between mb-3"><div class="flex items-center gap-2"><span class="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5"><svg class="w-4 h-4 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>Cam kết an tâm vi vu</span></div><span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800/40"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>Hỗ trợ hành trình 24/7</span></div><div class="space-y-2 text-xs text-slate-200"><div class="flex items-start gap-2.5">
+<div class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center shrink-0 text-brand-orange border border-slate-700 mt-0.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></div><span class="">Cứu hộ&nbsp; trong&nbsp; phạm vị 10km từ vị trí cửa hàng</span></div><div class="flex items-start gap-2.5">
+<div class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center shrink-0 text-brand-orange border border-slate-700 mt-0.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></div><span class="">100% đổi xe ngay lập tức nếu không hài lòng</span></div></div><div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]"><span class="text-slate-400">Tổng đài khẩn cấp:</span><a class="font-bold text-brand-orange hover:text-amber-400 transition-custom tracking-wide" th:href="${'tel:'+shop.phone}" th:text="${shop.phone}"></a></div></div>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- RIGHT COLUMN: Secure Login Form Card           -->
+<!-- ============================================== -->
+<section class="lg:col-span-6 xl:col-span-5 flex flex-col justify-center" data-purpose="login-form-container">
+<div class="glass-panel p-6 sm:p-9 md:p-10 rounded-3xl border border-slate-700/60 shadow-card-glass relative overflow-hidden">
+<!-- Top Accent Light inside card -->
+<div class="absolute -top-16 -right-16 w-36 h-36 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Form Header -->
+<div class="mb-6">
+<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+              Chào mừng trở lại! <span class="inline-block animate-wave origin-[70%_70%]">👋</span>
+</h2>
+<p class="text-xs sm:text-sm text-slate-400 mt-1.5 font-normal leading-relaxed">
+              Nhập thông tin tài khoản của bạn để tiếp tục đặt xe và quản lý chuyến đi
+            </p>
+</div>
+<!-- Main Login Form -->
+<form class="space-y-4" data-purpose="credential-form" id="login-form" novalidate="">
+<!-- Field 1: Email or Phone -->
+<div>
+<label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="identifier">
+                Email hoặc Số điện thoại
+              </label>
+<div class="relative rounded-xl shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<!-- Mail / Phone Combined Icon -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input autocomplete="username" class="w-full pl-10 pr-4 py-3 bg-slate-900/90 border border-slate-700/90 rounded-xl text-slate-100 text-sm placeholder:text-slate-400 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-custom" id="identifier" name="identifier" placeholder="name@example.com hoặc 0905 xxx xxx" required="" type="text">
+</div>
+<p class="hidden text-xs text-rose-400 mt-1 font-medium flex items-center gap-1" id="identifier-error">
+<svg class="w-3.5 h-3.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Vui lòng nhập email hoặc số điện thoại hợp lệ.</span>
+</p>
+</div>
+<!-- Field 2: Password -->
+<div>
+<label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" for="password">
+                Mật khẩu
+              </label>
+<div class="relative rounded-xl shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<input autocomplete="current-password" class="w-full pl-10 pr-12 py-3 bg-slate-900/90 border border-slate-700/90 rounded-xl text-slate-100 text-sm placeholder:text-slate-400 focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange transition-custom" id="password" name="password" placeholder="Nhập mật khẩu của bạn" required="" type="password">
+<!-- Toggle Password Visibility Button -->
+<button aria-label="Ẩn hoặc hiện mật khẩu" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-amber-400 focus:outline-none" id="toggle-password" type="button">
+<!-- Eye Icon (Default) -->
+<svg class="w-4 h-4" fill="none" id="eye-icon" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<!-- Eye Off Icon (Hidden initially) -->
+<svg class="w-4 h-4 hidden" fill="none" id="eye-off-icon" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<p class="hidden text-xs text-rose-400 mt-1 font-medium flex items-center gap-1" id="password-error">
+<svg class="w-3.5 h-3.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Mật khẩu phải có tối thiểu 6 ký tự.</span>
+</p>
+</div>
+<!-- Utility Row: Remember Me & Forgot Password -->
+<div class="flex items-center justify-between text-xs pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none text-slate-300 hover:text-white">
+<input class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-brand-orange focus:ring-brand-orange focus:ring-offset-slate-900 focus:ring-1" id="remember-me" name="remember-me" type="checkbox">
+<span class="font-medium">Ghi nhớ đăng nhập</span>
+</label>
+<a class="font-semibold text-brand-orange hover:text-amber-400 hover:underline transition-custom" th:href="@{/auth/forgot-password}">Quên mật khẩu?</a>
+</div>
+<!-- Form Status Feedback Box (hidden by default) -->
+<div class="hidden p-3 rounded-xl text-xs font-medium border" id="form-alert" role="alert"></div>
+<!-- Primary Submit Button -->
+<button class="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-white bg-gradient-to-r from-brand-orange to-brand-orangeDark hover:from-amber-500 hover:to-brand-orange text-sm uppercase tracking-wider shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-custom flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-brand-orange" id="submit-btn" type="submit">
+<span class="">Đăng nhập</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</form>
+<!-- Card Footer Links -->
+<div class="mt-6 pt-5 border-t border-slate-800 text-center space-y-3">
+<p class="text-xs text-slate-400">
+              Chưa có tài khoản? 
+              <a class="font-bold text-brand-orange hover:text-amber-400 hover:underline transition-custom ml-1" th:href="@{/auth/register}">Đăng ký ngay</a>
+</p>
+<div class="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 font-medium">
+<svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Đăng nhập bằng tài khoản của bạn</span>
+</div>
+<!-- Auto Return Hint -->
+<p class="text-[11px] text-slate-400 italic">
+              * Sau khi đăng nhập, hệ thống sẽ tự động quay lại trang bạn đang xem hoặc lịch đặt xe gần nhất.
+            </p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full py-4 border-t border-white/5 text-center text-xs text-slate-400">
+<div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+<div class="">
+        © 2025 MotoRent Đà Nẵng. Đồng hành cùng vạn dặm khám phá miền Trung di sản.
+      </div>
+<div class="flex items-center gap-4 text-slate-400">
+<span class="">Tổng đài hỗ trợ sự cố: <a class="text-brand-400 hover:underline" th:href="${'tel:'+shop.phone}" th:text="${shop.phone}"></a></span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: Logic & Interaction Scripts -->
+<script data-purpose="password-toggle">
+    // Toggle password visibility functionality
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye-icon');
+    const eyeOffIcon = document.getElementById('eye-off-icon');
+
+    if (togglePasswordBtn && passwordInput) {
+      togglePasswordBtn.addEventListener('click', function () {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        
+        // Toggle icon states
+        if (isPassword) {
+          eyeIcon.classList.add('hidden');
+          eyeOffIcon.classList.remove('hidden');
+        } else {
+          eyeIcon.classList.remove('hidden');
+          eyeOffIcon.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+<script data-purpose="form-validation-and-submit">
+    // Client-side validation and server authentication
+    const loginForm = document.getElementById('login-form');
+    const identifierInput = document.getElementById('identifier');
+    const pwdInput = document.getElementById('password');
+    const idError = document.getElementById('identifier-error');
+    const pwdError = document.getElementById('password-error');
+    const formAlert = document.getElementById('form-alert');
+    const submitBtn = document.getElementById('submit-btn');
+
+    // Helper: Validate email or VN phone format
+    function isValidIdentifier(val) {
+      const trimmed = val.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^(0|\+84)[3|5|7|8|9][0-9]{8}$/;
+      return emailRegex.test(trimmed) || phoneRegex.test(trimmed.replace(/\s+/g, ''));
+    }
+
+    // Input blur dynamic check
+    identifierInput.addEventListener('input', function() {
+      if (idError.classList.contains('hidden')) return;
+      if (isValidIdentifier(this.value)) {
+        idError.classList.add('hidden');
+      }
+    });
+
+    pwdInput.addEventListener('input', function() {
+      if (pwdError.classList.contains('hidden')) return;
+      if (this.value.length >= 6) {
+        pwdError.classList.add('hidden');
+      }
+    });
+
+    // Form submission
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      
+      let isValid = true;
+      const idVal = identifierInput.value.trim();
+      const pwdVal = pwdInput.value;
+
+      // Validate Identifier
+      if (!isValidIdentifier(idVal)) {
+        idError.classList.remove('hidden');
+        identifierInput.focus();
+        isValid = false;
+      } else {
+        idError.classList.add('hidden');
+      }
+
+      // Validate Password
+      if (pwdVal.length < 6) {
+        pwdError.classList.remove('hidden');
+        if (isValid) pwdInput.focus();
+        isValid = false;
+      } else {
+        pwdError.classList.add('hidden');
+      }
+
+      if (!isValid) return;
+
+      // Simulate loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Đang xác thực...</span>
+      `;
+
+      // Thực gọi API đăng nhập
+      fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: idVal, password: pwdVal })
+      })
+      .then(res => res.json())
+      .then(data => {
+          if (data.code === 200) {
+              const token = data.result.token;
+              // Lưu vào localStorage
+              localStorage.setItem('token', token);
+              // Lưu vào cookie để trình duyệt tự gửi khi request giao diện
+              const remember = document.getElementById('remember-me').checked;
+              document.cookie = `access_token=${token}; path=/; SameSite=Lax${remember ? '; max-age=86400' : ''}${location.protocol === 'https:' ? '; Secure' : ''}`;
+              
+              formAlert.className = 'p-3 rounded-xl text-xs font-medium border bg-emerald-950/80 border-emerald-600/50 text-emerald-300 block flex items-center gap-2';
+              formAlert.innerHTML = `
+                <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span>Đăng nhập thành công! Đang chuyển hướng bạn tới hành trình tiếp theo...</span>
+              `;
+              submitBtn.innerHTML = '<span>Thành công</span>';
+              
+              setTimeout(() => {
+                  const urlParams = new URLSearchParams(window.location.search);
+                  const redirect = urlParams.get('redirect');
+                  
+                  let defaultRedirect = '/customer/home';
+                  try {
+                      // Decode JWT payload
+                      const payloadBase64 = token.split('.')[1];
+                      const payloadStr = decodeURIComponent(atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/')).split('').map(function(c) {
+                          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                      }).join(''));
+                      const payload = JSON.parse(payloadStr);
+                      
+                      if (payload.role === 'ADMIN') {
+                          defaultRedirect = '/admin/dashboard';
+                      } else if (payload.role === 'STAFF') {
+                          defaultRedirect = '/staff/dashboard';
+                      }
+                  } catch (e) {
+                      console.error("Lỗi parse token JWT", e);
+                  }
+
+                  if (redirect && redirect.startsWith('/') && !redirect.startsWith('//') && !redirect.includes('\\')) {
+                      window.location.href = redirect;
+                  } else {
+                      window.location.href = defaultRedirect;
+                  }
+              }, 1500);
+          } else {
+              formAlert.className = 'p-3 rounded-xl text-xs font-medium border bg-rose-950/80 border-rose-600/50 text-rose-300 block flex items-center gap-2 mt-4';
+              formAlert.innerHTML = `
+                <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>${data.message || 'Sai thông tin đăng nhập!'}</span>
+              `;
+              submitBtn.innerHTML = '<span>Đăng nhập</span>';
+              submitBtn.disabled = false;
+          }
+      })
+      .catch(error => {
+          console.error(error);
+          formAlert.className = 'p-3 rounded-xl text-xs font-medium border bg-rose-950/80 border-rose-600/50 text-rose-300 block flex items-center gap-2 mt-4';
+          formAlert.innerHTML = `Lỗi hệ thống. Vui lòng thử lại.`;
+          submitBtn.innerHTML = '<span>Đăng nhập</span>';
+          submitBtn.disabled = false;
+      });
+    });
+
+  </script>
+<!-- END: Logic & Interaction Scripts -->
+
+
+</body></html>
+
+

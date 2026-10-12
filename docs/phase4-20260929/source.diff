@@ -1,0 +1,440 @@
+--- before/src/test/java/com/motorrent/motorbikerental/Phase1ConcurrencyTests.java
++++ src/test/java/com/motorrent/motorbikerental/Phase1ConcurrencyTests.java
+@@ -38,6 +38,8 @@
+  @Autowired PaymentService paymentService;
+  @Autowired VehicleChangeService changesService;@Autowired RentalVehicleChangeRepository changes;
+  @Autowired RentalContractRepository contracts;
++ @Autowired ExtensionService extensionService; @Autowired RentalExtensionRepository extensions;
++ @Autowired AvailabilityService availability;
+  List<Motorbike> extras=new ArrayList<>();
+  User customer,staff;Motorbike bike;
+  @BeforeEach void fixture(){
+@@ -50,6 +52,7 @@
+   SecurityContextHolder.clearContext();
+   tx.executeWithoutResult(s->{
+    if(bike!=null)for(var o:orders.findAll().stream().filter(o->o.getCustomer().getId().equals(customer.getId())).toList()){
++    extensions.deleteAll(extensions.findByRentalOrderIdOrderByCreatedAtDesc(o.getId()));extensions.flush();
+     changes.deleteAll(changes.findByRentalOrderIdOrderByIdDesc(o.getId()));changes.flush();
+     payments.deleteAll(payments.findByRentalOrderIdOrderByCreatedAtDesc(o.getId()));payments.flush();
+     contracts.findByRentalOrderId(o.getId()).ifPresent(contracts::delete);contracts.flush();
+@@ -119,6 +122,74 @@
+   var order=paidOrder(bike);
+   var result=race(()->{as(staff);try{changesService.refund(order.getId(),new VehicleChangeService.Refund(60000,"BANK_TRANSFER",UUID.randomUUID().toString(),"No replacement",null),true);return true;}catch(IllegalArgumentException ex){assertThat(ex.getMessage()).contains("trước bàn giao");return false;}finally{SecurityContextHolder.clearContext();}});
+   assertThat(result).containsExactlyInAnyOrder(true,false);assertThat(payments.findByRentalOrderIdOrderByCreatedAtDesc(order.getId())).hasSize(1);assertThat(orders.findById(order.getId()).orElseThrow().getStatus()).isEqualTo(RentalStatus.REJECTED);
++ }
++ RentalOrder extendingOrder(){var o=paidOrder(bike);o.setStatus(RentalStatus.HANDED_OVER);o.setBalancePaid(60000);orders.saveAndFlush(o);return o;}
++ Long requestExtension(RentalOrder o){as(customer);extensionService.request(o.getId(),o.getReturnDate().plusDays(2),"Phase4 test");return extensions.findByRentalOrderIdOrderByCreatedAtDesc(o.getId()).get(0).getId();}
++ Payment approvedExtension(RentalOrder o){Long id=requestExtension(o);as(staff);extensionService.decide(id,true);as(customer);return extensionService.preparePayment(id);}
++ @Test void extensionApprovalHoldsButOnlyDuplicateSafePaymentAdvancesSchedule()throws Exception{
++  var o=extendingOrder();var p=approvedExtension(o);
++  var pending=orders.findById(o.getId()).orElseThrow();assertThat(pending.getReturnDate()).isEqualTo(o.getReturnDate());assertThat(pending.getTotalPrice()).isEqualTo(120000);
++  assertThat(availability.available(bike.getId(),null,o.getReturnDate(),o.getReturnDate().plusDays(2))).isFalse();
++  as(customer);assertThat(extensionService.preparePayment(p.getSourceId()).getId()).isEqualTo(p.getId());SecurityContextHolder.clearContext();
++  assertThat(race(()->{paymentService.apply(p.getProviderCode(),240000,"extension-link","extension-ref");return true;})).containsExactly(true,true);
++  var saved=orders.findById(o.getId()).orElseThrow();assertThat(saved.getReturnDate()).isEqualTo(o.getReturnDate().plusDays(2));assertThat(saved.getTotalPrice()).isEqualTo(360000);assertThat(saved.getRentalFee()).isEqualTo(360000);assertThat(saved.getBalancePaid()).isEqualTo(300000);assertThat(saved.getDepositPaid()).isEqualTo(60000);assertThat(saved.getStatus()).isEqualTo(RentalStatus.EXTENDED);
++  assertThat(payments.findByRentalOrderIdOrderByCreatedAtDesc(o.getId())).singleElement().satisfies(v->{assertThat(v.getTransactionType()).isEqualTo("EXTENSION_PAYMENT");assertThat(v.getStatus()).isEqualTo("PAID");assertThat(v.getDirection()).isEqualTo("IN");assertThat(v.getProcessedAt()).isNotNull();});
++  var e=extensions.findById(p.getSourceId()).orElseThrow();assertThat(e.getStatus()).isEqualTo("PAID");assertThat(e.getApprovedBy().getId()).isEqualTo(staff.getId());assertThat(e.getApprovedAt()).isNotNull();assertThat(e.getProcessedAt()).isNotNull();
++ }
++ @Test void expiredExtensionReleasesHoldAndLatePaymentRequiresReview(){
++  var o=extendingOrder();var p=approvedExtension(o);var e=extensions.findById(p.getSourceId()).orElseThrow();e.setExpiresAt(AvailabilityService.now().minusSeconds(1));extensions.saveAndFlush(e);
++  assertThat(availability.available(bike.getId(),null,o.getReturnDate(),e.getNewReturnDate())).isTrue();
++  as(customer);assertThatThrownBy(()->extensionService.preparePayment(e.getId())).isInstanceOf(IllegalArgumentException.class);
++  paymentService.apply(p.getProviderCode(),240000,"late-link","late-ref");
++  assertThat(payments.findById(p.getId()).orElseThrow().getStatus()).isEqualTo("REVIEW_REQUIRED");assertThat(orders.findById(o.getId()).orElseThrow().getReturnDate()).isEqualTo(o.getReturnDate());
++ }
++ @Test void wrongExtensionAmountAndWrongLinkCannotAdvanceSchedule(){
++  var o=extendingOrder();var p=approvedExtension(o);p.setProviderLinkId("right-link");payments.saveAndFlush(p);
++  assertThatThrownBy(()->paymentService.apply(p.getProviderCode(),240000,"wrong-link","wrong-ref")).isInstanceOf(IllegalArgumentException.class);
++  assertThat(payments.findById(p.getId()).orElseThrow().getStatus()).isEqualTo("PENDING");
++  paymentService.apply(p.getProviderCode(),240001,"right-link","amount-ref");paymentService.apply(p.getProviderCode(),240001,"right-link","amount-ref");
++  assertThat(payments.findById(p.getId()).orElseThrow().getStatus()).isEqualTo("REVIEW_REQUIRED");assertThat(orders.findById(o.getId()).orElseThrow().getTotalPrice()).isEqualTo(120000);
++ }
++ @Test void extensionChecksConflictAtRequestApprovalAndPayment(){
++  var o=extendingOrder();Long id=requestExtension(o);
++  var conflicting=paidOrder(bike);conflicting.setPickupDate(o.getReturnDate());conflicting.setReturnDate(o.getReturnDate().plusDays(1));orders.saveAndFlush(conflicting);
++  as(staff);assertThatThrownBy(()->extensionService.decide(id,true)).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("hotline");
++  conflicting.setStatus(RentalStatus.CANCELLED);orders.saveAndFlush(conflicting);extensionService.decide(id,true);as(customer);var p=extensionService.preparePayment(id);
++  // Simulate a stale external schedule change; callback must recheck, even after approval.
++  conflicting.setStatus(RentalStatus.CONFIRMED);orders.saveAndFlush(conflicting);
++  paymentService.apply(p.getProviderCode(),240000,"conflict-link","conflict-ref");assertThat(payments.findById(p.getId()).orElseThrow().getStatus()).isEqualTo("REVIEW_REQUIRED");
++  assertThat(orders.findById(o.getId()).orElseThrow().getReturnDate()).isEqualTo(o.getReturnDate());
++  assertThatThrownBy(()->extensionService.request(o.getId(),o.getReturnDate().plusDays(2),"Again")).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("hotline");
++ }
++ @Test void extensionClosedOrderAndChangedVehicleCannotBeApplied(){
++  var o=extendingOrder();var p=approvedExtension(o);o.setStatus(RentalStatus.COMPLETED);orders.saveAndFlush(o);
++  assertThat(availability.available(bike.getId(),null,o.getReturnDate(),o.getReturnDate().plusDays(2))).isTrue();
++  paymentService.apply(p.getProviderCode(),240000,"closed-link","closed-ref");assertThat(payments.findById(p.getId()).orElseThrow().getStatus()).isEqualTo("REVIEW_REQUIRED");assertThat(orders.findById(o.getId()).orElseThrow().getStatus()).isEqualTo(RentalStatus.COMPLETED);
++  o.setStatus(RentalStatus.HANDED_OVER);orders.saveAndFlush(o);var next=approvedExtension(o);o.setMotorbike(extra(120000));orders.saveAndFlush(o);
++  paymentService.apply(next.getProviderCode(),240000,"changed-link","changed-ref");assertThat(payments.findById(next.getId()).orElseThrow().getStatus()).isEqualTo("REVIEW_REQUIRED");
++ }
++ @Test void simultaneousExtensionRequestsAndLinkRetriesOnlyCreateOneIntent()throws Exception{
++  var o=extendingOrder();assertThat(race(()->{as(customer);try{extensionService.request(o.getId(),o.getReturnDate().plusDays(2),"race");return true;}catch(IllegalArgumentException ex){assertThat(ex.getMessage()).contains("đang xử lý");return false;}finally{SecurityContextHolder.clearContext();}})).containsExactlyInAnyOrder(true,false);
++  Long id=extensions.findByRentalOrderIdOrderByCreatedAtDesc(o.getId()).get(0).getId();as(staff);extensionService.decide(id,true);
++  assertThat(race(()->{as(customer);try{extensionService.preparePayment(id);return true;}finally{SecurityContextHolder.clearContext();}})).containsExactly(true,true);
++  assertThat(payments.findByRentalOrderIdOrderByCreatedAtDesc(o.getId())).hasSize(1);
++ }
++ @Test void extensionAuthorizationAndDatesAreEnforced(){
++  var o=extendingOrder();as(customer);
++  assertThatThrownBy(()->extensionService.request(o.getId(),o.getReturnDate(),"invalid")).isInstanceOf(IllegalArgumentException.class);
++  assertThatThrownBy(()->extensionService.request(o.getId(),null,"invalid")).isInstanceOf(IllegalArgumentException.class);
++  Long id=requestExtension(o);assertThatThrownBy(()->extensionService.decide(id,true)).isInstanceOf(org.springframework.security.access.AccessDeniedException.class);
++  as(staff);extensionService.decide(id,false);as(customer);assertThatThrownBy(()->extensionService.preparePayment(id)).isInstanceOf(IllegalArgumentException.class);
++  assertThat(orders.findById(o.getId()).orElseThrow().getReturnDate()).isEqualTo(o.getReturnDate());
++ }
++ @Test void extensionApprovalRacingNewBookingCannotReserveBoth()throws Exception{
++  var o=extendingOrder();Long id=requestExtension(o);var next=new java.util.concurrent.atomic.AtomicInteger();
++  var results=race(()->{as(staff);try{
++   if(next.getAndIncrement()==0)extensionService.decide(id,true);
++   else tx.executeWithoutResult(s->{var locked=bikes.lockById(bike.getId()).orElseThrow();availability.requireAvailable(locked,null,o.getReturnDate(),o.getReturnDate().plusDays(2));orders.saveAndFlush(RentalOrder.builder().orderCode("P4-RACE-"+UUID.randomUUID()).customer(customer).motorbike(locked).pickupDate(o.getReturnDate()).returnDate(o.getReturnDate().plusDays(2)).days(2).dailyRate(120000).totalPrice(240000).status(RentalStatus.CONFIRMED).build());});
++   return true;
++  }catch(IllegalArgumentException ex){assertThat(ex.getMessage()).containsAnyOf("không còn trống","hotline");return false;}finally{SecurityContextHolder.clearContext();}});
++  assertThat(results).containsExactlyInAnyOrder(true,false);
+  }
+  @Test void twoStaffHandoverActionsOnlyPostOnce()throws Exception{
+   var order=paidOrder(bike);
+--- before/src/test/java/com/motorrent/motorbikerental/CustomerSecurityIntegrationTests.java
++++ src/test/java/com/motorrent/motorbikerental/CustomerSecurityIntegrationTests.java
+@@ -211,12 +211,28 @@
+    .andExpect(status().isOk());
+   var extension=context.getBean(RentalExtensionRepository.class).findByRentalOrderIdOrderByCreatedAtDesc(order.getId()).get(0);
+   mvc.perform(post("/api/operations/extensions/"+extension.getId()).param("approve","true").with(user("operator").roles("STAFF")).with(csrf())).andExpect(status().isOk());
++  // Phase 4 supersedes immediate extension on approval: payment must succeed first.
++  assertThat(order.getTotalPrice()).isEqualTo(120000);assertThat(order.getStatus()).isEqualTo(RentalStatus.HANDED_OVER);
++  assertThat(extension.getStatus()).isEqualTo("WAITING_FOR_PAYMENT");
++  var extensionUrl="/api/payment/extension/"+extension.getId();
++  mvc.perform(post(extensionUrl).with(user("bob").roles("CUSTOMER")).with(csrf())).andExpect(status().isForbidden());
++  mvc.perform(post(extensionUrl).with(user("operator").roles("STAFF")).with(csrf())).andExpect(status().isForbidden());
++  mvc.perform(post(extensionUrl).with(user("alice").roles("CUSTOMER"))).andExpect(status().isForbidden());
++  var checkout=org.mockito.Mockito.mock(vn.payos.type.CheckoutResponseData.class);
++  org.mockito.Mockito.when(checkout.getCheckoutUrl()).thenReturn("https://pay.payos.vn/test-extension");
++  org.mockito.Mockito.when(checkout.getPaymentLinkId()).thenReturn("extension-checkout");
++  org.mockito.Mockito.when(payOS.createPaymentLink(org.mockito.ArgumentMatchers.any(vn.payos.type.PaymentData.class))).thenThrow(new java.io.IOException("extension timeout")).thenReturn(checkout);
++  mvc.perform(post(extensionUrl).with(user("alice").roles("CUSTOMER")).with(csrf())).andExpect(status().isBadGateway());
++  assertThat(order.getTotalPrice()).isEqualTo(120000);
++  mvc.perform(post(extensionUrl).with(user("alice").roles("CUSTOMER")).with(csrf())).andExpect(status().isOk());
++  var extensionPayment=payments.findByRentalOrderIdOrderByCreatedAtDesc(order.getId()).stream().filter(p->"EXTENSION".equals(p.getSourceType())).findFirst().orElseThrow();
++  paymentService.apply(extensionPayment.getProviderCode(),120000,"extension-checkout","extension-lifecycle-ref");
+   assertThat(order.getTotalPrice()).isEqualTo(240000);assertThat(order.getStatus()).isEqualTo(RentalStatus.EXTENDED);
+   mvc.perform(get("/staff/rental-orders").with(user("operator").roles("STAFF"))).andExpect(content().string(org.hamcrest.Matchers.containsString("data-action=\"complete\"")));
+   mvc.perform(post(url+"/complete").with(user("operator").roles("STAFF")).with(csrf())).andExpect(status().isOk());
+   assertThat(order.getStatus()).isEqualTo(RentalStatus.COMPLETED);assertThat(order.getActualReturnDate()).isNotNull();assertThat(bike.getStatus()).isEqualTo(MotorbikeStatus.AVAILABLE);
+-  assertThat(payments.findByRentalOrderIdOrderByCreatedAtDesc(order.getId())).hasSize(3);
+-  assertThat(order.getBalancePaid()).isEqualTo(60000);
++  assertThat(payments.findByRentalOrderIdOrderByCreatedAtDesc(order.getId())).hasSize(4);
++  assertThat(order.getBalancePaid()).isEqualTo(180000);
+   mvc.perform(get("/customer/rental-history").with(user("alice").roles("CUSTOMER"))).andExpect(content().string(org.hamcrest.Matchers.containsString("TEST-OWNER")));
+   String review="{\"orderId\":"+order.getId()+",\"rating\":5,\"comment\":\"Xe tốt\"}";
+   mvc.perform(post("/api/reviews").with(user("alice").roles("CUSTOMER")).with(csrf()).contentType("application/json").content(review)).andExpect(status().isOk());
+@@ -224,7 +240,7 @@
+   assertThat(bike.getRating()).isEqualTo(5.0);assertThat(bike.getReviewCount()).isEqualTo(1);
+   makeUser("administrator",UserRole.ADMIN);
+   mvc.perform(get("/api/admin/reports").with(user("administrator").roles("ADMIN")))
+-   .andExpect(status().isOk()).andExpect(jsonPath("revenue").value(240000)).andExpect(jsonPath("collected").value(120000)).andExpect(jsonPath("activeRentals").value(0));
++   .andExpect(status().isOk()).andExpect(jsonPath("revenue").value(240000)).andExpect(jsonPath("collected").value(240000)).andExpect(jsonPath("activeRentals").value(0));
+  }
+  @Test void cancelledPaidOrderRefundIsRecordedOnce() throws Exception {
+   order.setStatus(RentalStatus.PENDING);order.setDepositPaid(60000);orders.saveAndFlush(order);
+--- before/src/main/resources/static/js/operations-live.js
++++ src/main/resources/static/js/operations-live.js
+@@ -1,8 +1,8 @@
+ (() => {
+  'use strict';
+  const $=s=>document.querySelector(s),error=$('#ops-error');
+- const labels={direction:'Thu / chi',processedBy:'Người ghi nhận',processedAt:'Thời điểm ghi nhận',note:'Ghi chú',imageCredit:'Tác giả / ghi chú ảnh',imageSourceUrl:'Nguồn ảnh (HTTPS)',imageLicenseUrl:'Giấy phép ảnh (HTTPS)',lat:'Vĩ độ',lng:'Kinh độ',area:'Khu vực',category:'Nhóm địa điểm',mapsUrl:'Liên kết bản đồ',published:'Hiển thị cho khách',id:'Mã',name:'Tên',licensePlate:'Biển số',brandId:'Hãng',categoryId:'Loại xe',year:'Năm',cc:'Dung tích',pricePerDay:'Giá ngày',depositAmount:'Bảo đảm tài sản',status:'Trạng thái',odoKm:'Công tơ mét',description:'Mô tả',imageUrl:'Ảnh',username:'Tên đăng nhập',firstName:'Tên',lastName:'Họ và tên đệm',email:'Email',phone:'Điện thoại',address:'Địa chỉ',orderCode:'Mã đơn',customer:'Khách hàng',motorbike:'Xe',pickupDate:'Ngày nhận',returnDate:'Ngày trả',totalPrice:'Tổng tiền',paid:'Đã thu',staff:'Người xử lý',motorbikeId:'Xe',type:'Hạng mục',cost:'Chi phí',reportedBy:'Người lập',startedAt:'Bắt đầu',completedAt:'Hoàn tất',code:'Mã ưu đãi',discountType:'Loại giảm',discountValue:'Giá trị giảm',minOrderAmount:'Đơn tối thiểu',maxDiscount:'Giảm tối đa',startDate:'Bắt đầu',endDate:'Kết thúc',usageLimit:'Giới hạn lượt',usedCount:'Đã dùng',amount:'Số tiền',receivedAmount:'Thực nhận',purpose:'Khoản thu',method:'Hình thức',paidAt:'Ngày nhận',reference:'Tham chiếu',newReturnDate:'Ngày trả mới',extraAmount:'Phí thêm',reason:'Lý do',rating:'Số sao',comment:'Nội dung',staffReply:'Phản hồi',createdAt:'Ngày tạo',password:'Mật khẩu (để trống nếu giữ nguyên)'};
+- const states={BOOKING_PAYMENT:'Thanh toán giữ xe',BOOKING_REFUND:'Hoàn tiền đặt xe',BOOKING_ADJUSTMENT_REFUND:'Hoàn tiền chênh lệch',IN:'Thu',OUT:'Chi',OTHER:'Khác',true:'Đang hiển thị',false:'Đang ẩn',PENDING_PAYMENT:'Chờ cọc',PENDING:'Chờ duyệt',CONFIRMED:'Đã xác nhận',READY_FOR_HANDOVER:'Sẵn sàng giao',HANDED_OVER:'Đang thuê',COMPLETED:'Đã hoàn thành',CANCELLED:'Đã hủy',REJECTED:'Từ chối',EXTENDED:'Đã gia hạn',OVERDUE:'Quá hạn',AVAILABLE:'Sẵn sàng',UNAVAILABLE:'Tạm ngưng',RENTED:'Đang thuê',MAINTENANCE:'Bảo dưỡng',ACTIVE:'Hoạt động',BLOCKED:'Đã khóa',INACTIVE:'Ngừng áp dụng',IN_PROGRESS:'Đang bảo dưỡng',PAID:'Đã nhận tiền',REVIEW_REQUIRED:'Cần đối soát',REFUNDED:'Đã hoàn tiền',APPROVED:'Đã duyệt',DEPOSIT:'Cọc thuê',BALANCE:'Tiền thuê còn lại',SECURITY:'Bảo đảm tài sản',SECURITY_REFUND:'Hoàn bảo đảm',DEPOSIT_REFUND:'Hoàn cọc',LATE_REFUND:'Hoàn tiền đến muộn',BANK_TRANSFER:'Chuyển khoản ngân hàng',CASH:'Tiền mặt',PAYOS:'PayOS',PERCENTAGE:'Phần trăm',FIXED:'Số tiền'};
++ const labels={expiresAt:"Hạn thanh toán",approvedAt:"Ngày duyệt",direction:'Thu / chi',processedBy:'Người ghi nhận',processedAt:'Thời điểm ghi nhận',note:'Ghi chú',imageCredit:'Tác giả / ghi chú ảnh',imageSourceUrl:'Nguồn ảnh (HTTPS)',imageLicenseUrl:'Giấy phép ảnh (HTTPS)',lat:'Vĩ độ',lng:'Kinh độ',area:'Khu vực',category:'Nhóm địa điểm',mapsUrl:'Liên kết bản đồ',published:'Hiển thị cho khách',id:'Mã',name:'Tên',licensePlate:'Biển số',brandId:'Hãng',categoryId:'Loại xe',year:'Năm',cc:'Dung tích',pricePerDay:'Giá ngày',depositAmount:'Bảo đảm tài sản',status:'Trạng thái',odoKm:'Công tơ mét',description:'Mô tả',imageUrl:'Ảnh',username:'Tên đăng nhập',firstName:'Tên',lastName:'Họ và tên đệm',email:'Email',phone:'Điện thoại',address:'Địa chỉ',orderCode:'Mã đơn',customer:'Khách hàng',motorbike:'Xe',pickupDate:'Ngày nhận',returnDate:'Ngày trả',totalPrice:'Tổng tiền',paid:'Đã thu',staff:'Người xử lý',motorbikeId:'Xe',type:'Hạng mục',cost:'Chi phí',reportedBy:'Người lập',startedAt:'Bắt đầu',completedAt:'Hoàn tất',code:'Mã ưu đãi',discountType:'Loại giảm',discountValue:'Giá trị giảm',minOrderAmount:'Đơn tối thiểu',maxDiscount:'Giảm tối đa',startDate:'Bắt đầu',endDate:'Kết thúc',usageLimit:'Giới hạn lượt',usedCount:'Đã dùng',amount:'Số tiền',receivedAmount:'Thực nhận',purpose:'Khoản thu',method:'Hình thức',paidAt:'Ngày nhận',reference:'Tham chiếu',newReturnDate:'Ngày trả mới',extraAmount:'Phí thêm',reason:'Lý do',rating:'Số sao',comment:'Nội dung',staffReply:'Phản hồi',createdAt:'Ngày tạo',password:'Mật khẩu (để trống nếu giữ nguyên)'};
++ const states={WAITING_FOR_PAYMENT:"Chờ thanh toán gia hạn",EXPIRED:"Hết hạn thanh toán",EXTENSION_PAYMENT:"Thanh toán gia hạn",BOOKING_PAYMENT:'Thanh toán giữ xe',BOOKING_REFUND:'Hoàn tiền đặt xe',BOOKING_ADJUSTMENT_REFUND:'Hoàn tiền chênh lệch',IN:'Thu',OUT:'Chi',OTHER:'Khác',true:'Đang hiển thị',false:'Đang ẩn',PENDING_PAYMENT:'Chờ cọc',PENDING:'Chờ duyệt',CONFIRMED:'Đã xác nhận',READY_FOR_HANDOVER:'Sẵn sàng giao',HANDED_OVER:'Đang thuê',COMPLETED:'Đã hoàn thành',CANCELLED:'Đã hủy',REJECTED:'Từ chối',EXTENDED:'Đã gia hạn',OVERDUE:'Quá hạn',AVAILABLE:'Sẵn sàng',UNAVAILABLE:'Tạm ngưng',RENTED:'Đang thuê',MAINTENANCE:'Bảo dưỡng',ACTIVE:'Hoạt động',BLOCKED:'Đã khóa',INACTIVE:'Ngừng áp dụng',IN_PROGRESS:'Đang bảo dưỡng',PAID:'Đã nhận tiền',REVIEW_REQUIRED:'Cần đối soát',REFUNDED:'Đã hoàn tiền',APPROVED:'Đã duyệt',DEPOSIT:'Cọc thuê',BALANCE:'Tiền thuê còn lại',SECURITY:'Bảo đảm tài sản',SECURITY_REFUND:'Hoàn bảo đảm',DEPOSIT_REFUND:'Hoàn cọc',LATE_REFUND:'Hoàn tiền đến muộn',BANK_TRANSFER:'Chuyển khoản ngân hàng',CASH:'Tiền mặt',PAYOS:'PayOS',PERCENTAGE:'Phần trăm',FIXED:'Số tiền'};
+  const money=n=>new Intl.NumberFormat('vi-VN').format(n||0)+' ₫';
+  const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const show=e=>{if(error)error.textContent=e.message||e;};
+@@ -19,7 +19,7 @@
+   maintenance:{fields:['motorbikeId','type','description','cost','status'],columns:['motorbike','type','cost','status','reportedBy'],select:{motorbikeId:'bikes',status:['IN_PROGRESS','COMPLETED']}},
+   'rental-orders':{columns:['orderCode','customer','phone','motorbike','pickupDate','returnDate','totalPrice','paid','status']},
+   payments:{columns:['orderCode','amount','receivedAmount','purpose','method','status','paidAt','direction','processedBy','processedAt','reference']},
+-  extensions:{columns:['orderCode','customer','newReturnDate','extraAmount','reason','status']},
++  extensions:{columns:['orderCode','customer','newReturnDate','extraAmount','reason','status','expiresAt']},
+   reviews:{fields:['staffReply'],columns:['motorbike','customer','rating','comment','staffReply','createdAt'],noCreate:true}
+  };
+  let module=$('[data-live-module]')?.dataset.liveModule,rows=[],lookups={},editing=null,placePage=0,placeTotal=0,placePages=0;
+--- before/src/main/resources/static/js/customer.js
++++ src/main/resources/static/js/customer.js
+@@ -14,6 +14,7 @@
+  const json=body=>({headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>busy(button,async()=>{
+   const id=button.dataset.id,action=button.dataset.action;
++  if(action==='pay-extension'){const data=await api('/api/payment/extension/'+id,{method:'POST'});location.assign(data.checkoutUrl);}
+   if(action==='pay'){const data=await api('/api/payment/create/'+id,{method:'POST'});location.assign(data.checkoutUrl);}
+   if(action==='cancel' && confirm('Hủy đơn thuê này? Khoản đã thanh toán sẽ được cửa hàng đối soát.')){await api('/api/rental-orders/'+id+'/cancel',{method:'POST'});location.reload();}
+   if(action==='reconcile'){await api('/api/payment/reconcile/'+id,{method:'POST'});location.reload();}
+--- before/src/main/resources/templates/customer/rental-extension.html
++++ src/main/resources/templates/customer/rental-extension.html
+@@ -1 +1 @@
+-<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="vi"><head th:replace="~{fragments/head :: head(title='Yêu cầu gia hạn')}"></head><body class="bg-surface text-on-surface"><div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div><main class="customer-workspace"><div class="cw-tabs"><a href="/customer/my-rentals">Đơn đang thuê</a><a href="/customer/rental-history">Lịch sử</a><a href="/customer/profile">Hồ sơ cá nhân</a></div><h1>Yêu cầu gia hạn</h1><div id="cw-message" class="cw-message" role="status" aria-live="polite"></div><section class="cw-card"><div class="cw-row"><h2 th:text="${rental.orderCode}"></h2><span class="cw-tag" th:text="${display.status(rental.status)}"></span></div><div class="cw-order"><img th:src="${display.image(rental.motorbike.imagePrimary)}" th:alt="${rental.motorbike.name}"><div><h2 th:text="${rental.motorbike.name}"></h2><span class="cw-price" th:text="${display.money(rental.totalPrice)}"></span><div class="cw-facts"><span th:text="${'Nhận: '+display.date(rental.pickupDate)}"></span><span th:text="${'Trả: '+display.date(rental.returnDate)}"></span><span th:text="${'Đã trả: '+display.money((rental.depositPaid ?: 0)+(rental.balancePaid ?: 0))}"></span><span th:text="${'Còn lại: '+display.money(rental.totalPrice-(rental.depositPaid ?: 0)-(rental.balancePaid ?: 0))}"></span></div><p class="cw-muted" th:text="${rental.pickupAddress ?: 'Nhận tại cửa hàng'}"></p><p class="cw-muted" th:text="${rental.returnAddress ?: 'Trả tại cửa hàng'}"></p><p th:if="${rental.rejectionReason != null}" th:text="${rental.rejectionReason}"></p></div></div></section><section class="cw-card"><form id="extension-form" th:data-id="${rental.id}" class="cw-grid"><label class="cw-field">Ngày trả mới<input type="datetime-local" name="newReturnDate" required th:min="${rental.returnDate}"></label><label class="cw-field">Lý do<textarea name="reason" maxlength="1000" required></textarea></label><p class="cw-muted cw-full">Cửa hàng sẽ kiểm tra lịch xe và duyệt yêu cầu. Phí phát sinh tính theo giá ngày đã chốt trong đơn; gửi yêu cầu chưa có nghĩa là được gia hạn.</p><button class="cw-btn primary">Gửi yêu cầu</button></form></section></main><div th:replace="~{fragments/customer-footer :: footer}"></div><script src="/js/customer.js" defer></script></body></html>
++<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="vi"><head th:replace="~{fragments/head :: head(title='Yêu cầu gia hạn')}"></head><body class="bg-surface text-on-surface"><div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div><main class="customer-workspace"><div class="cw-tabs"><a href="/customer/my-rentals">Đơn đang thuê</a><a href="/customer/rental-history">Lịch sử</a><a href="/customer/profile">Hồ sơ cá nhân</a></div><h1>Yêu cầu gia hạn</h1><div id="cw-message" class="cw-message" role="status" aria-live="polite"></div><section class="cw-card"><div class="cw-row"><h2 th:text="${rental.orderCode}"></h2><span class="cw-tag" th:text="${display.status(rental.status)}"></span></div><div class="cw-order"><img th:src="${display.image(rental.motorbike.imagePrimary)}" th:alt="${rental.motorbike.name}"><div><h2 th:text="${rental.motorbike.name}"></h2><span class="cw-price" th:text="${display.money(rental.totalPrice)}"></span><div class="cw-facts"><span th:text="${'Nhận: '+display.date(rental.pickupDate)}"></span><span th:text="${'Trả: '+display.date(rental.returnDate)}"></span><span th:text="${'Đã trả: '+display.money((rental.depositPaid ?: 0)+(rental.balancePaid ?: 0))}"></span><span th:text="${'Còn lại: '+display.money(rental.totalPrice-(rental.depositPaid ?: 0)-(rental.balancePaid ?: 0))}"></span></div><p class="cw-muted" th:text="${rental.pickupAddress ?: 'Nhận tại cửa hàng'}"></p><p class="cw-muted" th:text="${rental.returnAddress ?: 'Trả tại cửa hàng'}"></p><p th:if="${rental.rejectionReason != null}" th:text="${rental.rejectionReason}"></p></div></div></section><section class="cw-card"><form id="extension-form" th:data-id="${rental.id}" class="cw-grid"><label class="cw-field">Ngày trả mới<input type="datetime-local" name="newReturnDate" step="1" required th:min="${rental.returnDate}"></label><label class="cw-field">Lý do<textarea name="reason" maxlength="1000" required></textarea></label><p class="cw-muted cw-full">Cửa hàng sẽ kiểm tra lịch xe và duyệt yêu cầu. Phí phát sinh tính theo giá ngày đã chốt trong đơn; gửi yêu cầu hoặc được duyệt chưa có nghĩa là được gia hạn. Ngày trả chỉ thay đổi sau khi thanh toán PayOS thành công.</p><button class="cw-btn primary">Gửi yêu cầu</button></form></section></main><div th:replace="~{fragments/customer-footer :: footer}"></div><script src="/js/customer.js" defer></script></body></html>
+--- before/src/main/resources/templates/customer/rental-detail.html
++++ src/main/resources/templates/customer/rental-detail.html
+@@ -1 +1 @@
+-<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="vi"><head th:replace="~{fragments/head :: head(title='Chi tiết đơn thuê')}"></head><body class="bg-surface text-on-surface"><div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div><main class="customer-workspace"><div class="cw-tabs"><a href="/customer/my-rentals">Đơn đang thuê</a><a href="/customer/rental-history">Lịch sử</a><a href="/customer/profile">Hồ sơ cá nhân</a></div><h1>Chi tiết đơn thuê</h1><div id="cw-message" class="cw-message" role="status" aria-live="polite"></div><section class="cw-card"><div class="cw-row"><h2 th:text="${rental.orderCode}"></h2><span class="cw-tag" th:text="${display.status(rental.status)}"></span></div><div class="cw-order"><img th:src="${display.image(rental.motorbike.imagePrimary)}" th:alt="${rental.motorbike.name}"><div><h2 th:text="${rental.motorbike.name}"></h2><span class="cw-price" th:text="${display.money(rental.totalPrice)}"></span><div class="cw-facts"><span th:text="${'Nhận: '+display.date(rental.pickupDate)}"></span><span th:text="${'Trả: '+display.date(rental.returnDate)}"></span><span th:text="${'Đã trả: '+display.money((rental.depositPaid ?: 0)+(rental.balancePaid ?: 0))}"></span><span th:text="${'Còn lại: '+display.money(rental.remainingRentalAmount)}"></span></div><p class="cw-muted" th:text="${rental.pickupAddress ?: 'Nhận tại cửa hàng'}"></p><p class="cw-muted" th:text="${rental.returnAddress ?: 'Trả tại cửa hàng'}"></p><p th:if="${rental.rejectionReason != null}" th:text="${rental.rejectionReason}"></p></div></div></section><div class="cw-actions"><button class="cw-btn primary" data-action="pay" th:data-id="${rental.id}" th:if="${rental.status.name() == 'PENDING_PAYMENT'}">Thanh toán cọc</button><a class="cw-btn" th:if="${rental.status.name() == 'COMPLETED' && !reviewed}" th:href="@{/customer/review/{id}(id=${rental.id})}">Đánh giá chuyến đi</a><span th:if="${reviewed}" class="cw-tag">Bạn đã đánh giá chuyến đi này</span><button class="cw-btn" onclick="window.print()">In thông tin đơn thuê</button></div><section class="cw-card" data-customer-changes th:data-id="${rental.id}"></section><section class="cw-card"><p th:if="${rental.rentalCreditAmount > 0}" th:text="${'Tiền dư chờ cửa hàng xử lý: '+display.money(rental.rentalCreditAmount)}"></p><h2>Giao dịch thanh toán</h2><p class="cw-muted" th:if="${#lists.isEmpty(payments)}">Chưa có giao dịch được lưu.</p><div class="cw-scroll"><table class="cw-table" th:unless="${#lists.isEmpty(payments)}"><thead><tr><th>Số tiền</th><th>Hình thức</th><th>Trạng thái</th><th>Thời điểm nhận</th></tr></thead><tbody><tr th:each="p : ${payments}"><td th:text="${display.money(p.amount)}"></td><td th:text="${p.method == 'PAYOS' ? 'PayOS' : (p.method == 'BANK_TRANSFER' ? 'Chuyển khoản ngân hàng' : (p.method == 'CASH' ? 'Tiền mặt' : 'Khác'))}"></td><td th:text="${p.status == 'PAID' and p.direction == 'OUT' ? 'Đã hoàn tiền' : display.status(p.status)}"></td><td th:text="${display.date(p.paidAt)}"></td></tr></tbody></table></div></section><section class="cw-card"><h2>Yêu cầu gia hạn</h2><p th:if="${#lists.isEmpty(extensions)}" class="cw-muted">Chưa có yêu cầu gia hạn.</p><div th:each="e : ${extensions}" class="cw-facts"><span th:text="${display.date(e.newReturnDate)}"></span><span th:text="${display.money(e.extraAmount)}"></span><span th:text="${display.status(e.status)}"></span><span th:text="${e.reason}"></span></div></section><section class="cw-card" th:if="${contract != null}"><h2>Biên bản bàn giao</h2><p th:text="${contract.contractCode}"></p><p th:text="${contract.vehicleConditionBefore}"></p><p th:text="${contract.vehicleConditionAfter}"></p><div class="cw-facts"><span th:text="${'Công tơ mét lúc giao: '+(contract.odoBefore ?: 0)+' km'}"></span><span th:text="${'Công tơ mét lúc trả: '+(contract.odoAfter ?: 0)+' km'}"></span></div></section></main><div th:replace="~{fragments/customer-footer :: footer}"></div><script src="/js/customer.js" defer></script><script src="/js/vehicle-changes.js" defer></script></body></html>
++<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org" lang="vi"><head th:replace="~{fragments/head :: head(title='Chi tiết đơn thuê')}"></head><body class="bg-surface text-on-surface"><div th:replace="~{fragments/customer-header :: header(isHome=false)}"></div><main class="customer-workspace"><div class="cw-tabs"><a href="/customer/my-rentals">Đơn đang thuê</a><a href="/customer/rental-history">Lịch sử</a><a href="/customer/profile">Hồ sơ cá nhân</a></div><h1>Chi tiết đơn thuê</h1><div id="cw-message" class="cw-message" role="status" aria-live="polite"></div><section class="cw-card"><div class="cw-row"><h2 th:text="${rental.orderCode}"></h2><span class="cw-tag" th:text="${display.status(rental.status)}"></span></div><div class="cw-order"><img th:src="${display.image(rental.motorbike.imagePrimary)}" th:alt="${rental.motorbike.name}"><div><h2 th:text="${rental.motorbike.name}"></h2><span class="cw-price" th:text="${display.money(rental.totalPrice)}"></span><div class="cw-facts"><span th:text="${'Nhận: '+display.date(rental.pickupDate)}"></span><span th:text="${'Trả: '+display.date(rental.returnDate)}"></span><span th:text="${'Đã trả: '+display.money((rental.depositPaid ?: 0)+(rental.balancePaid ?: 0))}"></span><span th:text="${'Còn lại: '+display.money(rental.remainingRentalAmount)}"></span></div><p class="cw-muted" th:text="${rental.pickupAddress ?: 'Nhận tại cửa hàng'}"></p><p class="cw-muted" th:text="${rental.returnAddress ?: 'Trả tại cửa hàng'}"></p><p th:if="${rental.rejectionReason != null}" th:text="${rental.rejectionReason}"></p></div></div></section><div class="cw-actions"><button class="cw-btn primary" data-action="pay" th:data-id="${rental.id}" th:if="${rental.status.name() == 'PENDING_PAYMENT'}">Thanh toán cọc</button><a class="cw-btn" th:if="${rental.status.name() == 'COMPLETED' && !reviewed}" th:href="@{/customer/review/{id}(id=${rental.id})}">Đánh giá chuyến đi</a><span th:if="${reviewed}" class="cw-tag">Bạn đã đánh giá chuyến đi này</span><button class="cw-btn" onclick="window.print()">In thông tin đơn thuê</button></div><section class="cw-card" data-customer-changes th:data-id="${rental.id}"></section><section class="cw-card"><p th:if="${rental.rentalCreditAmount > 0}" th:text="${'Tiền dư chờ cửa hàng xử lý: '+display.money(rental.rentalCreditAmount)}"></p><h2>Giao dịch thanh toán</h2><p class="cw-muted" th:if="${#lists.isEmpty(payments)}">Chưa có giao dịch được lưu.</p><div class="cw-scroll"><table class="cw-table" th:unless="${#lists.isEmpty(payments)}"><thead><tr><th>Số tiền</th><th>Hình thức</th><th>Trạng thái</th><th>Thời điểm nhận</th></tr></thead><tbody><tr th:each="p : ${payments}"><td th:text="${display.money(p.amount)}"></td><td th:text="${p.method == 'PAYOS' ? 'PayOS' : (p.method == 'BANK_TRANSFER' ? 'Chuyển khoản ngân hàng' : (p.method == 'CASH' ? 'Tiền mặt' : 'Khác'))}"></td><td th:text="${p.status == 'PAID' and p.direction == 'OUT' ? 'Đã hoàn tiền' : display.status(p.status)}"></td><td th:text="${display.date(p.paidAt)}"></td></tr></tbody></table></div></section><section class="cw-card"><h2>Yêu cầu gia hạn</h2><p th:if="${#lists.isEmpty(extensions)}" class="cw-muted">Chưa có yêu cầu gia hạn.</p><div th:each="e : ${extensions}" class="cw-facts"><span th:text="${display.date(e.newReturnDate)}"></span><span th:text="${display.money(e.extraAmount)}"></span><span th:text="${display.status(e.status)}"></span><span th:text="${e.reason}"></span><p class="cw-muted" th:if="${e.status == 'WAITING_FOR_PAYMENT'}">Yêu cầu đã được chấp nhận. Ngày trả chỉ thay đổi sau khi thanh toán phí gia hạn thành công.</p><span th:if="${e.expiresAt != null}" th:text="${'Hạn thanh toán: '+display.date(e.expiresAt)}"></span><button class="cw-btn primary" data-action="pay-extension" th:data-id="${e.id}" th:if="${e.status == 'WAITING_FOR_PAYMENT'}">Thanh toán phí gia hạn</button></div></section><section class="cw-card" th:if="${contract != null}"><h2>Biên bản bàn giao</h2><p th:text="${contract.contractCode}"></p><p th:text="${contract.vehicleConditionBefore}"></p><p th:text="${contract.vehicleConditionAfter}"></p><div class="cw-facts"><span th:text="${'Công tơ mét lúc giao: '+(contract.odoBefore ?: 0)+' km'}"></span><span th:text="${'Công tơ mét lúc trả: '+(contract.odoAfter ?: 0)+' km'}"></span></div></section></main><div th:replace="~{fragments/customer-footer :: footer}"></div><script src="/js/customer.js" defer></script><script src="/js/vehicle-changes.js" defer></script></body></html>
+--- before/src/main/java/com/motorrent/motorbikerental/service/PaymentService.java
++++ src/main/java/com/motorrent/motorbikerental/service/PaymentService.java
+@@ -10,6 +10,7 @@
+  private final NotificationService notifications;
+  private final AvailabilityService availability;
+  private final VehicleChangeService vehicleChanges;
++ private final ExtensionService extensions;
+  @jakarta.persistence.PersistenceContext private jakarta.persistence.EntityManager entityManager;
+  private final CurrentUser current; private final TransactionTemplate tx;
+  @Value("${app.base-url:http://localhost:8080}") private String baseUrl;
+@@ -43,10 +44,10 @@
+  private String checkout(Payment payment,Long orderId){
+   if(payment.getCheckoutUrl()!=null) return payment.getCheckoutUrl();
+   try {
+-   var data=PaymentData.builder().orderCode(payment.getProviderCode()).amount(payment.getAmount()).description(("VEHICLE_CHANGE".equals(payment.getSourceType())?"Doi xe ":"Coc don ")+orderId)
++   var data=PaymentData.builder().orderCode(payment.getProviderCode()).amount(payment.getAmount()).description(("EXTENSION".equals(payment.getSourceType())?"Gia han ":"VEHICLE_CHANGE".equals(payment.getSourceType())?"Doi xe ":"Coc don ")+orderId)
+     .returnUrl(baseUrl+"/customer/payment-result?orderId="+orderId).cancelUrl(baseUrl+"/customer/payment-result?orderId="+orderId)
+     .expiredAt(payment.getExpiresAt().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toEpochSecond())
+-    .item(ItemData.builder().name("VEHICLE_CHANGE".equals(payment.getSourceType())?"Thanh toan bo sung doi xe":"Dat coc thue xe").price(payment.getAmount()).quantity(1).build()).build();
++    .item(ItemData.builder().name("EXTENSION".equals(payment.getSourceType())?"Thanh toan gia han":"VEHICLE_CHANGE".equals(payment.getSourceType())?"Thanh toan bo sung doi xe":"Dat coc thue xe").price(payment.getAmount()).quantity(1).build()).build();
+    var response=payOS.createPaymentLink(data);
+    tx.executeWithoutResult(s->{var p=payments.lockById(payment.getId()).orElseThrow();p.setCheckoutUrl(response.getCheckoutUrl());p.setProviderLinkId(response.getPaymentLinkId());payments.save(p);});
+    return response.getCheckoutUrl();
+@@ -74,6 +75,7 @@
+   }
+  }
+  public void apply(Long code,Integer received,String link,String reference) {
++  if("EXTENSION".equals(payments.sourceTypeForCode(code).orElse(null))){extensions.applyPayment(code,received,link,reference);return;}
+   if("VEHICLE_CHANGE".equals(payments.sourceTypeForCode(code).orElse(null))){vehicleChanges.applyPayment(code,received,link,reference);return;}
+   var orderId=payments.orderIdForCode(code).orElse(null); if(orderId==null) return;
+   tx.executeWithoutResult(s->{
+@@ -96,4 +98,8 @@
+   current.canRead(orders.findById(id).orElseThrow());
+   return payments.findByRentalOrderIdOrderByCreatedAtDesc(id).stream().map(p->{Map<String,Object> m=new LinkedHashMap<>();m.put("id",p.getId());m.put("amount",Financials.signedAmount(p));m.put("receivedAmount",Financials.signedReceived(p));m.put("absoluteAmount",p.getAmount());m.put("transactionType",Financials.type(p));m.put("direction",p.getDirection());m.put("transactionStatus",Financials.transactionStatus(p));m.put("status",p.getStatus());m.put("method",p.getPaymentMethod());m.put("purpose",p.getPurpose());m.put("paidAt",p.getPaidAt());return m;}).toList();
+  }
++ public String createExtensionPaymentLink(Long id){
++  if(!paymentsEnabled)throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"PayOS đang tắt trên bản kiểm thử");
++  Payment p=extensions.preparePayment(id);return checkout(p,p.getRentalOrder().getId());
++ }
+ }
+--- before/src/main/java/com/motorrent/motorbikerental/service/OperationsService.java
++++ src/main/java/com/motorrent/motorbikerental/service/OperationsService.java
+@@ -18,7 +18,7 @@
+  private final MotorbikeRepository bikes; private final MotorbikeBrandRepository brands; private final MotorbikeCategoryRepository categories;
+  private final MotorbikeImageRepository images; private final UserRepository users;
+  private final RentalOrderRepository orders; private final PaymentRepository payments; private final MaintenanceRecordRepository maintenance;
+- private final ShopSettingsRepository settings; private final RentalExtensionRepository extensions;
++ private final ShopSettingsRepository settings; private final RentalExtensionRepository extensions; private final ExtensionService extensionService;
+  private final RentalContractRepository contracts; private final TokenAuthenticationRepository tokens; private final PasswordEncoder encoder;
+  private final ReviewRepository reviews;
+  public static Map<String,Object> row(Object... pairs){Map<String,Object> m=new LinkedHashMap<>();for(int i=0;i<pairs.length;i+=2)m.put(pairs[i].toString(),pairs[i+1]);return m;}
+@@ -37,7 +37,7 @@
+    case "rental-orders" -> orders.findAll().stream().sorted(Comparator.comparing(RentalOrder::getCreatedAt).reversed()).map(o->row("id",o.getId(),"orderCode",o.getOrderCode(),"customer",name(o.getCustomer()),"phone",o.getCustomer().getPhone(),"motorbike",o.getMotorbike().getName(),"pickupDate",o.getPickupDate(),"returnDate",o.getReturnDate(),"totalPrice",o.getTotalPrice(),"paid",Objects.requireNonNullElse(o.getDepositPaid(),0)+Objects.requireNonNullElse(o.getBalancePaid(),0),"status",o.getStatus().name(),"staff",name(o.getStaff()))).toList();
+    case "maintenance" -> maintenance.findAll().stream().map(m->row("id",m.getId(),"motorbikeId",m.getMotorbike().getId(),"motorbike",m.getMotorbike().getName(),"type",m.getType(),"description",m.getDescription(),"cost",m.getCost(),"status",m.getStatus(),"reportedBy",name(m.getReportedBy()),"startedAt",m.getStartedAt(),"completedAt",m.getCompletedAt())).toList();
+    case "payments" -> payments.findAll().stream().sorted(Comparator.comparing(Payment::getCreatedAt).reversed()).map(p->row("id",p.getId(),"orderId",p.getRentalOrder().getId(),"orderCode",p.getRentalOrder().getOrderCode(),"amount",Financials.signedAmount(p),"receivedAmount",Financials.signedReceived(p),"absoluteAmount",p.getAmount(),"transactionType",Financials.type(p),"direction",p.getDirection(),"transactionStatus",Financials.transactionStatus(p),"processedByStaffId",p.getProcessedByStaffId(),"processedBy",p.getProcessedByStaffId()==null?("PAYOS".equals(p.getPaymentMethod())?"PayOS":"Chưa ghi nhận"):users.findById(p.getProcessedByStaffId()).map(this::name).orElse(p.getProcessedByStaffId()),"processedAt",p.getProcessedAt(),"note",p.getNote(),"components",p.getComponentsJson(),"purpose",p.getPurpose(),"method",p.getPaymentMethod(),"status",p.getStatus(),"paidAt",p.getPaidAt(),"reference",p.getTransactionCode())).toList();
+-   case "extensions" -> extensions.findAll().stream().map(e->row("id",e.getId(),"orderCode",e.getRentalOrder().getOrderCode(),"customer",name(e.getRequestedBy()),"newReturnDate",e.getNewReturnDate(),"extraAmount",e.getExtraAmount(),"reason",e.getReason(),"status",e.getStatus())).toList();
++   case "extensions" -> extensions.findAll().stream().map(e->row("id",e.getId(),"orderCode",e.getRentalOrder().getOrderCode(),"customer",name(e.getRequestedBy()),"newReturnDate",e.getNewReturnDate(),"extraAmount",e.getExtraAmount(),"reason",e.getReason(),"status",extensionService.effectiveStatus(e),"expiresAt",e.getExpiresAt(),"approvedAt",e.getApprovedAt())).toList();
+    case "reviews" -> reviews.findAll().stream().map(r->row("id",r.getId(),"motorbike",r.getMotorbike().getName(),"customer",name(r.getCustomer()),"rating",r.getRating(),"comment",r.getComment(),"staffReply",r.getStaffReply(),"createdAt",r.getCreatedAt())).toList();
+    default -> throw new IllegalArgumentException("Danh mục không tồn tại");
+   };
+--- before/src/main/java/com/motorrent/motorbikerental/service/ExtensionService.java
++++ src/main/java/com/motorrent/motorbikerental/service/ExtensionService.java
+@@ -1,29 +1,86 @@
+ package com.motorrent.motorbikerental.service;
+-import com.motorrent.motorbikerental.entity.*; import com.motorrent.motorbikerental.repository.*; import com.motorrent.motorbikerental.enums.RentalStatus; import com.motorrent.motorbikerental.security.CurrentUser;
+-import lombok.RequiredArgsConstructor; import org.springframework.stereotype.Service; import org.springframework.transaction.annotation.Transactional; import java.time.*; import java.util.*;
++
++import com.motorrent.motorbikerental.entity.*;
++import com.motorrent.motorbikerental.repository.*;
++import com.motorrent.motorbikerental.enums.RentalStatus;
++import com.motorrent.motorbikerental.security.CurrentUser;
++import jakarta.persistence.*;
++import lombok.RequiredArgsConstructor;
++import org.springframework.stereotype.Service;
++import org.springframework.transaction.annotation.*;
++import java.time.*;
++import java.util.*;
++
+ @Service @RequiredArgsConstructor
+ public class ExtensionService {
+  private final NotificationService notifications;
+  private final AvailabilityService availability;
+- private final RentalOrderRepository orders;private final RentalExtensionRepository extensions;private final MotorbikeRepository bikes;private final CurrentUser current;
+- public List<Map<String,Object>> forOrder(Long id) {current.canRead(orders.findById(id).orElseThrow());return extensions.findByRentalOrderIdOrderByCreatedAtDesc(id).stream().map(e->{Map<String,Object> m=new LinkedHashMap<>();m.put("id",e.getId());m.put("newReturnDate",e.getNewReturnDate());m.put("extraAmount",e.getExtraAmount());m.put("status",e.getStatus());m.put("reason",e.getReason());return m;}).toList();}
+- @Transactional public void request(Long id,LocalDateTime end,String reason) {
+-  var order=availability.lockOrder(id);current.owns(order);
+-  if(!List.of(RentalStatus.HANDED_OVER,RentalStatus.EXTENDED).contains(order.getStatus()))throw new IllegalArgumentException("Chỉ được gia hạn khi đang thuê xe");
+-  if(extensions.existsByRentalOrderIdAndStatus(id,"PENDING"))throw new IllegalArgumentException("Bạn đã có yêu cầu gia hạn chờ xử lý");
+-  int days=PricingService.days(order.getReturnDate(),end);
+-  availability.requireAvailable(order.getMotorbike(),id,order.getReturnDate(),end);
+-  int rate=Objects.requireNonNullElse(order.getDailyRate(),order.getMotorbike().getPricePerDay());
+-  extensions.save(RentalExtension.builder().rentalOrder(order).requestedBy(current.get()).originalReturnDate(order.getReturnDate()).newReturnDate(end).extraDays(days).extraAmount(Math.multiplyExact(days,rate)).reason(reason).build());
++ private final RentalOrderRepository orders;
++ private final RentalExtensionRepository extensions;
++ private final PaymentRepository payments;
++ private final PricingService pricing;
++ private final CurrentUser current;
++ @PersistenceContext private EntityManager em;
++ private static final java.security.SecureRandom CODES=new java.security.SecureRandom();
++ private static boolean active(RentalOrder o){return List.of(RentalStatus.HANDED_OVER,RentalStatus.EXTENDED,RentalStatus.OVERDUE).contains(o.getStatus());}
++ private boolean matches(RentalOrder o,RentalExtension e){return active(o)&&Objects.equals(o.getMotorbike().getId(),e.getMotorbikeId())&&Objects.equals(o.getReturnDate(),e.getOriginalReturnDate())&&Objects.equals(o.getTotalPrice(),e.getOriginalTotal())&&Objects.equals(o.getDailyRate(),e.getDailyRate());}
++ public String effectiveStatus(RentalExtension e){
++  if(List.of("PENDING","WAITING_FOR_PAYMENT").contains(e.getStatus())&&!matches(e.getRentalOrder(),e))return "CANCELLED";
++  if("WAITING_FOR_PAYMENT".equals(e.getStatus())&&(e.getExpiresAt()==null||!e.getExpiresAt().isAfter(AvailabilityService.now())))return "EXPIRED";
++  return e.getStatus();
+  }
+- @Transactional public void decide(Long id,boolean approve) {
+-  var actor=current.operator();var orderId=extensions.orderIdFor(id).orElseThrow();
+-  var order=availability.lockOrder(orderId);var e=extensions.lockById(id).orElseThrow();
++ public Map<String,Object> view(RentalExtension e){return OperationsService.row("id",e.getId(),"newReturnDate",e.getNewReturnDate(),"originalReturnDate",e.getOriginalReturnDate(),"extraAmount",e.getExtraAmount(),"status",effectiveStatus(e),"reason",e.getReason(),"expiresAt",e.getExpiresAt(),"approvedAt",e.getApprovedAt(),"processedAt",e.getProcessedAt());}
++ @Transactional(readOnly=true) public List<Map<String,Object>> forOrder(Long id){current.canRead(orders.findById(id).orElseThrow());return extensions.findByRentalOrderIdOrderByCreatedAtDesc(id).stream().map(this::view).toList();}
++ private RentalExtension locked(Long id){var e=extensions.lockById(id).orElseThrow();em.refresh(e,LockModeType.PESSIMISTIC_WRITE);return e;}
++ private void requireSchedule(RentalOrder o,RentalExtension e){
++  if(!e.getNewReturnDate().isAfter(AvailabilityService.now()))throw new IllegalArgumentException("Ngày trả mới phải ở tương lai");
++  if(!availability.availableLocked(o.getMotorbike(),o.getId(),e.getOriginalReturnDate(),e.getNewReturnDate()))throw new IllegalArgumentException("Xe hiện tại không còn trống trong khoảng gia hạn. Vui lòng liên hệ cửa hàng theo hotline "+Objects.toString(pricing.settings().getPhone(),"")+" để được hỗ trợ đổi xe.");
++ }
++ @Transactional(isolation=Isolation.READ_COMMITTED) public void request(Long id,LocalDateTime end,String reason){
++  var o=availability.lockOrder(id);current.owns(o);
++  if(!active(o))throw new IllegalArgumentException("Chỉ được gia hạn khi đang thuê xe");
++  if(reason==null||reason.isBlank()||reason.length()>1000)throw new IllegalArgumentException("Nhập lý do, tối đa 1000 ký tự");
++  int days=PricingService.days(o.getReturnDate(),end);
++  for(var old:extensions.lockOpen(id)){em.refresh(old,LockModeType.PESSIMISTIC_WRITE);String state=effectiveStatus(old);if(List.of("PENDING","WAITING_FOR_PAYMENT").contains(state))throw new IllegalArgumentException("Bạn đã có yêu cầu gia hạn đang xử lý");old.setStatus(state);old.setProcessedAt(AvailabilityService.now());}
++  int rate=Objects.requireNonNullElse(o.getDailyRate(),o.getMotorbike().getPricePerDay());
++  // Snapshot the nullable original rate too, so legacy orders remain comparable.
++  var e=RentalExtension.builder().rentalOrder(o).requestedBy(current.get()).motorbikeId(o.getMotorbike().getId()).dailyRate(o.getDailyRate()).originalTotal(o.getTotalPrice()).originalReturnDate(o.getReturnDate()).newReturnDate(end).extraDays(days).extraAmount(Math.multiplyExact(days,rate)).reason(reason.trim()).build();
++  if(e.getExtraAmount()<=0)throw new IllegalArgumentException("Phí gia hạn chưa hợp lệ; liên hệ cửa hàng");
++  requireSchedule(o,e);extensions.save(e);
++ }
++ @Transactional(isolation=Isolation.READ_COMMITTED) public Map<String,Object> decide(Long id,boolean approve){
++  var actor=current.operator();var o=availability.lockOrder(extensions.orderIdFor(id).orElseThrow());var e=locked(id);
+   if(!"PENDING".equals(e.getStatus()))throw new IllegalArgumentException("Yêu cầu đã được xử lý");
+-  if(approve) {
+-   if(!List.of(RentalStatus.HANDED_OVER,RentalStatus.EXTENDED,RentalStatus.OVERDUE).contains(order.getStatus()) || !order.getReturnDate().equals(e.getOriginalReturnDate()))throw new IllegalArgumentException("Đơn thuê đã thay đổi, cần tạo yêu cầu mới");
+-   availability.requireAvailable(order.getMotorbike(),order.getId(),order.getReturnDate(),e.getNewReturnDate());
+-   order.setReturnDate(e.getNewReturnDate());order.setDays(Math.addExact(order.getDays(),e.getExtraDays()));order.setTotalPrice(Math.addExact(order.getTotalPrice(),e.getExtraAmount()));order.setRentalFee(Math.addExact(Objects.requireNonNullElse(order.getRentalFee(),order.getTotalPrice()-e.getExtraAmount()),e.getExtraAmount()));order.setStatus(RentalStatus.EXTENDED);orders.save(order);
+-  }e.setApprovedBy(actor);e.setStatus(approve?"APPROVED":"REJECTED");extensions.save(e);notifications.send(order,"Yêu cầu gia hạn "+order.getOrderCode(),approve?"Gia hạn đã được duyệt. Vui lòng kiểm tra ngày trả và khoản thuê bổ sung.":"Yêu cầu gia hạn bị từ chối. Vui lòng trả xe theo lịch đã xác nhận.");
++  if(approve){
++   if(!matches(o,e))throw new IllegalArgumentException("Đơn thuê đã thay đổi, cần tạo yêu cầu mới");
++   requireSchedule(o,e);e.setStatus("WAITING_FOR_PAYMENT");e.setExpiresAt(AvailabilityService.now().plusMinutes(pricing.settings().getHoldMinutes()));
++  }else{e.setStatus("REJECTED");e.setProcessedAt(AvailabilityService.now());}
++  e.setApprovedBy(actor);e.setApprovedAt(AvailabilityService.now());
++  notifications.send(o,"Yêu cầu gia hạn "+o.getOrderCode(),approve?"Yêu cầu đã được chấp nhận. Vui lòng thanh toán phí gia hạn trước hạn. Ngày trả chỉ thay đổi sau khi thanh toán thành công.":"Yêu cầu gia hạn bị từ chối. Vui lòng trả xe theo lịch đã xác nhận.");
++  return view(e);
++ }
++ @Transactional(isolation=Isolation.READ_COMMITTED) public Payment preparePayment(Long id){
++  var o=availability.lockOrder(extensions.orderIdFor(id).orElseThrow());current.owns(o);var e=locked(id);
++  if(!"WAITING_FOR_PAYMENT".equals(effectiveStatus(e)))throw new IllegalArgumentException("Yêu cầu gia hạn không còn trong thời gian thanh toán");
++  requireSchedule(o,e);
++  var existing=payments.lockForOrder(o.getId()).stream().filter(p->"EXTENSION".equals(p.getSourceType())&&id.equals(p.getSourceId())).findFirst();
++  if(existing.isPresent()){if(!"PENDING".equals(existing.get().getStatus()))throw new IllegalArgumentException("Giao dịch đã được xử lý");return existing.get();}
++  var p=Payment.builder().rentalOrder(o).amount(e.getExtraAmount()).transactionType("EXTENSION_PAYMENT").purpose("EXTENSION_PAYMENT").direction("IN").paymentMethod("PAYOS").sourceType("EXTENSION").sourceId(id).expiresAt(e.getExpiresAt()).idempotencyKey("EXTENSION:"+id).componentsJson(Financials.components(Map.of("EXTENSION_PAYMENT",e.getExtraAmount()),e.getExtraAmount())).build();
++  long code;do{code=1+CODES.nextLong(4_503_599_627_370_495L);}while(payments.findByProviderCode(code).isPresent());p.setProviderCode(code);return payments.saveAndFlush(p);
++ }
++ @Transactional(isolation=Isolation.READ_COMMITTED) public void applyPayment(Long code,Integer amount,String link,String reference){
++  Long id=payments.sourceIdForCode(code).orElseThrow();var o=availability.lockOrder(extensions.orderIdFor(id).orElseThrow());var e=locked(id);var p=payments.lockByProviderCode(code).orElseThrow();em.refresh(p,LockModeType.PESSIMISTIC_WRITE);
++  if(!"PENDING".equals(p.getStatus()))return;
++  if(!"EXTENSION".equals(p.getSourceType())||!Objects.equals(p.getSourceId(),id)||!Objects.equals(p.getRentalOrder().getId(),o.getId()))throw new IllegalArgumentException("Nguồn thanh toán không khớp");
++  if(link==null||link.isBlank()||p.getProviderLinkId()!=null&&!Objects.equals(p.getProviderLinkId(),link))throw new IllegalArgumentException("Mã giao dịch không khớp");
++  if(amount==null||amount<0)throw new IllegalArgumentException("Số tiền nhận không hợp lệ");
++  var now=AvailabilityService.now();p.setReceivedAmount(amount);p.setPaidAt(now);p.setProcessedAt(now);p.setProviderLinkId(link);p.setTransactionCode(reference==null||reference.isBlank()?"PAYOS-"+code:reference);
++  if(!Objects.equals(amount,p.getAmount())||!Objects.equals(amount,e.getExtraAmount())||!"WAITING_FOR_PAYMENT".equals(effectiveStatus(e))||p.getExpiresAt()==null||!p.getExpiresAt().isAfter(now)||!e.getNewReturnDate().isAfter(now)||!availability.availableLocked(o.getMotorbike(),o.getId(),e.getOriginalReturnDate(),e.getNewReturnDate())){
++   p.setStatus("REVIEW_REQUIRED");e.setStatus("REVIEW_REQUIRED");e.setProcessedAt(now);return;
++  }
++  // One transaction posts the receipt and advances only the approved segment.
++  int oldTotal=o.getTotalPrice();o.setReturnDate(e.getNewReturnDate());o.setDays(Math.addExact(o.getDays(),e.getExtraDays()));o.setTotalPrice(Math.addExact(oldTotal,amount));o.setRentalFee(Math.addExact(Objects.requireNonNullElse(o.getRentalFee(),oldTotal-Objects.requireNonNullElse(o.getDeliveryFee(),0)),amount));o.setBalancePaid(Math.addExact(Objects.requireNonNullElse(o.getBalancePaid(),0),amount));o.setStatus(RentalStatus.EXTENDED);
++  p.setStatus("PAID");e.setStatus("PAID");e.setProcessedAt(now);orders.save(o);
++  notifications.send(o,"Đã thanh toán gia hạn "+o.getOrderCode(),"Ngày trả mới đã được xác nhận: "+e.getNewReturnDate()+". Khoản thanh toán được lưu trong chi tiết đơn.");
+  }
+ }
+--- before/src/main/java/com/motorrent/motorbikerental/service/Display.java
++++ src/main/java/com/motorrent/motorbikerental/service/Display.java
+@@ -10,5 +10,6 @@
+   case "HANDED_OVER","RENTED"->"Đang thuê";case "COMPLETED"->"Đã hoàn thành";case "CANCELLED"->"Đã hủy";case "REJECTED"->"Từ chối";
+   case "EXTENDED"->"Đã gia hạn";case "OVERDUE"->"Quá hạn";case "RETURN_REQUESTED"->"Yêu cầu trả xe";case "RETURNED"->"Đã trả xe";
+   case "AVAILABLE"->"Sẵn sàng";case "UNAVAILABLE"->"Tạm ngừng";case "MAINTENANCE"->"Bảo dưỡng";case "PAID"->"Đã nhận tiền";
++  case "WAITING_FOR_PAYMENT"->"Chờ thanh toán gia hạn";case "EXPIRED"->"Hết hạn thanh toán";
+   case "REVIEW_REQUIRED"->"Cần đối soát";case "REFUNDED"->"Đã hoàn tiền";case "APPROVED"->"Đã duyệt";case "ACTIVE"->"Đang hoạt động";case "BLOCKED"->"Đã khóa";default->s.toString();};}
+ }
+--- before/src/main/java/com/motorrent/motorbikerental/service/AvailabilityService.java
++++ src/main/java/com/motorrent/motorbikerental/service/AvailabilityService.java
+@@ -14,6 +14,7 @@
+  private final RentalOrderRepository orders;
+  private final MotorbikeRepository bikes;
+  private final RentalVehicleChangeRepository changes;
++ private final RentalExtensionRepository extensions;
+  @jakarta.persistence.PersistenceContext private jakarta.persistence.EntityManager entityManager;
+  public static LocalDateTime now(){return LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));}
+  @Transactional(readOnly=true)
+@@ -24,7 +25,7 @@
+   PricingService.days(start,end);
+   if(bike.getStatus()==MotorbikeStatus.MAINTENANCE||bike.getStatus()==MotorbikeStatus.UNAVAILABLE)return false;
+   long skip=excluded==null?-1L:excluded;
+-  return orders.conflicts(bike.getId(),skip,start,end,now())==0 && changes.held(bike.getId(),skip,start,end,now())==0;
++  return orders.conflicts(bike.getId(),skip,start,end,now())==0 && changes.held(bike.getId(),skip,start,end,now())==0 && extensions.held(bike.getId(),skip,start,end,now())==0;
+  }
+  public void requireAvailable(Motorbike bike,Long excluded,LocalDateTime start,LocalDateTime end){
+   if(!availableLocked(bike,excluded,start,end))throw new IllegalArgumentException("Xe không còn trống trong thời gian đã chọn");
+@@ -36,7 +37,7 @@
+   if(bike.getStatus()==MotorbikeStatus.MAINTENANCE||bike.getStatus()==MotorbikeStatus.UNAVAILABLE)return false;
+   // A locking read sees commits made while waiting for the vehicle lock, also under MySQL REPEATABLE READ.
+   long skip=excluded==null?-1L:excluded;
+-  return orders.lockedConflicts(bike.getId(),skip,start,end,now()).isEmpty() && changes.lockHeld(bike.getId(),skip,start,end,now()).isEmpty();
++  return orders.lockedConflicts(bike.getId(),skip,start,end,now()).isEmpty() && changes.lockHeld(bike.getId(),skip,start,end,now()).isEmpty() && extensions.lockHeld(bike.getId(),skip,start,end,now()).isEmpty();
+  }
+  /** Acquire in stable vehicle -> order order; reject a stale vehicle association. */
+  @Transactional(propagation=org.springframework.transaction.annotation.Propagation.MANDATORY)
+--- before/src/main/java/com/motorrent/motorbikerental/repository/RentalExtensionRepository.java
++++ src/main/java/com/motorrent/motorbikerental/repository/RentalExtensionRepository.java
+@@ -10,6 +10,16 @@
+  @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+  @org.springframework.data.jpa.repository.Query("select e from RentalExtension e where e.id=:id")
+  java.util.Optional<RentalExtension> lockById(@org.springframework.data.repository.query.Param("id") Long id);
+- java.util.List<RentalExtension> findByRentalOrderIdOrderByCreatedAtDesc(Long id);
++ @org.springframework.data.jpa.repository.Query("select e from RentalExtension e where e.rentalOrder.id=:id order by e.createdAt desc,e.id desc")
++ java.util.List<RentalExtension> findByRentalOrderIdOrderByCreatedAtDesc(@org.springframework.data.repository.query.Param("id") Long id);
+  boolean existsByRentalOrderIdAndStatus(Long id,String status);
++ @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
++ @org.springframework.data.jpa.repository.Query("select e from RentalExtension e where e.rentalOrder.id=:id and e.status in ('PENDING','WAITING_FOR_PAYMENT') order by e.id")
++ java.util.List<RentalExtension> lockOpen(@org.springframework.data.repository.query.Param("id") Long id);
++ String HOLD = " from RentalExtension e where e.motorbikeId=:bike and e.rentalOrder.id<>:excluded and e.status='WAITING_FOR_PAYMENT' and e.expiresAt>:now and e.rentalOrder.status in ('HANDED_OVER','EXTENDED','OVERDUE') and e.rentalOrder.motorbike.id=e.motorbikeId and e.rentalOrder.returnDate=e.originalReturnDate and e.originalReturnDate<:end and e.newReturnDate>:start";
++ @org.springframework.data.jpa.repository.Query("select count(e)"+HOLD)
++ long held(@org.springframework.data.repository.query.Param("bike") Long bike,@org.springframework.data.repository.query.Param("excluded") Long excluded,@org.springframework.data.repository.query.Param("start") java.time.LocalDateTime start,@org.springframework.data.repository.query.Param("end") java.time.LocalDateTime end,@org.springframework.data.repository.query.Param("now") java.time.LocalDateTime now);
++ @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
++ @org.springframework.data.jpa.repository.Query("select e"+HOLD+" order by e.id")
++ java.util.List<RentalExtension> lockHeld(@org.springframework.data.repository.query.Param("bike") Long bike,@org.springframework.data.repository.query.Param("excluded") Long excluded,@org.springframework.data.repository.query.Param("start") java.time.LocalDateTime start,@org.springframework.data.repository.query.Param("end") java.time.LocalDateTime end,@org.springframework.data.repository.query.Param("now") java.time.LocalDateTime now);
+ }
+--- before/src/main/java/com/motorrent/motorbikerental/entity/RentalExtension.java
++++ src/main/java/com/motorrent/motorbikerental/entity/RentalExtension.java
+@@ -30,6 +30,12 @@
+     
+     Integer extraDays;
+     Integer extraAmount;
++    Long motorbikeId;
++    Integer dailyRate;
++    Integer originalTotal;
++    LocalDateTime expiresAt;
++    LocalDateTime approvedAt;
++    LocalDateTime processedAt;
+ 
+     @Builder.Default
+     String status = "PENDING";
+--- before/src/main/java/com/motorrent/motorbikerental/controller/api/PaymentController.java
++++ src/main/java/com/motorrent/motorbikerental/controller/api/PaymentController.java
+@@ -4,6 +4,7 @@
+ @RestController @RequestMapping("/api/payment") @RequiredArgsConstructor
+ public class PaymentController {
+  private final PaymentService payments;
++ @PostMapping("/extension/{id}") public Map<String,String> extension(@PathVariable Long id){return Map.of("checkoutUrl",payments.createExtensionPaymentLink(id));}
+  private final com.motorrent.motorbikerental.service.FinancialSummaryService summaries;
+  @GetMapping("/order/{orderId}/summary") public Object summary(@PathVariable Long orderId){return summaries.forOrder(orderId);}
+  @PostMapping("/create/{orderId}") public Map<String,String> create(@PathVariable Long orderId) { return Map.of("checkoutUrl",payments.createPaymentLink(orderId)); }
+--- before/src/main/java/com/motorrent/motorbikerental/controller/api/ExtensionController.java
++++ src/main/java/com/motorrent/motorbikerental/controller/api/ExtensionController.java
+@@ -6,5 +6,7 @@
+  @org.springframework.web.bind.annotation.PostMapping("/api/rental-orders/{id}/extensions")
+  public Object request(@org.springframework.web.bind.annotation.PathVariable Long id,@org.springframework.web.bind.annotation.RequestBody Request request) {service.request(id,request.newReturnDate(),request.reason());return java.util.Map.of("message","Đã gửi yêu cầu gia hạn");}
+  @org.springframework.web.bind.annotation.PostMapping("/api/operations/extensions/{id}")
+- public Object decide(@org.springframework.web.bind.annotation.PathVariable Long id,@org.springframework.web.bind.annotation.RequestParam boolean approve) {service.decide(id,approve);return java.util.Map.of("message","Đã xử lý yêu cầu");}
++ public Object decide(@org.springframework.web.bind.annotation.PathVariable Long id,@org.springframework.web.bind.annotation.RequestParam boolean approve) {var result=new java.util.LinkedHashMap<>(service.decide(id,approve));result.put("message",approve?"Đã duyệt; chờ khách thanh toán phí gia hạn. Ngày trả chưa thay đổi.":"Đã từ chối yêu cầu");return result;}
++ @org.springframework.web.bind.annotation.GetMapping("/api/rental-orders/{id}/extensions")
++ public Object history(@org.springframework.web.bind.annotation.PathVariable Long id){return service.forOrder(id);}
+ }

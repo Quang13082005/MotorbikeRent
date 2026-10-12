@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
+<!-- Shared Scripts Fragment -->
+<th:block th:fragment="scripts">
+  <!-- Any global JS libraries like Chart.js can go here -->
+  <script>
+    // Utility to format currency
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+  </script>
+</th:block>
+
+</html>

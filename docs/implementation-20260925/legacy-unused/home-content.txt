@@ -1,0 +1,813 @@
+﻿<!-- BEGIN: HeroSection -->
+<section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden" id="hero">
+<!-- Cinematic Sunset Danang Background directly using Reference Image -->
+<div class="absolute inset-0 z-0"><img alt="Cung đường ven biển Sơn Trà ngắm toàn cảnh vịnh biển và hoàng hôn Đà Nẵng cùng xe máy" class="w-full h-full object-cover object-center filter brightness-90 contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq5UDzK3f1VYMASgUdJADsrWB1zU1xfeVSgilqAw_hPsDlo-UyM3khFMnHzRaYd1sUW4MbsVmISid_7jyvzMQUIpHs6vq-SHVTK2NIDjXGftmuFNGQeqIUs9At_Q-7mc42yBxrF5FbeY0vHMMU9zPWfJQgMt0tMq1k2ZzwwdI1WTaZxlHXmU49_UMO9iUAiBfbgk69fRjqdbqoA7lmrTE7lsFhj8r5v2loqqHFBm1b7fT7iy7D-VcSBQ"><div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/40 to-slate-950/80"></div><div class="absolute inset-0 bg-radial-at-c from-transparent via-black/30 to-black/70"></div></div>
+<!-- Hero Content -->
+<div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center text-white mt-12">
+<!-- Quality Badge -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-medium text-amber-200 mb-6 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Hơn 120+ xe ga &amp; xe số đời mới sẵn sàng phục vụ hôm nay
+      </div>
+<!-- Main Headline matching image typography -->
+<h1 class="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-tight text-white drop-shadow-md">
+        Thuê Xe Máy Dễ Dàng
+      </h1>
+<p class="mt-4 text-lg sm:text-2xl font-light text-slate-100 max-w-3xl mx-auto drop-shadow">
+        Khám phá Đà Nẵng tự do - Giao xe tận nơi chỉ sau 15 phút
+      </p>
+<p class="mt-2 text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto font-normal">&nbsp;xe ga &amp; xe số đời mới êm ái • Trang bị&nbsp; 2 nón bảo hiểm&nbsp;</p>
+<!-- Action Buttons -->
+<!-- 3 Key Value Commitments replacing single manager badge -->
+<div class="mt-14 pt-8 border-t border-white/15 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+<!-- Commitment 1 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Giao Xe Tận Nơi</h4>
+<p class="text-xs text-slate-300">Sân bay, khách sạn &amp; ga Đà Nẵng 15-30p</p>
+</div>
+</div>
+<!-- Commitment 2 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Xe Ga &amp; Xe Số Đời Mới</h4>
+<p class="text-xs text-slate-300">Bảo dưỡng định kỳ, lốp gai sâu, phanh tốt</p>
+</div>
+</div>
+<!-- Commitment 3 -->
+<div class="flex items-center gap-3.5 p-3 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="w-11 h-11 rounded-xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm">Đồng Hành &amp; Cứu Hộ 24/7</h4>
+<p class="text-xs text-slate-300">Đủ 2 mũ bảo hiểm, hỗ trợ kỹ thuật</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: QuickBookingFilter -->
+<section class="relative z-20 -mt-8 max-w-6xl mx-auto px-4" id="quick-book"><div class="bg-white rounded-2xl p-4 sm:p-6 shadow-2xl border border-slate-200/80">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100 text-xs text-slate-500">
+<div class="inline-flex items-center gap-2 font-medium text-slate-700">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="">⚡ Kiểm tra xe còn trống theo thời gian thực</span>
+</div>
+<div class="hidden sm:flex items-center gap-3 text-[11px] text-slate-400">
+<span class="">•</span>
+</div>
+</div>
+<form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-end" onsubmit="event.preventDefault(); const start=document.getElementById('pickup-datetime')?.value?.split('T')[0]||'2026-09-15'; const end=document.getElementById('return-datetime')?.value?.split('T')[0]||'2026-09-18'; const type=document.getElementById('vehicle-type')?.value||'ALL'; const loc=encodeURIComponent(document.getElementById('pickup-location')?.value||'store'); alert('Đang tìm xe có sẵn từ ' + start + ' đến ' + end + '...'); window.location.href='#bang-gia-xe';">
+<!-- Field 1: Ngày & giờ nhận xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="pickup-datetime">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Ngày &amp; giờ nhận xe</span>
+</label>
+<input class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="pickup-datetime" name="pickup-datetime" required="" type="datetime-local" value="2026-09-15T08:00">
+</div>
+<!-- Field 2: Ngày & giờ trả xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="return-datetime">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Ngày &amp; giờ trả xe</span>
+</label>
+<input class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="return-datetime" name="return-datetime" required="" type="datetime-local" value="2026-09-18T18:00">
+</div>
+<!-- Field 3: Loại xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="vehicle-type">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<circle cx="18.5" cy="17.5" r="3.5"></circle>
+<circle cx="5.5" cy="17.5" r="3.5"></circle>
+<path d="M12 17.5V14l-3-3 4-3 2 3h2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Loại xe</span>
+</label>
+<select class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="vehicle-type" name="vehicle-type">
+<option value="ALL">Tất cả xe (Ga, Số, Côn)</option>
+<option value="SCOOTER">Xe ga (Vision, Lead, Air Blade, SH)</option>
+<option value="SEMI_AUTOMATIC">Xe số (Wave Alpha, Sirius, Future)</option>
+<option value="MANUAL">Xe côn (Exciter, Winner X, PG-1)</option>
+</select>
+</div>
+<!-- Field 4: Địa điểm nhận xe -->
+<div>
+<label class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5" for="pickup-location">
+<svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Địa điểm nhận xe</span>
+</label>
+<select class="w-full rounded-xl border-slate-200 text-xs sm:text-sm font-medium text-slate-800 focus:border-amber-500 focus:ring-amber-500 py-2.5 px-3 bg-slate-50/50 hover:bg-white transition" id="pickup-location" name="pickup-location"><option value="store">Nhận xe ngay tại cửa hàng (Miễn phí)</option><option value="maps_delivery">Chọn vị trí qua Google Maps trong phạm vi Đà Nẵng (Tính phí)</option></select>
+</div>
+<!-- Field 5: CTA Kiểm tra xe trống -->
+<div>
+<button class="w-full py-2.5 px-4 bg-gradient-to-r from-amber-500 to-brand-sunset hover:from-amber-600 hover:to-orange-600 text-white font-bold rounded-xl shadow-lg shadow-amber-500/25 border border-amber-300/30 transition duration-200 flex items-center justify-center gap-2 active:scale-95 text-xs sm:text-sm h-[42px]" onclick="const start=document.getElementById('pickup-datetime')?.value?.split('T')[0]||'2026-09-15'; const end=document.getElementById('return-datetime')?.value?.split('T')[0]||'2026-09-18'; const type=document.getElementById('vehicle-type')?.value||'ALL'; const loc=encodeURIComponent(document.getElementById('pickup-location')?.value||'store'); window.location.href='/vehicles?startDate='+start+'&amp;endDate='+end+'&amp;type='+type+'&amp;location='+loc;" type="button">
+<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="tracking-wide">Kiểm tra xe trống</span>
+</button>
+</div>
+</form>
+</div></section>
+<!-- END: QuickBookingFilter -->
+<!-- BEGIN: FleetShowcase -->
+<section class="py-20 bg-slate-50" id="bang-gia-xe"><div class="max-w-7xl mx-auto px-4 sm:px-6">
+<!-- Section Header -->
+<div class="text-center max-w-3xl mx-auto mb-10">
+<span class="text-xs uppercase tracking-widest text-amber-600 font-bold bg-amber-100 px-3.5 py-1 rounded-full">Xe Đa Dạng - Kiểm Định An Toàn</span>
+<h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">Các Dòng Xe Nổi Bật</h2>
+<p class="text-slate-600 mt-2 text-sm sm:text-base">Lựa chọn những mẫu xe được khách hàng yêu thích và phù hợp cho nhiều nhu cầu di chuyển tại Đà Nẵng.</p>
+<!-- Category Filter Buttons (Pill styled, equal height) -->
+<div class="flex items-center justify-center gap-2 mt-6 overflow-x-auto pb-2">
+<button class="fleet-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition shadow-md bg-amber-500 text-white border border-amber-500 hover:bg-amber-600">Tất cả xe</button>
+<button class="fleet-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition">Xe ga</button>
+<button class="fleet-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition">Xe số</button>
+<button class="fleet-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition">Xe côn</button>
+</div>
+</div>
+<!-- 6 Featured Vehicles Grid (2 rows x 3 columns) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="fleet-container">
+<!-- Vehicle 1: Honda Vision 110cc -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-teal-50 text-teal-700 font-bold text-xs border border-teal-200">Xe Ga</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-200/60">Bán chạy nhất</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Honda Vision 110cc</h3>
+<p class="text-xs text-slate-500 mt-1">Đời 2022 - 2024 • Khóa thông minh Smartkey</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Khóa Smartkey</div>
+<div class="flex flex-col items-center justify-center text-slate-700 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3"></circle>
+<circle cx="19" cy="16" r="3"></circle>
+<path d="M5 16l4-7h5l3 7"></path>
+<path d="M12 9V5l3-2"></path>
+<path d="M12 12h4"></path>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Honda Vision Fi</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-slate-700">1.8 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Cốp xe</span><span class="font-bold text-slate-700">16 Lít (Rộng)</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-slate-700">Dạo Phố &amp; Biển</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Kiểu dáng thanh lịch, nhẹ nhàng dễ lái, cực kỳ tiết kiệm nhiên liệu khi dạo mát biển Mỹ Khê.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">130.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Còn 12 xe sẵn</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Kèm 2 mũ BH cao cấp</span></div>
+</div>
+</div>
+<!-- Vehicle 2: Honda Air Blade 125/160cc -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-orange-50 text-orange-700 font-bold text-xs border border-orange-200">Xe Ga Thể Thao</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200">Động cơ khỏe</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Honda Air Blade 125/160cc</h3>
+<p class="text-xs text-slate-500 mt-1">Bản động cơ eSP+ bốc khỏe • Phanh ABS an toàn</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Động cơ eSP+</div>
+<div class="flex flex-col items-center justify-center text-slate-800 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3.2"></circle>
+<circle cx="19" cy="16" r="3.2"></circle>
+<path d="M5 16l4-8h6l3 8"></path>
+<path d="M12 8V4l4-1"></path>
+<path d="M10 12h5"></path>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Air Blade 160 ABS</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-slate-700">2.1 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Cốp xe</span><span class="font-bold text-slate-700">23.2 Lít</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-slate-700">Đèo Hải Vân / Sơn Trà</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Lựa chọn số 1 của các cặp đôi chinh phục Hải Vân &amp; Sơn Trà. Khung sườn đầm chắc, leo dốc êm ru.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">160.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Còn 8 xe sẵn</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Giá đỡ ĐT + Sạc</span></div>
+</div>
+</div>
+<!-- Vehicle 3: Honda Lead 125cc -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs border border-indigo-200">Xe Ga Tiện Lợi</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Cốp rộng 37L</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Honda Lead 125cc</h3>
+<p class="text-xs text-slate-500 mt-1">Đời mới • Đựng trọn 2 nón bảo hiểm + Balo</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Cốp siêu rộng</div>
+<div class="flex flex-col items-center justify-center text-slate-700 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3.2"></circle>
+<circle cx="19" cy="16" r="3.2"></circle>
+<path d="M5 16l3.5-6h7l3.5 6"></path>
+<path d="M12 10V5l3-2"></path>
+<rect height="4" rx="1" width="8" x="8" y="11"></rect>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Honda Lead 125</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-slate-700">1.9 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Cốp xe</span><span class="font-bold text-amber-600 font-extrabold">37 Lít (Khủng)</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-slate-700">Gia Đình &amp; Mua Sắm</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Cốp xe rộng nhất phân khúc, để vừa 2 mũ bảo hiểm nửa đầu hoặc vali cabin cỡ nhỏ, sàn để chân rộng rãi.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">150.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Còn 6 xe sẵn</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Balo &amp; Áo mưa đôi</span></div>
+</div>
+</div>
+<!-- Vehicle 4: Honda Wave Alpha 110cc -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs border border-emerald-200">Xe Số</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200">Tiết kiệm nhất</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Honda Wave Alpha 110cc</h3>
+<p class="text-xs text-slate-500 mt-1">Bền bỉ • Máy khỏe • Leo dốc cực kỳ bốc</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Tiết kiệm xăng</div>
+<div class="flex flex-col items-center justify-center text-slate-700 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3.2"></circle>
+<circle cx="19" cy="16" r="3.2"></circle>
+<path d="M5 16l5-8h4l5 8"></path>
+<path d="M10 8V5l2-1"></path>
+<path d="M8 16l4-5 3 5"></path>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Wave Alpha 110</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-emerald-600 font-extrabold">1.4 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Động cơ</span><span class="font-bold text-slate-700">Bền bỉ 110cc</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-slate-700">Phượt Bụi &amp; Tiết Kiệm</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Chi phí hợp lý nhất, xe khỏe bất chấp mọi con dốc của Sơn Trà, Đèo Hải Vân hay đi phượt Hội An dài ngày.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">100.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Còn 15 xe sẵn</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Siêu tiết kiệm xăng</span></div>
+</div>
+</div>
+<!-- Vehicle 5: Honda Future 125 Fi -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-purple-50 text-purple-700 font-bold text-xs border border-purple-200">Xe Số Cao Cấp</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">Vua đường dài</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Honda Future 125 Fi</h3>
+<p class="text-xs text-slate-500 mt-1">Động cơ 125cc đầm chắc • Cốp rộng như xe ga</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Vua đường trường</div>
+<div class="flex flex-col items-center justify-center text-slate-800 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3.2"></circle>
+<circle cx="19" cy="16" r="3.2"></circle>
+<path d="M5 16l4-8h6l4 8"></path>
+<path d="M12 8V4l3-1"></path>
+<path d="M9 13h6"></path>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Honda Future Fi</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-slate-700">1.54 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Cốp xe</span><span class="font-bold text-slate-700">Cốp U-Box</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-purple-700">Phượt Đường Dài</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Sự kết hợp hoàn hảo giữa độ bền xe số và sự sang trọng của xe ga. Rất đầm khi chạy tốc độ cao trên đèo Hải Vân.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">130.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Còn 9 xe sẵn</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Bảo dưỡng định kỳ</span></div>
+</div>
+</div>
+<!-- Vehicle 6: Yamaha Exciter 155 VVA -->
+<div class="fleet-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between h-full">
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-3">
+<span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-xs border border-blue-200">Xe Côn Tay</span>
+<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-700 border border-orange-200">Uy lực thể thao</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition">Yamaha Exciter 155 VVA</h3>
+<p class="text-xs text-slate-500 mt-1">Van biến thiên VVA • Ly hợp chống trượt Slipper Clutch</p>
+<div class="relative my-4 h-48 bg-gradient-to-b from-slate-50 to-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-4 border border-slate-100">
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-white/80 backdrop-blur-sm rounded text-[10px] font-semibold text-slate-600 border border-slate-200/50">Vua Côn Tay</div>
+<div class="flex flex-col items-center justify-center text-slate-800 group-hover:scale-105 transition duration-300">
+<svg class="w-32 h-32" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+<circle cx="5" cy="16" r="3.2"></circle>
+<circle cx="19" cy="16" r="3.2"></circle>
+<path d="M5 16l4-8h6l3 8"></path>
+<path d="M12 8V4l3-1"></path>
+<path d="M10 12h5"></path>
+</svg>
+<span class="text-[11px] font-medium text-slate-500 -mt-2">Exciter 155 VVA</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center text-xs mt-auto">
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Tiêu thụ</span><span class="font-bold text-slate-700">2.09 L/100km</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Bình xăng</span><span class="font-bold text-slate-700">5.4 Lít</span></div>
+<div class="p-2 bg-slate-50 rounded-lg flex flex-col justify-center"><span class="block text-slate-400 text-[10px]">Thích hợp</span><span class="font-bold text-blue-700">Đèo Dốc &amp; Ôm Cua</span></div>
+</div>
+<p class="text-xs text-slate-600 mt-3 line-clamp-2 min-h-[32px]">Sức mạnh vượt trội với khối động cơ 155cc VVA uy lực, bứt tốc mạnh mẽ và cực đầm khi đổ đèo quanh co.</p>
+</div>
+<div class="px-6 pb-6 pt-3 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-3">
+<div>
+<span class="text-xs text-slate-500">Giá thuê ngày:</span>
+<div class="text-lg font-extrabold text-amber-500">200.000đ <span class="text-xs font-normal text-slate-500">/24h</span></div>
+</div>
+<div class="flex items-center gap-2 pt-1"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Chỉ còn 3 xe</span><span class="inline-flex items-center text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full font-medium">Động cơ 155cc bốc</span></div>
+</div>
+</div>
+</div>
+<!-- Centered Call-To-Action (Replaces Pagination) -->
+<div class="flex justify-center items-center mt-12">
+<a class="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-amber-500 to-brand-sunset hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/25 border border-amber-300/30 transition-all hover:scale-105 active:scale-95" href="/vehicles">
+<span class="">Xem tất cả xe</span>
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</a>
+</div>
+</div></section>
+<!-- END: FleetShowcase -->
+<!-- BEGIN: InteractiveLocationSlider -->
+<section class="py-20 bg-slate-900 text-white relative overflow-hidden" id="dia-diem-goi-y">
+<!-- Background atmospheric glow -->
+<div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-amber-500/10 filter blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-teal-500/10 filter blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+<div>
+<span class="text-amber-400 text-xs uppercase tracking-widest font-bold">Cẩm Nang Lộ Trình Phù Hợp</span>
+<h2 class="text-3xl sm:text-4xl font-serif font-bold mt-2">Địa Điểm Đà Nẵng &amp; Loại Xe Khuyên Dùng</h2>
+<p class="text-slate-400 text-sm mt-2 max-w-xl">Mỗi cung đường có đặc thù địa hình riêng. Chúng tôi gợi ý dòng xe tối ưu để bạn có chuyến đi an toàn &amp; trọn vẹn nhất.</p>
+</div>
+<!-- Slider Control Arrows -->
+<div class="flex items-center gap-3 mt-6 md:mt-0">
+<button aria-label="Slide trước" class="w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-white/20 flex items-center justify-center transition active:scale-95" id="slider-prev-btn">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<button aria-label="Slide tiếp theo" class="w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-white/20 flex items-center justify-center transition active:scale-95" id="slider-next-btn">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<!-- Slider Viewport Container -->
+<div class="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl bg-slate-950/60 min-h-[460px]">
+<!-- Slide 1: Sơn Trà -->
+<div class="dest-slide transition-opacity duration-700 p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 hidden">
+<div class="w-full lg:w-1/2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-semibold mb-4">
+<span class="">Độ dài cung đường: ~30km</span> • <span class="">Dốc quanh co</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Bán đảo Sơn Trà &amp; Chùa Linh Ứng</h3>
+<p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Đường dốc quanh co men theo vách núi và đại dương xanh biếc. Cung đường đòi hỏi phương tiện có hệ thống phanh tốt, lực kéo khỏe khi lên dốc Bàn Cờ và an toàn khi hạ dốc về bãi Bụt.
+            </p>
+<div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+<h4 class="text-xs uppercase font-bold text-amber-400 tracking-wider mb-2 flex items-center gap-1.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Xe Khuyên Dùng Tối Ưu:
+              </h4>
+<p class="font-bold text-white text-base">Honda Air Blade 160cc • Wave Alpha 110 • Future 125</p>
+<p class="text-xs text-slate-400 mt-1">Lưu ý quy định kiểm lâm: Không sử dụng xe ga tự động lên đỉnh Bàn Cờ nếu kỹ năng ghìm dốc chưa vững. Wave Alpha hoặc Future là giải pháp an toàn hàng đầu.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 h-72 sm:h-80 rounded-2xl overflow-hidden relative shadow-inner bg-slate-800">
+<!-- Utilizing reference landscape snippet atmosphere -->
+<img alt="Cung đường Bán đảo Sơn Trà và xe máy du lịch" class="w-full h-full object-cover filter brightness-95 contrast-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7uJzcYs-Qg5qmAcx9lA0PDLfJ4svE1UIYqBi4ryYXhT3C8piogp5gPrNbnjLEnjOndKnKdK9USnx-9SbAwATiCt-FC8uAvPqBr1xFvyM2gYhnb45lgDi2dVql_DjspJs0k4vmM3lYmd7y1q_Tm7oOJFalBDJWKOnqTS0SUAUxdXeS_RVQsCHlBMDsaQV6XBnHlNMOtBAr546fAIlofB3vC2p2kA2sgTTnPQHMtJdMyJ99kZ5LgaNMjw">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-white/90 bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10">
+<span class="">Điểm check-in: Cây đa ngàn năm, Đỉnh Bàn Cờ, Chùa Linh Ứng</span>
+<span class="text-amber-400 font-semibold">Tầm nhìn 360°</span>
+</div>
+</div>
+</div>
+<!-- Slide 2: Biển Mỹ Khê & Đường Võ Nguyên Giáp -->
+<div class="dest-slide transition-opacity duration-700 p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 hidden">
+<div class="w-full lg:w-1/2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-300 text-xs font-semibold mb-4">
+<span class="">Độ dài cung đường: 12km ven biển</span> • <span class="">Đường nhựa phẳng mịn</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Bãi biển Mỹ Khê &amp; Đại Lộ Võ Nguyên Giáp</h3>
+<p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Tuyến đại lộ ven biển tuyệt đẹp nối từ Sơn Trà về Non Nước. Rất thích hợp cho các buổi chiều ngắm hoàng hôn, ghé các quán cafe view biển, mang theo đồ tắm và thảm picnic.
+            </p>
+<div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+<h4 class="text-xs uppercase font-bold text-cyan-400 tracking-wider mb-2 flex items-center gap-1.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Xe Khuyên Dùng Tối Ưu:
+              </h4>
+<p class="font-bold text-white text-base">Honda Vision 110cc • Honda Lead 125cc</p>
+<p class="text-xs text-slate-400 mt-1">Cốp cực lớn để thoải mái kính bơi, khăn tắm, váy vóc check-in sống ảo, xe vận hành cực kỳ êm ái, tư thế ngồi thoải mái nhẹ nhàng.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 h-72 sm:h-80 rounded-2xl overflow-hidden relative shadow-inner bg-slate-800">
+<img alt="Bãi biển Mỹ Khê đón bình minh cùng xe máy tay ga" class="w-full h-full object-cover filter brightness-90 contrast-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0RbzdeDgG4g2jpumdX-tezcDQHqEu-_tMJq5S0dfXMqnqrebqPwqdQfCLiZGSsdXJRNt0ri78EQBA2tRyTOzc7lbzTRsg567ZvkyLy_0vV083-j9687Hju4t-74frAjLuj-03bZg-26Yzr_7kYDnbAT9ctoZNi4H3bhWkh6JHT490Pqjfje2r6mQv-A_kCg0tj4bK-aIx-SKE-X--8MykdpOnaWkNNfXaoLVQ9ya9jms28r451HRusw">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-white/90 bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10">
+<span class="">Điểm dừng chân: Công viên Biển Đông, Bãi tắm Sao Biển</span>
+<span class="text-cyan-400 font-semibold">Gió biển mát rượi</span>
+</div>
+</div>
+</div>
+<!-- Slide 3: Đỉnh Đèo Hải Vân -->
+<div class="dest-slide transition-opacity duration-700 p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8">
+<div class="w-full lg:w-1/2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-300 text-xs font-semibold mb-4">
+<span class="">Độ dài cung đường: 21km</span> • <span class="">Thiên hạ đệ nhất hùng quan</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Chinh phục Đèo Hải Vân &amp; Cầu Vòm Đồn Cả</h3>
+<p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Trải nghiệm cảm giác ôm cua ngoạn mục giữa mây và núi, phóng tầm mắt ngắm trọn vịnh Lăng Cô và toàn cảnh Đà Nẵng từ trên cao. Cần xe có máy êm, phuộc nhún đầm và lốp bám đường.
+            </p>
+<div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+<h4 class="text-xs uppercase font-bold text-emerald-400 tracking-wider mb-2 flex items-center gap-1.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Xe Khuyên Dùng Tối Ưu:
+              </h4>
+<p class="font-bold text-white text-base">Honda Air Blade 160 • Honda Future 125 Fi</p>
+<p class="text-xs text-slate-400 mt-1">Động cơ mạnh mẽ, đầm chắc khi vào cua tốc độ 40-50km/h, đèn pha LED sáng rõ khi qua các khúc cua sương mù ban sớm.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 h-72 sm:h-80 rounded-2xl overflow-hidden relative shadow-inner bg-slate-800"><img alt="Đèo Hải Vân hùng vĩ ngắm hoàng hôn và biển Đà Nẵng" class="w-full h-full object-cover filter brightness-95 contrast-105" src="https://lh3.googleusercontent.com/aida/AEtjO1UpvGnGOhf_NizXE8X8BqJrpDrot8gga6VSscSOfwTc6eJkxyLPQFlqf6ho6fNlIcYeYBYCIF2LowijbGFU5BEtPMLlkcBkPkOP7N4eAaJWskmteg3CVJNzKM9RJKTbxcu8aHipXctyR0UYSJLHI7wHUtmNCdH7jC02u-PJz2-QsZwcJmPLaTYoMM1y25SfvH4yFF_76IDTVxwpzdatHIPBP_1RXNq_ey5pJAKsBhIi9ytc7GxQNgLHJAl2"><div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div><div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-white/90 bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10"><span class="">Trạm dừng: Hải Vân Quan, Cây Thông Cô Đơn, Đỉnh Đèo</span><span class="text-emerald-400 font-semibold">Săn mây lý tưởng</span></div></div>
+</div>
+<!-- Slide 4: Phố Cổ Hội An & Cầu Rồng -->
+<div class="dest-slide transition-opacity duration-700 p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-8 hidden">
+<div class="w-full lg:w-1/2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-400/20 text-rose-300 text-xs font-semibold mb-4">
+<span class="">Độ dài cung đường: ~28km</span> • <span class="">Đường phố đêm nhộn nhịp</span>
+</div>
+<h3 class="text-2xl sm:text-3xl font-serif font-bold text-white mb-3">Trung Tâm Phố Đêm &amp; Lạc Vào Phố Cổ Hội An</h3>
+<p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Xem Cầu Rồng phun lửa, dạo chợ đêm Helio, thưởng thức ẩm thực đường phố và chạy thẳng vào phố cổ Hội An thả đèn hoa đăng.
+            </p>
+<div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+<h4 class="text-xs uppercase font-bold text-rose-400 tracking-wider mb-2 flex items-center gap-1.5">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Xe Khuyên Dùng Tối Ưu:
+              </h4>
+<p class="font-bold text-white text-base">Yamaha Sirius Fi • Honda Vision 110</p>
+<p class="text-xs text-slate-400 mt-1">Dễ dàng len lỏi trong phố cổ, gửi xe nhanh gọn tại các điểm chợ đêm, cực kỳ tiết kiệm xăng cho hành trình khứ hồi Đà Nẵng - Hội An.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 h-72 sm:h-80 rounded-2xl overflow-hidden relative shadow-inner bg-slate-800">
+<img alt="Cầu Rồng Đà Nẵng lung linh về đêm và xe máy dạo phố" class="w-full h-full object-cover filter brightness-95 contrast-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuJr63AiDuc1kA3SyL3Pqkn1cwXxRgXYCupJYcHRTtWbAEyX2uornmv7fWOQoe7e6YoiuF1B6jmilWiTmfijwIxZdm_3f2gHJexUFu3kleU_NO0tVluhRpbvYzM5VJP8oY6KnomVtspRQNRGlUqpa1TROrx9E613OMvSpUAjCCrfi5_mTO0-zlOxQt4HTlN9cqQSagtvp3uuwo66-691W2GeAcfqA1b5vMSgIZV41YnYXbdmx-c5Jn6w">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-white/90 bg-black/40 backdrop-blur-md p-3 rounded-xl border border-white/10">
+<span class="">Trải nghiệm: Cầu Rồng phun nước/lửa 21:00 cuối tuần</span>
+<span class="text-rose-400 font-semibold">Đêm phố lung linh</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Indicator Dots -->
+<div class="flex justify-center items-center gap-2.5 mt-6" id="slider-dots">
+<button class="w-2.5 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
+<button class="w-2.5 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
+<button class="w-8 h-2 rounded-full bg-amber-400 transition-all"></button>
+<button class="w-2.5 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
+</div>
+</div>
+</section>
+<!-- END: InteractiveLocationSlider -->
+<!-- BEGIN: AIAssistantSection -->
+<section class="py-24 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-white relative" id="ai-assistant">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
+<svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-opacity="0.3"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+          Độc Quyền Tại MotoRent
+        </div>
+<h2 class="text-3xl sm:text-5xl font-serif font-bold text-white tracking-tight">Thuê Xe Thông Minh Hơn Với Trợ Lý AI</h2>
+<p class="text-slate-400 text-sm sm:text-base mt-3">Công nghệ AI tự động phân tích lộ trình di chuyển, chiều cao người lái, số lượng vali và thời tiết để đề xuất dòng xe cùng lịch trình lý tưởng nhất.</p>
+</div>
+<!-- 6 AI Features Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"><!-- Feature 1 -->
+<div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/50 hover:bg-white/[0.08] transition duration-300 flex flex-col justify-between h-full">
+<div>
+<div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4 border border-amber-500/30">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">1. AI Gợi Ý Xe Chuẩn Gu</h3>
+<p class="text-slate-400 text-xs leading-relaxed">Phân tích số người (1 người, 2 người, gia đình), vóc dáng người lái và địa hình bạn muốn đến để chọn chính xác giữa Xe Ga hay Xe Số tối ưu nhất.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-pink-500/50 hover:bg-white/[0.08] transition duration-300 flex flex-col justify-between h-full">
+<div>
+<div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-4 border border-pink-500/30">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">2. Chatbot AI Giải Đáp 24/7</h3>
+<p class="text-slate-400 text-xs leading-relaxed">Phản hồi tức thì mọi câu hỏi về thủ tục, hỗ trợ nhận xe tận nơi tại sân bay, ga tàu và tư vấn lộ trình đèo dốc an toàn mà không giữ CCCD gốc.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-white/[0.08] transition duration-300 flex flex-col justify-between h-full">
+<div>
+<div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4 border border-emerald-500/30">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-2">3. AI Tính Giá Minh Bạch</h3>
+<p class="text-slate-400 text-xs leading-relaxed">Tự động áp dụng chiết khấu giảm 10% - 20% cho khách thuê trên 3 ngày hoặc nhóm bạn từ 3 xe trở lên, cam kết hoàn toàn không phát sinh phụ phí ẩn.</p>
+</div>
+</div></div>
+<!-- Interactive AI Simulator Widget -->
+<div class="max-w-3xl mx-auto rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-8 shadow-2xl">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-3 h-3 rounded-full bg-red-400"></div>
+<div class="w-3 h-3 rounded-full bg-amber-400"></div>
+<div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+<span class="text-xs font-mono text-slate-300 ml-2">MotoRent AI Smart Suggestion Engine v2.4</span>
+</div>
+<p class="text-sm text-slate-200 mb-3 font-semibold">Chọn nhanh tình huống của bạn để AI tư vấn trực tiếp:</p>
+<div class="flex flex-wrap gap-2 mb-6">
+<button class="ai-prompt-btn px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400 hover:text-slate-950 text-xs font-medium transition border border-white/15" onclick="simulateAI('haivan')">
+            🏔️ 2 người đi phượt Đèo Hải Vân
+          </button>
+<button class="ai-prompt-btn px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400 hover:text-slate-950 text-xs font-medium transition border border-white/15" onclick="simulateAI('beach')">
+            🏖️ Nữ đi dạo phố biển Mỹ Khê &amp; cafe
+          </button>
+<button class="ai-prompt-btn px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400 hover:text-slate-950 text-xs font-medium transition border border-white/15" onclick="simulateAI('budget')">
+            🎒 Sinh viên cần xe số siêu tiết kiệm xăng
+          </button>
+<button class="ai-prompt-btn px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-amber-400 hover:text-slate-950 text-xs font-medium transition border border-white/15" onclick="simulateAI('family')">
+            🧳 Gia đình có 2 balo to + quà lưu niệm
+          </button>
+</div>
+<!-- AI Output Box -->
+<div class="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border border-amber-500/40 text-sm" id="ai-response-box">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+              🤖
+            </div>
+<div>
+<div class="font-bold text-amber-400 text-sm flex items-center gap-2">
+                MotoRent AI Phản Hồi:
+                <span class="text-[10px] font-normal text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">Đã tối ưu hóa</span>
+</div>
+<p class="text-slate-200 mt-2 text-xs sm:text-sm leading-relaxed" id="ai-response-text">
+                👉 <strong class="text-white">Khuyên dùng: Honda Air Blade 160cc hoặc Future 125 Fi.</strong><br>
+                Động cơ khỏe leo dốc êm ái, hệ thống phanh an toàn khi ôm cua đèo Hải Vân, khung gầm đầm chắc cho 2 người lớn. Kèm theo giá đỡ điện thoại xem bản đồ miễn phí!
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: AIAssistantSection -->
+<!-- BEGIN: BookingProcess -->
+<section class="py-20 bg-white" id="quy-trinh">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-xs uppercase tracking-widest text-amber-600 font-bold bg-amber-100 px-3 py-1 rounded-full">Đơn Giản &amp; Minh Bạch</span>
+<h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">Quy Trình Thuê Xe 4 Bước Nhanh Gọn</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative"><!-- Step 1 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+1
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Chọn Mẫu Xe Ưa Thích</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Tham khảo bảng giá các dòng xe ga hoặc xe số phù hợp với sở thích và nhu cầu hành trình của bạn.</p>
+</div>
+<!-- Step 2 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+2
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Gửi Yêu Cầu &amp; Giấy Tờ</h3>
+<p class="text-xs text-slate-600 leading-relaxed"></p><li class="" data-end="234" data-section-id="1vek3gf" data-start="184"><strong data-end="202" data-start="186">Giữ 02 CCCD:</strong> Không cần đặt cọc tiền thuê xe.<span aria-hidden="true" class="PDq2pG_selectionAnchor"></span>
+</li>
+<li class="" data-end="331" data-section-id="qylepe" data-start="235">
+<strong data-end="253" data-start="237">Giữ 01 CCCD:</strong><br data-end="256" data-start="253">
+<strong data-end="268" data-start="258">Xe số:</strong> Đặt cọc 1.000.000 đồng.<br data-end="295" data-start="292">
+<strong data-end="307" data-start="297">Xe ga:</strong> Đặt cọc 2.000.000 đồng.
+</li>
+<li class="" data-end="381" data-section-id="1fgreg3" data-start="332">
+<strong data-end="351" data-start="334">Tiền thuê xe:</strong> Thanh toán trước khi nhận xe.</li><p></p>
+</div>
+<!-- Step 3 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+3
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Xác Nhận Trong 3 Phút</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Nhân viên chốt thời gian, biển số xe và địa điểm hẹn gặp (Sân bay Đà Nẵng, ga tàu hoặc sảnh khách sạn....).</p>
+</div>
+<!-- Step 4 -->
+<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 relative group hover:bg-amber-500/5 transition flex flex-col h-full">
+<div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg mb-5 shadow-lg group-hover:bg-amber-500 transition">
+4
+</div>
+<h3 class="text-lg font-bold text-slate-900 mb-2">Nhận Xe &amp; Khởi Hành</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Kiểm tra xe tại chỗ, nhận kèm 2 mũ bảo hiểm đạt chuẩn</p>
+</div></div>
+</div>
+</section>
+<!-- END: BookingProcess -->
+<!-- BEGIN: CustomerTestimonials -->
+<section class="py-20 bg-slate-50 border-t border-slate-200" id="danh-gia">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="text-center max-w-3xl mx-auto mb-14">
+<span class="text-xs uppercase tracking-widest text-amber-600 font-bold bg-amber-100 px-3 py-1 rounded-full">Đánh Giá Thực Tế</span>
+<h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-3">Hơn 10.000+ Du Khách Đã Hài Lòng</h2>
+<div class="flex items-center justify-center gap-1 mt-3">
+<span class="text-amber-400 text-lg">★★★★★</span>
+<span class="text-xs font-bold text-slate-700 ml-1">4.9/5 trên Google Maps &amp; Facebook</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6"><!-- Review 1 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center gap-1 text-amber-400 text-xs mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+"Máy bay mình hạ cánh lúc 7h sáng, vừa ra sảnh sân bay đã thấy bạn nhân viên đứng đợi sẵn giao xe. Xe Vision mới tinh, chạy êm và tiết kiệm xăng. Cực kỳ uy tín, lần sau đến Đà Nẵng nhất định vẫn chọn MotoRent!"
+</p>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-100">
+<div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 text-xs shrink-0">TH</div>
+<div>
+<h4 class="font-bold text-slate-900 text-xs">Trần Hoàng Long</h4>
+<p class="text-[10px] text-slate-500">Du khách từ Hà Nội • Thuê 4 ngày</p>
+</div>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center gap-1 text-amber-400 text-xs mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+"Bọn mình 2 người thuê chiếc Air Blade để vượt đèo Hải Vân và đi Sơn Trà. Xe ga bốc, phanh đĩa rất đầm và chắc. Đặc biệt shop chuẩn bị sẵn kẹp điện thoại nên xem google maps cực tiện. 10 điểm chu đáo!"
+</p>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-100">
+<div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 text-xs shrink-0">MA</div>
+<div>
+<h4 class="font-bold text-slate-900 text-xs">Nguyễn Mai Anh</h4>
+<p class="text-[10px] text-slate-500">Du khách từ TP.HCM • Thuê 3 ngày</p>
+</div>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center gap-1 text-amber-400 text-xs mb-3">★★★★★</div>
+<p class="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+"Thủ tục nhanh như chớp, chỉ cần chụp căn cước và bằng lái gửi qua Zalo là nhận xe ngay tại sảnh khách sạn Mỹ Khê. Trả xe ngay tại sân bay trước giờ bay về rất tiện lợi, không mất thêm phí."
+</p>
+</div>
+<div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-100">
+<div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-700 text-xs shrink-0">DK</div>
+<div>
+<h4 class="font-bold text-slate-900 text-xs">David Kim</h4>
+<p class="text-[10px] text-slate-500">Khách du lịch quốc tế (Korea)</p>
+</div>
+</div>
+</div></div>
+</div>
+</section>
+<!-- END: CustomerTestimonials -->
+<!-- BEGIN: ContactAndFooter -->
+<footer class="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800" id="lien-he">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 pb-12 border-b border-slate-800 items-start">
+<!-- Column 1: Brand Info -->
+<div class="flex flex-col space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shrink-0 shadow-sm">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<circle cx="18.5" cy="17.5" r="3.5"></circle>
+<circle cx="5.5" cy="17.5" r="3.5"></circle>
+<circle cx="15" cy="5" r="1"></circle>
+<path d="M12 17.5V14l-3-3 4-3 2 3h2"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="text-white font-bold text-xl tracking-tight">MotoRent <span class="text-amber-400">Đà Nẵng</span></span>
+<span class="text-[10px] tracking-widest text-slate-400 uppercase">Dịch vụ xe máy uy tín</span>
+</div>
+</div>
+<p class="text-sm text-slate-400 leading-relaxed">
+      Đơn vị tiên phong cung cấp giải pháp thuê xe máy hiện đại, an toàn và chuyên nghiệp tại TP. Đà Nẵng.
+    </p>
+<div class="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800/80 text-xs text-emerald-400 font-semibold shadow-sm w-fit">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0"></span>
+<span class="">Cửa hàng mở cửa: 05:00 - 20:00 hàng ngày</span>
+</div>
+</div>
+<!-- Column 2: Quick Support -->
+<div class="flex flex-col space-y-4">
+<div class="flex items-center gap-2 h-10">
+<h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        Hỗ Trợ Nhanh
+      </h4>
+</div>
+<div class="space-y-3">
+<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/30 transition duration-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
+          📞
+        </div>
+<div class="flex flex-col">
+<span class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Hotline / Zalo</span>
+<a class="text-white font-bold hover:text-amber-400 transition text-sm sm:text-base" href="tel:0986780177">098.678.0177</a>
+</div>
+</div>
+<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 hover:border-amber-500/30 transition duration-200 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
+          ✉️
+        </div>
+<div class="flex flex-col">
+<span class="text-[11px] text-slate-400 font-medium uppercase tracking-wider">Email liên hệ</span>
+<span class="text-white text-xs sm:text-sm font-medium">Datlien789@gmail.com</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Service Commitments -->
+<div class="flex flex-col space-y-4">
+<div class="flex items-center gap-2 h-10">
+<h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        Cam Kết Dịch Vụ
+      </h4>
+</div>
+<div class="space-y-2.5 text-xs sm:text-sm text-slate-300">
+<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-start gap-2.5">
+<span class="text-emerald-400 font-bold text-base leading-none shrink-0">✓</span>
+<span class="">Không tráo đổi xe cũ, 100% xe đúng mẫu đã chọn</span>
+</div>
+<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-start gap-2.5">
+<span class="text-emerald-400 font-bold text-base leading-none shrink-0">✓</span>
+<span class="">Đổi xe miễn phí nếu không ưng ý hoặc gặp sự cố</span>
+</div>
+<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-start gap-2.5">
+<span class="text-emerald-400 font-bold text-base leading-none shrink-0">✓</span>
+<span class="">Hỗ trợ cứu hộ nếu cách địa điểm thuê xe 10km</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+<p class="">© 2025 MotoRent Đà Nẵng. Bản quyền thuộc về dịch vụ cho thuê xe máy du lịch Đà Nẵng.</p>
+<div class="flex gap-4 mt-3 sm:mt-0">
+<a class="hover:text-slate-400" href="#">Chính sách bảo mật</a>
+<a class="hover:text-slate-400" href="#">Điều khoản thuê xe</a>
+<a class="hover:text-slate-400" href="#">Cẩm nang du lịch</a>
+</div>
+</div>
+</div>
+</footer>

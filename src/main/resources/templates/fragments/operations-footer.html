@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<footer th:fragment="footer(workspaceRole)" class="ops-work-footer" aria-label="Thông tin không gian làm việc">
+  <div class="ops-work-footer-identity">
+    <span class="ops-work-footer-logo"><span class="material-symbols-outlined" aria-hidden="true">two_wheeler</span></span>
+    <div><strong>MotoRent<span>.</span></strong><p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> MotoRent Đà Nẵng</p></div>
+    <span class="ops-work-footer-role" th:text="${workspaceRole == 'admin' ? 'Không gian quản trị' : 'Không gian nhân viên'}">Không gian nhân viên</span>
+  </div>
+  <nav class="ops-work-footer-links" aria-label="Tiện ích không gian làm việc">
+    <a th:if="${workspaceRole == 'staff'}" th:href="@{/staff/profile}"><span class="material-symbols-outlined" aria-hidden="true">account_circle</span>Tài khoản của tôi</a>
+    <a th:if="${workspaceRole == 'admin'}" th:href="@{/admin/settings}"><span class="material-symbols-outlined" aria-hidden="true">settings</span>Cài đặt chung</a>
+    <a class="ops-work-footer-top" href="#mainContent"><span>Về đầu trang</span><span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span></a>
+  </nav>
+</footer>
+</html>

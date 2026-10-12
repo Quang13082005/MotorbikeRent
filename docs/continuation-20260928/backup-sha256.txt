@@ -1,0 +1,9 @@
+
+Algorithm : SHA256
+Hash      : 4015DE69486EEF61E9E9072FE41B8BB912463BAD73AB0F4AD4C21906FB314457
+Path      : D:\Motorbike-rental\docs\continuation-20260928\database-before-handover-motorent_db.sql
+
+Algorithm : SHA256
+Hash      : EA8444BF6A93CBC6AFCCA8A225F191E628A4B3C34C8A31F7725E6026438391FE
+Path      : D:\Motorbike-rental\docs\continuation-20260928\database-before-handover-motorent_verify_20260926.sql
+

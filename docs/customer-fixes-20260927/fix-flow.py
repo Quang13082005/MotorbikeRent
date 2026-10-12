@@ -1,0 +1,16 @@
+from pathlib import Path
+import re
+r=Path('src/main/resources');j=Path('src/main/java/com/motorrent/motorbikerental')
+p=r/'templates/fragments/map-modal.html';s=p.read_text(encoding='utf-8');s=re.sub(r'          // Tự động mở modal.*?\n          }\);','',s,flags=re.S);s=s.replace("              document.getElementById('mapModal').close();\n          } else", "              window.BookingContext?.save({location:'maps_delivery',deliveryAddress:addr,deliveryLat:String(lat),deliveryLng:String(lng)});\n              document.getElementById('mapModal').close();\n          } else");p.write_text(s,encoding='utf-8')
+p=r/'templates/customer/home.html';s=p.read_text(encoding='utf-8');s=re.sub(r' onclick="\s*const start =.*?" type="button"',' type="submit"',s,flags=re.S);s=re.sub(r'<script>document.getElementById\(\'home-search\'\).*?</script>','<script src="/js/booking-search.js" defer></script>',s,flags=re.S);p.write_text(s,encoding='utf-8')
+p=r/'templates/fragments/head.html';s=p.read_text(encoding='utf-8').replace('<script src="/js/request-security.js"></script>','<script src="/js/request-security.js"></script>\n  <script src="/js/booking-context.js"></script>');p.write_text(s,encoding='utf-8')
+p=r/'templates/customer/motorbike-list.html';s=p.read_text(encoding='utf-8').replace('<script src="/js/catalog.js" defer></script>','<script src="/js/booking-search.js" defer></script>');s=s.replace('<main class="customer-workspace catalog-page">','<main class="customer-workspace catalog-page"><p class="cw-message" role="alert" th:if="${searchError!=null}" th:text="${searchError}"></p>');p.write_text(s,encoding='utf-8')
+p=j/'controller/web/CustomerPageController.java';s=p.read_text(encoding='utf-8');old='if(pickup!=null && returnAt!=null) { com.motorrent.motorbikerental.service.PricingService.days(pickup,returnAt);motorbikes=motorbikes.stream().filter(m->!"MAINTENANCE".equals(m.getStatus()) && !"UNAVAILABLE".equals(m.getStatus()) && !rentalOrderRepository.existsOverlappingOrder(m.getId(),pickup,returnAt)).toList(); }';new='''try {
+            if(pickup!=null || returnAt!=null){
+                com.motorrent.motorbikerental.service.PricingService.validateStart(pickup);
+                com.motorrent.motorbikerental.service.PricingService.days(pickup,returnAt);
+                motorbikes=motorbikes.stream().filter(m->!"MAINTENANCE".equals(m.getStatus()) && !"UNAVAILABLE".equals(m.getStatus()) && !rentalOrderRepository.existsOverlappingOrder(m.getId(),pickup,returnAt)).toList();
+            }
+        }catch(IllegalArgumentException e){model.addAttribute("searchError",e.getMessage());motorbikes=List.of();}''';assert old in s;s=s.replace(old,new);p.write_text(s,encoding='utf-8')
+p=j/'service/PricingService.java';s=p.read_text(encoding='utf-8');s=s.replace(' public static int days(',''' public static void validateStart(LocalDateTime start){if(start==null || start.isBefore(LocalDateTime.now(java.time.ZoneId.of("Asia/Ho_Chi_Minh")).withSecond(0).withNano(0)))throw new IllegalArgumentException("Ngày nhận xe không được ở quá khứ");}
+ public static int days(''');s=s.replace('if(r.getPickupDate()==null || r.getPickupDate().isBefore(LocalDateTime.now().minusMinutes(1))) throw new IllegalArgumentException("Ngày nhận không được ở quá khứ");','validateStart(r.getPickupDate());');p.write_text(s,encoding='utf-8')

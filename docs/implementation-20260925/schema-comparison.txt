@@ -1,0 +1,36 @@
+ADD payments.checkout_url : varchar(2000) | null=YES | default=null | 
+ADD payments.expires_at : datetime(6) | null=YES | default=null | 
+ADD payments.provider_code : bigint | null=YES | default=null | 
+ADD payments.provider_link_id : varchar(255) | null=YES | default=null | 
+ADD payments.purpose : varchar(255) | null=YES | default=null | 
+ADD payments.received_amount : int | null=YES | default=null | 
+ADD rental_orders.balance_paid : int | null=YES | default=null | 
+ADD rental_orders.daily_rate : int | null=YES | default=null | 
+ADD rental_orders.delivery_fee : int | null=YES | default=null | 
+ADD rental_orders.deposit_due : int | null=YES | default=null | 
+ADD rental_orders.discount_amount : int | null=YES | default=null | 
+ADD rental_orders.identity_snapshot : text | null=YES | default=null | 
+ADD rental_orders.payment_expires_at : datetime(6) | null=YES | default=null | 
+ADD rental_orders.promotion_code : varchar(255) | null=YES | default=null | 
+ADD rental_orders.rental_fee : int | null=YES | default=null | 
+ADD rental_orders.return_address : varchar(255) | null=YES | default=null | 
+ADD rental_orders.return_type : varchar(255) | null=YES | default=null | 
+ADD rental_orders.security_deposit : int | null=YES | default=null | 
+ADD rental_orders.terms_accepted : bit(1) | null=YES | default=null | 
+ADD shop_settings.delivery_base_fee : int | null=YES | default=null | 
+ADD shop_settings.delivery_base_km : int | null=YES | default=null | 
+ADD shop_settings.delivery_max_km : int | null=YES | default=null | 
+ADD shop_settings.delivery_per_km : int | null=YES | default=null | 
+ADD shop_settings.deposit_percent : int | null=YES | default=null | 
+ADD shop_settings.email : varchar(255) | null=YES | default=null | 
+ADD shop_settings.hold_minutes : int | null=YES | default=null | 
+ADD shop_settings.lat : double | null=YES | default=null | 
+ADD shop_settings.lng : double | null=YES | default=null | 
+ADD shop_settings.representative : varchar(255) | null=YES | default=null | 
+ADD users.birth_date : date | null=YES | default=null | 
+Original schema inspected read-only: motorent_db
+SELECT COUNT(*) FROM motorbikes WHERE license_plate IS NULL OR TRIM(license_plate)='' => 11
+SELECT COUNT(*) FROM motorbikes b WHERE status='RENTED' AND NOT EXISTS (SELECT 1 FROM rental_orders o WHERE o.motorbike_id=b.motorbike_id AND o.status IN ('HANDED_OVER','EXTENDED','OVERDUE','RETURN_REQUESTED','RETURNED')) => 3
+SELECT COUNT(*) FROM rental_orders WHERE status='COMPLETED' AND actual_return_date IS NULL => 1
+SELECT COUNT(*) FROM payments => 0
+SELECT COUNT(*) FROM deposit_attempts => 0

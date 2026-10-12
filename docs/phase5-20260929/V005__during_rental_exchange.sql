@@ -1,0 +1,9 @@
+ALTER TABLE rental_vehicle_changes ADD COLUMN extension_start_time DATETIME(6) NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN new_planned_return_time DATETIME(6) NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN actual_vehicle_change_time DATETIME(6) NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN financial_approved_at DATETIME(6) NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN extra_rental_amount INT NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN vehicle_change_fee INT NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN additional_deposit_amount INT NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN changed_by_staff_id VARCHAR(255) NULL;
+ALTER TABLE rental_vehicle_changes ADD COLUMN exchange_address VARCHAR(500) NULL;
